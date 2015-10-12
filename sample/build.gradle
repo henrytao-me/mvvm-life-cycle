@@ -38,10 +38,9 @@ dependencies {
   compile(rootProject.ext.dependencies["me.henrytao:mdcore"]) {
     exclude group: "com.android.support"
   }
-
-  compile rootProject.ext.dependencies["com.jakewharton:butterknife"]
-
-  compile(project(":smooth-app-bar-layout")) {
+  compile(project(":library")) {
     exclude group: "com.android.support"
   }
+
+  compile rootProject.ext.dependencies["com.jakewharton:butterknife"]
 }

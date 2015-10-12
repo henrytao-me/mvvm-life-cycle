@@ -15,6 +15,7 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="?attr/mdList_itemHeight_md"
   android:background="@drawable/md_ripple"
@@ -27,7 +28,7 @@
     android:layout_centerVertical="true"
     android:layout_toLeftOf="@+id/description"
     android:paddingLeft="?attr/mdLayout_spacing_sm"
-    android:text="Buy me a coffee"
+    tools:text="Buy me a coffee"
     style="@style/MdText.Subhead.SingleLine" />
 
   <TextView
@@ -35,6 +36,6 @@
     android:layout_alignParentRight="true"
     android:layout_centerVertical="true"
     android:paddingRight="?attr/mdLayout_spacing_sm"
-    android:text="$0.99"
+    tools:text="$0.99"
     style="@style/MdText.Body1.SingleLine" />
 </RelativeLayout>

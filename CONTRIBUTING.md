@@ -1,8 +1,6 @@
 # Thank you for your contribution!
 
-I am working hard to predefine element styles as many as I can. If you find that it still doesn't meet your need, don't hesitate to send me a request. I love to work with you to solve problems. [Send a request HERE](https://github.com/henrytao-me/smooth-app-bar-layout/issues)
-
-Any contributions will be greatly appreciated.
+Any contributions will be greatly appreciated. If you find that it still doesn't meet your need, don't hesitate to send me a request. I love to work with you to solve problems.
 
 Before submitting a new issue, please check the following guideline.
 

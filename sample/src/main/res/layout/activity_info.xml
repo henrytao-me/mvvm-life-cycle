@@ -19,7 +19,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="me.henrytao.smoothappbarlayoutdemo.activity.InfoActivity">
+  tools:context="me.henrytao.bootstrapandroidlibrarydemo.activity.InfoActivity">
 
   <android.support.v7.widget.Toolbar
     android:id="@+id/toolbar"
@@ -43,14 +43,18 @@
 
       <TextView
         android:layout_marginBottom="?attr/mdLayout_spacing_sm"
-        android:text="smooth-app-bar-layout"
+        android:text="@string/app_code"
         style="@style/MdText.Headline" />
 
       <TextView
         android:layout_marginBottom="?attr/mdLayout_spacing_sm"
         android:gravity="center"
-        android:text="Smooth version of Google Support Design AppBarLayout "
+        android:text="@string/app_description"
         style="@style/MdText.Body1" />
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="?attr/mdLayout_spacing_lg" />
 
       <ImageView
         android:layout_width="?attr/mdIcon_xlg"
@@ -61,7 +65,7 @@
       <TextView
         android:layout_marginBottom="?attr/mdLayout_spacing_sm"
         android:gravity="center"
-        android:text="© 2015 Henry Tao All rights reserved"
+        android:text="@string/app_copyright"
         style="@style/MdText.Body1" />
 
       <View
@@ -71,14 +75,14 @@
       <TextView
         android:layout_marginBottom="?attr/mdLayout_spacing_sm"
         android:gravity="center"
-        android:text="Fork me on GitHub!"
+        android:text="@string/text_fork"
         style="@style/MdText.Body1" />
 
       <TextView
         android:layout_marginBottom="?attr/mdLayout_spacing_sm"
         android:autoLink="web"
         android:gravity="center"
-        android:text="https://github.com/henrytao-me/smooth-app-bar-layout"
+        android:text="@string/app_repo"
         style="@style/MdText.Body1" />
 
       <View
@@ -87,12 +91,12 @@
 
       <TextView
         android:layout_marginBottom="?attr/mdLayout_spacing_sm"
-        android:text="License"
+        android:text="@string/text_license"
         style="@style/MdText.Headline" />
 
       <TextView
         android:layout_marginBottom="?attr/mdLayout_spacing_sm"
-        android:text="@string/license"
+        android:text="@string/app_license"
         style="@style/MdText.Body1" />
     </LinearLayout>
   </ScrollView>
