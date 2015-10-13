@@ -43,6 +43,8 @@ ext {
       siteUrl           : "https://github.com/henrytao-me/bootstrap-android-library",
       gitUrl            : "https://github.com/henrytao-me/bootstrap-android-library.git",
 
+      libraryVersion    : rootProject.ext.android.versionName,
+
       developerId       : "henrytao",
       developerName     : "Henry Tao",
       developerEmail    : "hi@henrytao.me",
