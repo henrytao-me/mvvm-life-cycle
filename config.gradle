@@ -38,7 +38,7 @@ ext {
       libraryName       : "Bootstrap Android Library",
       artifact          : "bootrap-android-library",
 
-      libraryDescription: "https://github.com/henrytao-me/bootstrap-android-library",
+      libraryDescription: "Bootstrapping android library",
 
       siteUrl           : "https://github.com/henrytao-me/bootstrap-android-library",
       gitUrl            : "https://github.com/henrytao-me/bootstrap-android-library.git",

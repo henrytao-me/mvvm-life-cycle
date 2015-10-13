@@ -1,19 +1,44 @@
-[ ![Download](https://api.bintray.com/packages/henrytao-me/maven/smooth-app-bar-layout/images/download.svg) ](https://bintray.com/henrytao-me/maven/smooth-app-bar-layout/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/henrytao-me/maven/bootstrap-android-library/images/download.svg) ](https://bintray.com/henrytao-me/maven/bootstrap-android-library/_latestVersion)
 
-smooth-app-bar-layout
+bootstrap-android-library
 ================
 
-This is a smooth version of `Google Support Design AppBarLayout`. If you are using `AppBarLayout`, you will know it has an issue with fling. Check out these threads to know about that problem:
-[http://stackoverflow.com/questions/30923889/flinging-with-recyclerview-appbarlayout](http://stackoverflow.com/questions/30923889/flinging-with-recyclerview-appbarlayout)
-[https://code.google.com/p/android/issues/detail?id=177729...](https://code.google.com/p/android/issues/detail?id=177729&q=appbarlayout&colspec=ID%20Type%20Status%20Owner%20Summary%20Stars)
-
-If you find that it still doesn't meet your need, don't hesitate to send me a request. I love to work with you to solve problems. [Send a request HERE](https://github.com/henrytao-me/smooth-app-bar-layout/issues)
+Bootstrapping android library
 
 
-## Installation
+## Configuration
 
-bintray.apikey=...
-bintray.user=...
-bintray.gpg.password=...
+1. Rename `library` module to your library name. Ex: `bootstrap-android-library`
+2. Check out some of these files: `config.gradle`, `sample/src/main/res/values/strings.xml`
+3. Setup bintray account and add these information into project `local.properties`
+
+```
+bintray.apikey=xxx
+bintray.user=xxx
+bintray.gpg.password=xxx
+```
+
+
+## Contributing
+
+Any contributions are welcome!  
+Please check the [CONTRIBUTING](CONTRIBUTING.md) guideline before submitting a new issue. Wanna send PR? [Click HERE](https://github.com/henrytao-me/smooth-app-bar-layout/pulls)
+
+
+## License
+
+    Copyright 2015 "Henry Tao <hi@henrytao.me>"
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 
 

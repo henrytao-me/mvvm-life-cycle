@@ -1,29 +1,5 @@
 apply plugin: "com.android.library"
 
-ext {
-  bintrayRepo = rootProject.ext.bintray.bintrayRepo
-  bintrayName = rootProject.ext.bintray.bintrayName
-
-  publishedGroupId = rootProject.ext.bintray.publishedGroupId
-  libraryName = rootProject.ext.bintray.libraryName
-  artifact = rootProject.ext.bintray.artifact
-
-  libraryDescription = rootProject.ext.bintray.libraryDescription
-
-  siteUrl = rootProject.ext.bintray.siteUrl
-  gitUrl = rootProject.ext.bintray.gitUrl
-
-  libraryVersion = rootProject.ext.android.versionName
-
-  developerId = rootProject.ext.bintray.developerId
-  developerName = rootProject.ext.bintray.developerName
-  developerEmail = rootProject.ext.bintray.developerEmail
-
-  licenseName = rootProject.ext.bintray.licenseName
-  licenseUrl = rootProject.ext.bintray.licenseUrl
-  allLicenses = rootProject.ext.bintray.allLicenses
-}
-
 android {
   compileSdkVersion rootProject.ext.android.compileSdkVersion
   buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -50,5 +26,5 @@ dependencies {
   compile rootProject.ext.dependencies["com.android.support:recyclerview-v7"]
 }
 
-apply from: "https://raw.githubusercontent.com/henrytao-me/JCenter/master/installv1.gradle"
-apply from: "https://raw.githubusercontent.com/henrytao-me/JCenter/master/bintrayv1.gradle"
+apply from: "https://raw.githubusercontent.com/henrytao-me/bintray/master/installv1.gradle"
+apply from: "https://raw.githubusercontent.com/henrytao-me/bintray/master/bintrayv1.gradle"
