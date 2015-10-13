@@ -22,7 +22,7 @@ bintray.gpg.password=xxx
 ## Contributing
 
 Any contributions are welcome!  
-Please check the [CONTRIBUTING](CONTRIBUTING.md) guideline before submitting a new issue. Wanna send PR? [Click HERE](./pulls)
+Please check the [CONTRIBUTING](CONTRIBUTING.md) guideline before submitting a new PR.
 
 
 ## License
