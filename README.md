@@ -22,7 +22,7 @@ bintray.gpg.password=xxx
 ## Contributing
 
 Any contributions are welcome!  
-Please check the [CONTRIBUTING](CONTRIBUTING.md) guideline before submitting a new issue. Wanna send PR? [Click HERE](https://github.com/henrytao-me/smooth-app-bar-layout/pulls)
+Please check the [CONTRIBUTING](CONTRIBUTING.md) guideline before submitting a new issue. Wanna send PR? [Click HERE](./pulls)
 
 
 ## License
