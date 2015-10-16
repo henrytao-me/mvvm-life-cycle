@@ -1,6 +1,11 @@
 apply plugin: "com.android.application"
 
 android {
+  compileOptions {
+    sourceCompatibility rootProject.ext.java.sourceCompatibility
+    targetCompatibility rootProject.ext.java.targetCompatibility
+  }
+
   compileSdkVersion rootProject.ext.android.compileSdkVersion
   buildToolsVersion rootProject.ext.android.buildToolsVersion
 
