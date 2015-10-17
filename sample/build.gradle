@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: "me.tatarka.retrolambda"
 
 android {
   compileOptions {
@@ -28,6 +29,10 @@ android {
     disable "InvalidPackage"
     lintConfig file("lint.xml")
   }
+}
+
+retrolambda {
+  jvmArgs "-noverify"
 }
 
 dependencies {
