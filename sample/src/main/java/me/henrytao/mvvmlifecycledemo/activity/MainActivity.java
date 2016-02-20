@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 "Henry Tao <hi@henrytao.me>"
+ * Copyright 2016 "Henry Tao <hi@henrytao.me>"
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,38 +14,34 @@
  * limitations under the License.
  */
 
-package me.henrytao.bootstrapandroidlibrarydemo.activity;
+package me.henrytao.mvvmlifecycledemo.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.henrytao.bootstrapandroidlibrarydemo.R;
 
-public class InfoActivity extends BaseActivity {
-
-  public static Intent newIntent(Context context) {
-    return new Intent(context, InfoActivity.class);
-  }
+public class MainActivity extends BaseActivity {
 
   @Bind(R.id.toolbar)
   Toolbar vToolbar;
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.menu_info, menu);
+    getMenuInflater().inflate(R.menu.menu_main, menu);
     return true;
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
+      case R.id.action_info:
+        startActivity(InfoActivity.newIntent(this));
+        return true;
       case R.id.action_donate:
         showDonateDialog();
         return true;
@@ -56,15 +52,8 @@ public class InfoActivity extends BaseActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_info);
+    setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
-
     setSupportActionBar(vToolbar);
-    vToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        onBackPressed();
-      }
-    });
   }
 }
