@@ -51,7 +51,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.henrytao.bootstrapandroidlibrarydemo.R;
+import me.henrytao.mvvmlifecycledemo.R;
 
 /**
  * Created by henrytao on 10/11/15.

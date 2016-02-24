@@ -37,6 +37,7 @@ retrolambda {
 dependencies {
   compile fileTree(dir: "libs", include: ["*.jar"])
   compile rootProject.ext.dependencies["com.android.support:appcompat-v7"]
+  compile rootProject.ext.dependencies["com.android.support:recyclerview-v7"]
 
   compile rootProject.ext.dependencies["io.reactivex:rxjava"]
   compile rootProject.ext.dependencies["io.reactivex:rxandroid"]

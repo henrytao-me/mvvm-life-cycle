@@ -24,7 +24,7 @@ ext {
       compileSdkVersion: 23,
       buildToolsVersion: "23.0.1",
       applicationId    : "me.henrytao.mvvmlifecycle",
-      minSdkVersion    : 8,
+      minSdkVersion    : 9,
       targetSdkVersion : 23,
       versionCode      : 1,
       versionName      : "1.0.0"

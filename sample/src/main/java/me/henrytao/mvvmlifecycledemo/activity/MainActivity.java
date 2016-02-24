@@ -23,7 +23,7 @@ import android.view.MenuItem;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.henrytao.bootstrapandroidlibrarydemo.R;
+import me.henrytao.mvvmlifecycledemo.R;
 
 public class MainActivity extends BaseActivity {
 

@@ -26,7 +26,7 @@ import android.view.View;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.henrytao.bootstrapandroidlibrarydemo.R;
+import me.henrytao.mvvmlifecycledemo.R;
 
 public class InfoActivity extends BaseActivity {
 

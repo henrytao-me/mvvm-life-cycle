@@ -30,8 +30,12 @@ public class Ln {
 
   private static final String TAG = "ln";
 
+  public static boolean DEBUG = false;
+
   public static void d(String tag, String format, Object... args) {
-    Log.d(tag, String.format(Locale.US, format, args));
+    if (DEBUG) {
+      Log.d(tag, String.format(Locale.US, format, args));
+    }
   }
 
   public static void d(String format, Object... args) {
@@ -39,11 +43,19 @@ public class Ln {
   }
 
   public static void d(String tag, Throwable throwable) {
-    Log.d(tag, getStackTraceString(throwable), throwable);
+    if (DEBUG) {
+      Log.d(tag, getStackTraceString(throwable), throwable);
+    }
+  }
+
+  public static void d(Throwable throwable) {
+    d(TAG, throwable);
   }
 
   public static void e(String tag, String format, Object... args) {
-    Log.e(tag, String.format(Locale.US, format, args));
+    if (DEBUG) {
+      Log.e(tag, String.format(Locale.US, format, args));
+    }
   }
 
   public static void e(String format, Object... args) {
@@ -51,7 +63,9 @@ public class Ln {
   }
 
   public static void e(String tag, Throwable throwable) {
-    Log.e(tag, getStackTraceString(throwable), throwable);
+    if (DEBUG) {
+      Log.e(tag, getStackTraceString(throwable), throwable);
+    }
   }
 
   public static void e(Throwable throwable) {
@@ -59,7 +73,9 @@ public class Ln {
   }
 
   public static void i(String tag, String format, Object... args) {
-    Log.i(tag, String.format(Locale.US, format, args));
+    if (DEBUG) {
+      Log.i(tag, String.format(Locale.US, format, args));
+    }
   }
 
   public static void i(String format, Object... args) {
@@ -67,15 +83,21 @@ public class Ln {
   }
 
   public static void i(String tag, Throwable throwable) {
-    Log.i(tag, getStackTraceString(throwable), throwable);
+    if (DEBUG) {
+      Log.i(tag, getStackTraceString(throwable), throwable);
+    }
   }
 
   public static void i(Throwable throwable) {
-    i(TAG, throwable);
+    if (DEBUG) {
+      i(TAG, throwable);
+    }
   }
 
   public static void v(String tag, String format, Object... args) {
-    Log.v(tag, String.format(Locale.US, format, args));
+    if (DEBUG) {
+      Log.v(tag, String.format(Locale.US, format, args));
+    }
   }
 
   public static void v(String format, Object... args) {
@@ -83,7 +105,9 @@ public class Ln {
   }
 
   public static void v(String tag, Throwable throwable) {
-    Log.v(tag, getStackTraceString(throwable), throwable);
+    if (DEBUG) {
+      Log.v(tag, getStackTraceString(throwable), throwable);
+    }
   }
 
   public static void v(Throwable throwable) {
@@ -91,7 +115,9 @@ public class Ln {
   }
 
   public static void w(String tag, String format, Object... args) {
-    Log.w(tag, String.format(Locale.US, format, args));
+    if (DEBUG) {
+      Log.w(tag, String.format(Locale.US, format, args));
+    }
   }
 
   public static void w(String format, Object... args) {
@@ -99,7 +125,9 @@ public class Ln {
   }
 
   public static void w(String tag, Throwable throwable) {
-    Log.w(tag, getStackTraceString(throwable), throwable);
+    if (DEBUG) {
+      Log.w(tag, getStackTraceString(throwable), throwable);
+    }
   }
 
   public static void w(Throwable throwable) {

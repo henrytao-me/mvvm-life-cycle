@@ -36,5 +36,4 @@
       android:label="@string/title_activity_info"
       android:name=".activity.InfoActivity" />
   </application>
-
 </manifest>

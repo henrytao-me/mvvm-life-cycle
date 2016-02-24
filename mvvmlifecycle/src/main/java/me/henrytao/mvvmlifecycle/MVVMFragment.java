@@ -16,10 +16,6 @@
 
 package me.henrytao.mvvmlifecycle;
 
-import com.squar.mychat.util.log.Ln;
-import com.squar.mychat.util.rx.subscription.SubscriptionManager;
-import com.squar.mychat.util.rx.subscription.UnsubscribeLifeCycle;
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +24,9 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.henrytao.mvvmlifecycle.log.Ln;
+import me.henrytao.mvvmlifecycle.rx.SubscriptionManager;
+import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import rx.Subscription;
 
 /**
@@ -60,6 +59,36 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
       mViewModels.add(viewModel);
       propagateLifeCycle(viewModel);
     }
+  }
+
+  @Override
+  public void manageSubscription(String id, Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle) {
+    if ((unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY && mIsDestroy) ||
+        (unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY_VIEW && mIsDestroyView) ||
+        (unsubscribeLifeCycle == UnsubscribeLifeCycle.STOP && mIsStop) ||
+        (unsubscribeLifeCycle == UnsubscribeLifeCycle.PAUSE && mIsPause)) {
+      if (subscription != null && !subscription.isUnsubscribed()) {
+        subscription.unsubscribe();
+      }
+      Ln.w("Cancel manage subscription | %s | %s", getClass().getName(), unsubscribeLifeCycle.toString());
+      return;
+    }
+    mSubscriptionManager.manageSubscription(id, subscription, unsubscribeLifeCycle);
+  }
+
+  @Override
+  public void manageSubscription(Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle) {
+    if ((unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY && mIsDestroy) ||
+        (unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY_VIEW && mIsDestroyView) ||
+        (unsubscribeLifeCycle == UnsubscribeLifeCycle.STOP && mIsStop) ||
+        (unsubscribeLifeCycle == UnsubscribeLifeCycle.PAUSE && mIsPause)) {
+      if (subscription != null && !subscription.isUnsubscribed()) {
+        subscription.unsubscribe();
+      }
+      Ln.w("Cancel manage subscription | %s | %s", getClass().getName(), unsubscribeLifeCycle.toString());
+      return;
+    }
+    mSubscriptionManager.manageSubscription(subscription, unsubscribeLifeCycle);
   }
 
   @Override
@@ -209,36 +238,6 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
   @Override
   public void unsubscribe(String id) {
     mSubscriptionManager.unsubscribe(id);
-  }
-
-  @Override
-  public void manageSubscription(String id, Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle) {
-    if ((unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY && mIsDestroy) ||
-        (unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY_VIEW && mIsDestroyView) ||
-        (unsubscribeLifeCycle == UnsubscribeLifeCycle.STOP && mIsStop) ||
-        (unsubscribeLifeCycle == UnsubscribeLifeCycle.PAUSE && mIsPause)) {
-      if (subscription != null && !subscription.isUnsubscribed()) {
-        subscription.unsubscribe();
-      }
-      Ln.w("Cancel manage subscription | %s | %s", getClass().getName(), unsubscribeLifeCycle.toString());
-      return;
-    }
-    mSubscriptionManager.manageSubscription(id, subscription, unsubscribeLifeCycle);
-  }
-
-  @Override
-  public void manageSubscription(Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle) {
-    if ((unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY && mIsDestroy) ||
-        (unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY_VIEW && mIsDestroyView) ||
-        (unsubscribeLifeCycle == UnsubscribeLifeCycle.STOP && mIsStop) ||
-        (unsubscribeLifeCycle == UnsubscribeLifeCycle.PAUSE && mIsPause)) {
-      if (subscription != null && !subscription.isUnsubscribed()) {
-        subscription.unsubscribe();
-      }
-      Ln.w("Cancel manage subscription | %s | %s", getClass().getName(), unsubscribeLifeCycle.toString());
-      return;
-    }
-    mSubscriptionManager.manageSubscription(subscription, unsubscribeLifeCycle);
   }
 
   private void propagateLifeCycle(@NonNull MVVMViewModel viewModel) {
