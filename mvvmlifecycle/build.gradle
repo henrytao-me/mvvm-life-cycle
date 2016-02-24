@@ -1,6 +1,16 @@
 apply plugin: "com.android.library"
+apply plugin: "me.tatarka.retrolambda"
 
 android {
+  dataBinding {
+    enabled = true
+  }
+
+  compileOptions {
+    sourceCompatibility rootProject.ext.java.sourceCompatibility
+    targetCompatibility rootProject.ext.java.targetCompatibility
+  }
+
   compileSdkVersion rootProject.ext.android.compileSdkVersion
   buildToolsVersion rootProject.ext.android.buildToolsVersion
 
@@ -20,11 +30,16 @@ android {
   }
 }
 
+retrolambda {
+  jvmArgs "-noverify"
+}
+
 dependencies {
   compile fileTree(dir: "libs", include: ["*.jar"])
-  compile rootProject.ext.dependencies["com.android.support:design"]
   compile rootProject.ext.dependencies["com.android.support:appcompat-v7"]
-  compile rootProject.ext.dependencies["com.android.support:recyclerview-v7"]
+
+  compile rootProject.ext.dependencies["io.reactivex:rxjava"]
+  compile rootProject.ext.dependencies["io.reactivex:rxandroid"]
 }
 
 apply from: "https://raw.githubusercontent.com/henrytao-me/bintray/master/installv1.gradle"
