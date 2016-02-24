@@ -1,33 +1,41 @@
-[ ![Download](https://api.bintray.com/packages/henrytao-me/maven/bootstrap-android-library/images/download.svg) ](https://bintray.com/henrytao-me/maven/bootstrap-android-library/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/henrytao-me/maven/mdcore/images/download.svg) ](https://bintray.com/henrytao-me/maven/mdcore/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-android--md--core-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2469)
 
-bootstrap-android-library
+MVVM Life Cycle
 ================
 
-Bootstrapping android library
+Unify activity and fragment life cycle for MVVM architecture
 
 
-## Configuration
-
-1. Rename `library` module to your library name. Ex: `bootstrap-android-library`
-2. Check out some of these files: `config.gradle`, `sample/src/main/res/values/strings.xml`
-3. Setup bintray account and add these information into project `local.properties`
+## Installation
 
 ```
-bintray.apikey=xxx
-bintray.user=xxx
-bintray.gpg.password=xxx
+compile "me.henrytao:mvvmlifecycle:<latest-version>"
 ```
+
+`mvvm-life-cycle` is deployed to `jCenter`. Make sure you have `jcenter()` in your project gradle.
+
+
+## Demo
+
+[![Get it on Google Play](https://raw.githubusercontent.com/henrytao-me/mvvm-life-cycle/master/screenshots/google-play.png)](https://play.google.com/store/apps/details?id=me.henrytao.mvvmlifecycle)
+
+Please note that the app on the Play store is not always the latest version.
+
+
+## Concepts
+
+![Feature](./screenshots/mvvm-life-cycle.jpg)
 
 
 ## Contributing
 
-Any contributions are welcome!  
-Please check the [CONTRIBUTING](CONTRIBUTING.md) guideline before submitting a new PR.
+Any contributions are welcome!
+Please check the [CONTRIBUTING](CONTRIBUTING.md) guideline before submitting a new issue. Wanna send PR? [Click HERE](https://github.com/henrytao-me/mvvm-life-cycle/pulls)
 
 
 ## License
 
-    Copyright 2015 "Henry Tao <hi@henrytao.me>"
+    Copyright 2016 "Henry Tao <hi@henrytao.me>"
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

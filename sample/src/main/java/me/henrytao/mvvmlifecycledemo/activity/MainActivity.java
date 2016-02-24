@@ -17,6 +17,8 @@
 package me.henrytao.mvvmlifecycledemo.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +28,9 @@ import butterknife.ButterKnife;
 import me.henrytao.mvvmlifecycledemo.R;
 
 public class MainActivity extends BaseActivity {
+
+  @Bind(android.R.id.list)
+  RecyclerView vRecyclerView;
 
   @Bind(R.id.toolbar)
   Toolbar vToolbar;
@@ -55,5 +60,7 @@ public class MainActivity extends BaseActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
     setSupportActionBar(vToolbar);
+
+    vRecyclerView.setLayoutManager(new LinearLayoutManager(this));
   }
 }
