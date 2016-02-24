@@ -9,7 +9,7 @@ Unify activity and fragment life cycle for MVVM architecture
 ## Installation
 
 ```
-compile "me.henrytao:mvvmlifecycle:<latest-version>"
+compile "me.henrytao:mvvm-life-cycle:<latest-version>"
 ```
 
 `mvvm-life-cycle` is deployed to `jCenter`. Make sure you have `jcenter()` in your project gradle.

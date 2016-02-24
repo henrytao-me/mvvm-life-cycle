@@ -52,7 +52,7 @@ dependencies {
   compile(rootProject.ext.dependencies["me.henrytao:mdcore"]) {
     exclude group: "com.android.support"
   }
-  compile project(":mvvmlifecycle")
+  compile project(':mvvm-life-cycle')
 
   compile rootProject.ext.dependencies["com.jakewharton:butterknife"]
 }
