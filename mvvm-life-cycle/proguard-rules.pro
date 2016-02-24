@@ -15,3 +15,33 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# butterknife http://jakewharton.github.io/butterknife/
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+
+# guava
+-dontwarn sun.misc.Unsafe
+-dontwarn com.google.common.collect.MinMaxPriorityQueue
+-keepclasseswithmembers public class * {
+    public static void main(java.lang.String[]);
+}
+
+# retrolambda https://github.com/evant/gradle-retrolambda
+-dontwarn java.lang.invoke.*
+
+# rxjava
+-keep class rx.internal.util.unsafe.** { *; }
+
+# support design
+-dontwarn android.support.design.**
+-keep interface android.support.design.** { *; }
+-keep class android.support.design.** { *; }
+-keep class android.support.v7.widget.** { *; }
