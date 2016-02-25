@@ -33,6 +33,11 @@ Any contributions are welcome!
 Please check the [CONTRIBUTING](CONTRIBUTING.md) guideline before submitting a new issue. Wanna send PR? [Click HERE](https://github.com/henrytao-me/mvvm-life-cycle/pulls)
 
 
+## Special thanks to:
+
+- [longbkiter07](https://github.com/longbkiter07) for RxJava SubscriptionManager
+
+
 ## License
 
     Copyright 2016 "Henry Tao <hi@henrytao.me>"
