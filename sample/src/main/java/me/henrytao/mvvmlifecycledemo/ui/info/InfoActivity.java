@@ -14,39 +14,39 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycledemo.activity;
+package me.henrytao.mvvmlifecycledemo.ui.info;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.henrytao.mvvmlifecycledemo.R;
+import me.henrytao.mvvmlifecycledemo.base.BaseActivity;
 
-public class MainActivity extends BaseActivity {
+public class InfoActivity extends BaseActivity {
 
-  @Bind(android.R.id.list)
-  RecyclerView vRecyclerView;
+  public static Intent newIntent(Context context) {
+    return new Intent(context, InfoActivity.class);
+  }
 
   @Bind(R.id.toolbar)
   Toolbar vToolbar;
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.menu_main, menu);
+    getMenuInflater().inflate(R.menu.menu_info, menu);
     return true;
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case R.id.action_info:
-        startActivity(InfoActivity.newIntent(this));
-        return true;
       case R.id.action_donate:
         showDonateDialog();
         return true;
@@ -57,10 +57,15 @@ public class MainActivity extends BaseActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_info);
     ButterKnife.bind(this);
-    setSupportActionBar(vToolbar);
 
-    vRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    setSupportActionBar(vToolbar);
+    vToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        onBackPressed();
+      }
+    });
   }
 }

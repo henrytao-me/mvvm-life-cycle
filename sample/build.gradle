@@ -16,7 +16,7 @@ android {
 
   defaultConfig {
     applicationId rootProject.ext.android.applicationId
-    minSdkVersion rootProject.ext.android.minSdkVersion
+    minSdkVersion 11
     targetSdkVersion rootProject.ext.android.targetSdkVersion
     versionCode rootProject.ext.android.versionCode
     versionName rootProject.ext.android.versionName
@@ -46,10 +46,13 @@ dependencies {
   compile rootProject.ext.dependencies["com.android.support:cardview-v7"]
   compile rootProject.ext.dependencies["com.android.support:recyclerview-v7"]
 
+  compile(rootProject.ext.dependencies["me.henrytao:mdcore"]) {
+    exclude group: "com.android.support"
+  }
   compile(rootProject.ext.dependencies["me.henrytao:recyclerview"]) {
     exclude group: "com.android.support"
   }
-  compile(rootProject.ext.dependencies["me.henrytao:mdcore"]) {
+  compile(rootProject.ext.dependencies["me.henrytao:smooth-app-bar-layout"]) {
     exclude group: "com.android.support"
   }
   compile project(':mvvm-life-cycle')

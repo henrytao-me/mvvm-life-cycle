@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycledemo.activity;
+package me.henrytao.mvvmlifecycledemo.base;
 
 import com.android.vending.billing.IInAppBillingService;
 
