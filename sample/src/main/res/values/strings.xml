@@ -30,6 +30,46 @@
   <string name="text_close" translatable="false">Close</string>
   <string name="text_open" translatable="false">Open</string>
 
+  <string name="add_task">New TO-DO</string>
+  <string name="edit_task">Edit TO-DO</string>
+  <string name="task_marked_complete">Task marked complete</string>
+  <string name="task_marked_active">Task marked active</string>
+  <string name="loading_tasks_error">Error while loading tasks</string>
+  <string name="completed_tasks_cleared">Completed tasks cleared</string>
+  <string name="menu_filter">Filter</string>
+  <string name="menu_clear">Clear completed</string>
+  <string name="menu_delete_task">Delete task</string>
+  <string name="navigation_view_header_title">TO-DOs</string>
+  <string name="title_hint">Title</string>
+  <string name="description_hint">Enter your TO-DO here.</string>
+  <string name="empty_task_message">TO DOs cannot be empty</string>
+  <string name="successfully_saved_task_message">TO-DO saved</string>
+  <string name="list_title">TO-DO List</string>
+  <string name="statistics_title">Statistics</string>
+  <string name="statistics_no_tasks">You have no tasks.</string>
+  <string name="statistics_active_tasks">Active tasks:</string>
+  <string name="statistics_completed_tasks">Completed tasks:</string>
+  <string name="statistics_error">Error loading statistics.</string>
+  <string name="no_data">No data</string>
+  <string name="loading">LOADING</string>
+
+  <string-array name="list_tasks_array">
+    <item>@string/nav_all</item>
+    <item>@string/nav_active</item>
+    <item>@string/nav_completed</item>
+  </string-array>
+  <string name="nav_all">All</string>
+  <string name="nav_active">Active</string>
+  <string name="nav_completed">Completed</string>
+  <string name="label_all">All TO-DOs</string>
+  <string name="label_active">Active TO-DOs</string>
+  <string name="label_completed">Completed TO-DOs</string>
+  <string name="no_tasks_all">You have no TO-DOs!</string>
+  <string name="no_tasks_active">You have no active TO-DOs!</string>
+  <string name="no_tasks_completed">You have no completed TO-DOs!</string>
+  <string name="no_tasks_add">Add a TO-DO item +</string>
+  <string name="refresh">Refresh</string>
+
   <string-array name="donate_items">
     <item>donate_coffee</item>
     <item>donate_toast</item>
@@ -41,8 +81,7 @@
   <string name="text_donate_progress_message" translatable="false">This may take a while. Make sure you turned on the internet</string>
   <string name="text_donate_help_offer" translatable="false">Let me know if I can be of any help. Happy coding!</string>
   <string name="text_donate_thanks" translatable="false">Thanks for your gift. Happy coding!</string>
-  <string name="text_donate_error"
-    translatable="false">Something just happened. You can not donate at the moment. Keep in touch. Thanks!</string>
+  <string name="text_donate_error" translatable="false">Something just happened. You can not donate at the moment. Keep in touch. Thanks!</string>
 
   <string name="text_short" translatable="false">Lorem ipsum dolor sit amet, ut duis lorem provident sed felis blandit, condimentum donec lectus ipsum et mauris,
     morbi porttitor interdum feugiat nulla donec sodales, vestibulum nisl primis a molestie vestibulum quam, sapien mauris metus risus

@@ -16,53 +16,20 @@
 
 package me.henrytao.mvvmlifecycledemo.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import me.henrytao.mvvmlifecycledemo.R;
 import me.henrytao.mvvmlifecycledemo.base.BaseActivity;
-import me.henrytao.mvvmlifecycledemo.ui.info.InfoActivity;
+import me.henrytao.mvvmlifecycledemo.ui.tasks.TasksActivity;
 
 public class MainActivity extends BaseActivity {
-
-  @Bind(android.R.id.list)
-  RecyclerView vRecyclerView;
-
-  @Bind(R.id.toolbar)
-  Toolbar vToolbar;
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.menu_main, menu);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.action_info:
-        startActivity(InfoActivity.newIntent(this));
-        return true;
-      case R.id.action_donate:
-        showDonateDialog();
-        return true;
-    }
-    return super.onOptionsItemSelected(item);
-  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    ButterKnife.bind(this);
-    setSupportActionBar(vToolbar);
-
-    vRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    Intent intent = TasksActivity.newIntent(this);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    startActivity(intent);
+    finish();
   }
 }

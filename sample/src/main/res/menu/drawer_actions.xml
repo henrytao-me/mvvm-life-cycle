@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2015 "Henry Tao <hi@henrytao.me>"
+  ~ Copyright 2016 "Henry Tao <hi@henrytao.me>"
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,19 +14,14 @@
   ~ limitations under the License.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context=".ui.MainActivity">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <android.support.v7.widget.Toolbar
-    android:id="@+id/toolbar"
-    style="@style/AppStyle.MdToolbar" />
-
-  <android.support.v7.widget.RecyclerView
-    android:id="@android:id/list"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@+id/toolbar" />
-</RelativeLayout>
+  <item
+    android:id="@+id/list_navigation_menu_item"
+    android:icon="@drawable/ic_format_list_bulleted"
+    android:title="@string/list_title" />
+  <item
+    android:id="@+id/statistics_navigation_menu_item"
+    android:icon="@drawable/ic_assessment"
+    android:title="@string/statistics_title" />
+</menu>

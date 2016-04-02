@@ -18,6 +18,41 @@
 
   <!-- AppTheme -->
   <style name="AppTheme" parent="MdTheme.Light">
+    <item name="mdColor_primaryPalette">@color/mdColor_blueGrey</item>
+    <item name="mdColor_primaryPalette_dark">@color/mdColor_blueGrey_dark</item>
+    <item name="mdColor_primaryPalette_light">@color/mdColor_blueGrey_light</item>
 
+    <item name="mdColor_accentPalette">@color/mdColor_red_accent</item>
+    <item name="mdColor_accentPalette_dark">@color/mdColor_red_accent_dark</item>
+    <item name="mdColor_accentPalette_light">@color/mdColor_red_accent_light</item>
+
+    <!-- textColor for primary palette -->
+    <item name="mdTextColorPrimary_primaryPalette">@color/mdTextColorPrimary_dark</item>
+    <item name="mdTextColorPrimary_primaryPalette_dark">@color/mdTextColorPrimary_dark</item>
+    <item name="mdTextColorPrimary_primaryPalette_light">@color/mdTextColorPrimary_light</item>
+    <item name="mdTextColorSecondary_primaryPalette">@color/mdTextColorSecondary_dark</item>
+    <item name="mdTextColorSecondary_primaryPalette_dark">@color/mdTextColorSecondary_dark</item>
+    <item name="mdTextColorSecondary_primaryPalette_light">@color/mdTextColorSecondary_light</item>
+    <item name="mdTextColorHint_primaryPalette">@color/mdTextColorHint_dark</item>
+    <item name="mdTextColorHint_primaryPalette_dark">@color/mdTextColorHint_dark</item>
+    <item name="mdTextColorHint_primaryPalette_light">@color/mdTextColorHint_light</item>
+    <item name="mdColorDivider_primaryPalette">@color/mdColorDivider_dark</item>
+    <item name="mdColorDivider_primaryPalette_dark">@color/mdColorDivider_dark</item>
+    <item name="mdColorDivider_primaryPalette_light">@color/mdColorDivider_light</item>
+
+    <item name="mdTextColorPrimaryInverse_primaryPalette">@color/mdTextColorPrimary_light</item>
+    <item name="mdTextColorPrimaryInverse_primaryPalette_dark">@color/mdTextColorPrimary_light</item>
+    <item name="mdTextColorPrimaryInverse_primaryPalette_light">@color/mdTextColorPrimary_dark</item>
+    <item name="mdTextColorSecondaryInverse_primaryPalette">@color/mdTextColorSecondary_light</item>
+    <item name="mdTextColorSecondaryInverse_primaryPalette_dark">@color/mdTextColorSecondary_light</item>
+    <item name="mdTextColorSecondaryInverse_primaryPalette_light">@color/mdTextColorSecondary_dark</item>
+    <item name="mdTextColorHintInverse_primaryPalette">@color/mdTextColorHint_light</item>
+    <item name="mdTextColorHintInverse_primaryPalette_dark">@color/mdTextColorHint_light</item>
+    <item name="mdTextColorHintInverse_primaryPalette_light">@color/mdTextColorHint_dark</item>
+    <item name="mdColorDividerInverse_primaryPalette">@color/mdColorDivider_light</item>
+    <item name="mdColorDividerInverse_primaryPalette_dark">@color/mdColorDivider_light</item>
+    <item name="mdColorDividerInverse_primaryPalette_light">@color/mdColorDivider_dark</item>
+
+    <item name="mdDrawerArrowToggleColor">@color/mdIconColor_active_dark</item>
   </style>
 </resources>

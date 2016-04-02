@@ -35,5 +35,7 @@
     <activity
       android:label="@string/title_activity_info"
       android:name=".ui.info.InfoActivity" />
+    <activity android:name=".ui.tasks.TasksActivity"></activity>
   </application>
+
 </manifest>

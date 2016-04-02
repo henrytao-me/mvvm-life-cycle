@@ -57,7 +57,7 @@ public class InfoActivity extends BaseActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_info);
+    setContentView(R.layout.info_activity);
     ButterKnife.bind(this);
 
     setSupportActionBar(vToolbar);

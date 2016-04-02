@@ -333,7 +333,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
       if (convertView == null) {
-        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_purchase, parent, false);
+        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.billing_item_purchase, parent, false);
       }
       ButterKnife.bind(this, convertView);
       vTitle.setText(getItem(position).getDescription());
