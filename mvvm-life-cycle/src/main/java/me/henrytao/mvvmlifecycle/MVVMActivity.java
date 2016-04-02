@@ -34,7 +34,7 @@ import rx.Subscription;
  */
 public abstract class MVVMActivity extends AppCompatActivity implements MVVMLifeCycle, MVVMObserver {
 
-  public abstract void onSetContentView();
+  public abstract void onSetContentView(Bundle savedInstanceState);
 
   protected List<MVVMViewModel> mViewModels;
 
@@ -221,7 +221,7 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
     mViewModels = new ArrayList<>();
     onInitializeViewModels();
     onCreate();
-    onSetContentView();
+    onSetContentView(savedInstanceState);
     onCreateView();
   }
 

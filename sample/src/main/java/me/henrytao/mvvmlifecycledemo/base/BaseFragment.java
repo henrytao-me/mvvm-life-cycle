@@ -14,26 +14,13 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycledemo.ui.tasks;
+package me.henrytao.mvvmlifecycledemo.base;
 
-import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
+import me.henrytao.mvvmlifecycle.MVVMFragment;
 
-import me.henrytao.mvvmlifecycledemo.base.BaseDrawerLayoutActivity;
+/**
+ * Created by henrytao on 4/2/16.
+ */
+public abstract class BaseFragment extends MVVMFragment {
 
-public class TasksActivity extends BaseDrawerLayoutActivity {
-
-  public static Intent newIntent(Context context) {
-    return new Intent(context, TasksActivity.class);
-  }
-
-  @Override
-  public void onInitializeViewModels() {
-  }
-
-  @Override
-  protected Fragment onCreateFragment() {
-    return new TasksFragment();
-  }
 }

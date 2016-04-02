@@ -25,11 +25,15 @@ import me.henrytao.mvvmlifecycledemo.ui.tasks.TasksActivity;
 public class MainActivity extends BaseActivity {
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  public void onInitializeViewModels() {
+  }
+
+  @Override
+  public void onSetContentView(Bundle savedInstanceState) {
     Intent intent = TasksActivity.newIntent(this);
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
     startActivity(intent);
+    overridePendingTransition(0, 0);
     finish();
   }
 }

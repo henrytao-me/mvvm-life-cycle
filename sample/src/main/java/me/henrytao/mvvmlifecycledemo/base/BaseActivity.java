@@ -34,7 +34,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,12 +50,13 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.henrytao.mvvmlifecycle.MVVMActivity;
 import me.henrytao.mvvmlifecycledemo.R;
 
 /**
  * Created by henrytao on 10/11/15.
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends MVVMActivity {
 
   private static IInAppBillingService mBillingService;
 
@@ -77,6 +77,15 @@ public class BaseActivity extends AppCompatActivity {
   private String[] mDonateItems;
 
   private ProgressDialog mProgressDialog;
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    if (mBillingService != null) {
+      unbindService(mServiceConnection);
+    }
+    hideProgressDialog();
+  }
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -103,15 +112,6 @@ public class BaseActivity extends AppCompatActivity {
     Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
     serviceIntent.setPackage("com.android.vending");
     bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
-  }
-
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    if (mBillingService != null) {
-      unbindService(mServiceConnection);
-    }
-    hideProgressDialog();
   }
 
   public void showDonateDialog() {

@@ -22,21 +22,16 @@
   android:layout_height="match_parent"
   tools:context="me.henrytao.mvvmlifecycledemo.ui.tasks.TasksActivity">
 
-  <android.support.design.widget.CoordinatorLayout
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <FrameLayout
-      android:id="@+id/container"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
       android:id="@+id/smooth_app_bar_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:minHeight="@dimen/mdSecondaryActionBarSize"
-      app:elevation="0dp">
+      android:minHeight="@dimen/mdSecondaryActionBarSize">
 
       <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -44,21 +39,31 @@
         style="@style/AppStyle.Toolbar" />
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      app:layout_anchor="@+id/container"
-      app:layout_anchorGravity="bottom|right|end">
+    <android.support.design.widget.CoordinatorLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
-      <me.henrytao.mdcore.widgets.MdFloatingActionButton
-        android:id="@+id/fab_chat"
+      <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+      <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/mdLayoutSpacing"
-        android:src="@drawable/ic_add"
-        app:fabSize="normal" />
-    </FrameLayout>
-  </android.support.design.widget.CoordinatorLayout>
+        app:layout_anchor="@+id/container"
+        app:layout_anchorGravity="bottom|right|end">
+
+        <me.henrytao.mdcore.widgets.MdFloatingActionButton
+          android:id="@+id/fab_chat"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/mdLayoutSpacing"
+          android:src="@drawable/ic_add"
+          app:fabSize="normal" />
+      </FrameLayout>
+    </android.support.design.widget.CoordinatorLayout>
+  </LinearLayout>
 
   <android.support.design.widget.NavigationView
     android:id="@+id/nav_view"

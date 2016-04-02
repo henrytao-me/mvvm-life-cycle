@@ -45,6 +45,10 @@ public class InfoActivity extends BaseActivity {
   }
 
   @Override
+  public void onInitializeViewModels() {
+  }
+
+  @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_donate:
@@ -55,8 +59,7 @@ public class InfoActivity extends BaseActivity {
   }
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  public void onSetContentView(Bundle savedInstanceState) {
     setContentView(R.layout.info_activity);
     ButterKnife.bind(this);
 

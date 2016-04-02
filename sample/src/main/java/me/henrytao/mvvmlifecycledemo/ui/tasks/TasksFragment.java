@@ -16,24 +16,27 @@
 
 package me.henrytao.mvvmlifecycledemo.ui.tasks;
 
-import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import me.henrytao.mvvmlifecycledemo.base.BaseDrawerLayoutActivity;
+import me.henrytao.mvvmlifecycledemo.R;
+import me.henrytao.mvvmlifecycledemo.base.BaseFragment;
 
-public class TasksActivity extends BaseDrawerLayoutActivity {
+/**
+ * Created by henrytao on 4/2/16.
+ */
+public class TasksFragment extends BaseFragment {
 
-  public static Intent newIntent(Context context) {
-    return new Intent(context, TasksActivity.class);
+  @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    return inflater.inflate(R.layout.tasks_fragment, container, false);
   }
 
   @Override
   public void onInitializeViewModels() {
-  }
 
-  @Override
-  protected Fragment onCreateFragment() {
-    return new TasksFragment();
   }
 }
