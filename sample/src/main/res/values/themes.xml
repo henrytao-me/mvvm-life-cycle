@@ -54,5 +54,7 @@
     <item name="mdColorDividerInverse_primaryPalette_light">@color/mdColorDivider_dark</item>
 
     <item name="mdDrawerArrowToggleColor">@color/mdIconColor_active_dark</item>
+
+    <item name="mdIconColor_primaryPalette">@color/md_icon_color_dark</item>
   </style>
 </resources>

@@ -19,9 +19,12 @@ package me.henrytao.mvvmlifecycledemo.ui.tasks;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import me.henrytao.mdcore.utils.ResourceUtils;
 import me.henrytao.mvvmlifecycledemo.R;
 import me.henrytao.mvvmlifecycledemo.base.BaseFragment;
 
@@ -31,6 +34,13 @@ import me.henrytao.mvvmlifecycledemo.base.BaseFragment;
 public class TasksFragment extends BaseFragment {
 
   @Override
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    super.onCreateOptionsMenu(menu, inflater);
+    inflater.inflate(R.menu.menu_tasks, menu);
+    ResourceUtils.supportDrawableTint(getContext(), menu, ResourceUtils.Palette.PRIMARY);
+  }
+
+  @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     return inflater.inflate(R.layout.tasks_fragment, container, false);
   }
@@ -38,5 +48,11 @@ public class TasksFragment extends BaseFragment {
   @Override
   public void onInitializeViewModels() {
 
+  }
+
+  @Override
+  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    setHasOptionsMenu(true);
   }
 }

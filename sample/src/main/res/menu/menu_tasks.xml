@@ -20,14 +20,8 @@
   tools:context=".MainActivity">
 
   <item
-    android:id="@+id/action_donate"
-    android:icon="@drawable/ic_toolbar_donate_circle"
-    android:title="@string/text_donate"
-    compat:showAsAction="always" />
-
-  <item
-    android:id="@+id/action_info"
-    android:icon="@drawable/ic_toolbar_info"
-    android:title="@string/text_info"
+    android:id="@+id/action_filter"
+    android:icon="@drawable/ic_menu_filter_list"
+    android:title="@string/menu_filter"
     compat:showAsAction="always" />
 </menu>
