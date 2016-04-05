@@ -18,6 +18,7 @@ package me.henrytao.mvvmlifecycledemo.base;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -36,6 +37,9 @@ public abstract class BaseDrawerLayoutActivity extends BaseActivity {
   protected abstract Fragment onCreateFragment();
 
   protected static final int DELAY_TIMEOUT = 200;
+
+  @Bind(R.id.fab_add)
+  protected FloatingActionButton vFabAdd;
 
   @Bind(R.id.drawer_layout)
   DrawerLayout vDrawerLayout;

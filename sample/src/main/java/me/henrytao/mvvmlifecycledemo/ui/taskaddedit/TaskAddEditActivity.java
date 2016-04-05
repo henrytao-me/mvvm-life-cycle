@@ -14,55 +14,48 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycledemo.ui.info;
+package me.henrytao.mvvmlifecycledemo.ui.taskaddedit;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.henrytao.mdcore.utils.ResourceUtils;
 import me.henrytao.mvvmlifecycledemo.R;
 import me.henrytao.mvvmlifecycledemo.base.BaseActivity;
 
-public class InfoActivity extends BaseActivity {
+/**
+ * Created by henrytao on 4/2/16.
+ */
+public class TaskAddEditActivity extends BaseActivity {
 
   public static Intent newIntent(Context context) {
-    return new Intent(context, InfoActivity.class);
+    Intent intent = new Intent(context, TaskAddEditActivity.class);
+    return intent;
   }
 
   @Bind(R.id.toolbar)
   Toolbar vToolbar;
 
   @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.menu_info, menu);
-    return true;
-  }
-
-  @Override
   public void onInitializeViewModels() {
   }
 
   @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.action_donate:
-        showDonateDialog();
-        return true;
-    }
-    return super.onOptionsItemSelected(item);
+  public void onSetContentView(Bundle savedInstanceState) {
+    setContentView(R.layout.task_add_edit_activity);
   }
 
   @Override
-  public void onSetContentView(Bundle savedInstanceState) {
-    setContentView(R.layout.info_activity);
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
     ButterKnife.bind(this);
 
     setSupportActionBar(vToolbar);
     vToolbar.setNavigationOnClickListener(v -> onBackPressed());
+    ResourceUtils.supportDrawableTint(this, vToolbar, ResourceUtils.Palette.PRIMARY);
   }
 }

@@ -55,11 +55,12 @@
         app:layout_anchorGravity="bottom|right|end">
 
         <me.henrytao.mdcore.widgets.MdFloatingActionButton
-          android:id="@+id/fab_chat"
+          android:id="@+id/fab_add"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_margin="@dimen/mdLayoutSpacing"
           android:src="@drawable/ic_add"
+          android:visibility="gone"
           app:fabSize="normal" />
       </FrameLayout>
     </android.support.design.widget.CoordinatorLayout>

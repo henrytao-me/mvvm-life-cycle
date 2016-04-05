@@ -19,13 +19,22 @@ package me.henrytao.mvvmlifecycledemo.ui.tasks;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import me.henrytao.mvvmlifecycledemo.base.BaseDrawerLayoutActivity;
+import me.henrytao.mvvmlifecycledemo.ui.taskaddedit.TaskAddEditActivity;
 
 public class TasksActivity extends BaseDrawerLayoutActivity {
 
   public static Intent newIntent(Context context) {
     return new Intent(context, TasksActivity.class);
+  }
+
+  @Override
+  public void onCreateView() {
+    super.onCreateView();
+    vFabAdd.setVisibility(View.VISIBLE);
+    vFabAdd.setOnClickListener(v -> startActivity(TaskAddEditActivity.newIntent(this)));
   }
 
   @Override
