@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2015 "Henry Tao <hi@henrytao.me>"
+  ~ Copyright 2016 "Henry Tao <hi@henrytao.me>"
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -17,11 +17,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   xmlns:compat="http://schemas.android.com/apk/res-auto"
-  tools:context=".ui.info.InfoActivity">
+  tools:context=".MainActivity">
 
   <item
-    android:id="@+id/action_donate"
-    android:icon="@drawable/ic_toolbar_donate_circle"
-    android:title="@string/text_donate"
+    android:id="@+id/action_done"
+    android:icon="@drawable/ic_menu_done"
+    android:title="@string/menu_done"
     compat:showAsAction="always" />
 </menu>

@@ -20,7 +20,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import me.henrytao.mdcore.utils.ResourceUtils;
 import me.henrytao.mvvmlifecycledemo.R;
@@ -30,7 +33,7 @@ import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
 /**
  * Created by henrytao on 4/2/16.
  */
-public class TaskAddEditActivity extends BaseActivity {
+public class TaskAddEditActivity extends BaseActivity implements TaskAddEditViewModel.Listener {
 
   public static Intent newIntent(Context context) {
     return new Intent(context, TaskAddEditActivity.class);
@@ -39,9 +42,31 @@ public class TaskAddEditActivity extends BaseActivity {
   private TaskAddEditViewModel mViewModel;
 
   @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_task_add_edit, menu);
+    ResourceUtils.supportDrawableTint(this, menu, ResourceUtils.Palette.PRIMARY);
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
   public void onInitializeViewModels() {
-    mViewModel = new TaskAddEditViewModel();
+    mViewModel = new TaskAddEditViewModel(this);
     addViewModel(mViewModel);
+  }
+
+  @Override
+  public void onMissingTitle() {
+    Snackbar.make(findViewById(R.id.coordinator_layout), R.string.empty_task_message, Snackbar.LENGTH_LONG).show();
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_done:
+        mViewModel.onAddEditClick(item.getActionView());
+        break;
+    }
+    return true;
   }
 
   @Override

@@ -65,7 +65,7 @@
           android:onClick="@{viewModel.onAddNewTasksClick}"
           android:src="@drawable/ic_add"
           app:fabSize="normal"
-          app:layout_anchor="@+id/container"
+          app:layout_anchor="@id/container"
           app:layout_anchorGravity="bottom|right|end" />
       </android.support.design.widget.CoordinatorLayout>
     </LinearLayout>

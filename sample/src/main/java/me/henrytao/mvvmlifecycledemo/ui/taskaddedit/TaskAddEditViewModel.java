@@ -17,10 +17,8 @@
 package me.henrytao.mvvmlifecycledemo.ui.taskaddedit;
 
 import android.databinding.ObservableField;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
-
-import java.util.Locale;
 
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
 
@@ -29,15 +27,30 @@ import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
  */
 public class TaskAddEditViewModel extends BaseViewModel {
 
+  private final Listener mListener;
+
   public ObservableField<String> description = new ObservableField<>();
 
   public ObservableField<String> title = new ObservableField<>();
 
-  public TaskAddEditViewModel() {
-
+  public TaskAddEditViewModel(Listener listener) {
+    mListener = listener;
   }
 
   public void onAddEditClick(View view) {
-    
+    String title = this.title.get();
+    String description = this.description.get();
+    boolean isValid = !TextUtils.isEmpty(title);
+
+    if (!isValid && mListener != null) {
+      mListener.onMissingTitle();
+    } else if (isValid) {
+
+    }
+  }
+
+  public interface Listener {
+
+    void onMissingTitle();
   }
 }
