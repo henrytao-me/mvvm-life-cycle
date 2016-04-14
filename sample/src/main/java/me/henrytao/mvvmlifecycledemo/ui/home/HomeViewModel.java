@@ -14,19 +14,22 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycledemo.ui.base;
+package me.henrytao.mvvmlifecycledemo.ui.home;
 
-import android.content.Context;
-import android.content.Intent;
+import android.view.View;
 
-import me.henrytao.mvvmlifecycle.MVVMViewModelWithEventDispatcher;
+import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
+import me.henrytao.mvvmlifecycledemo.ui.taskaddedit.TaskAddEditActivity;
 
 /**
- * Created by henrytao on 4/5/16.
+ * Created by henrytao on 4/14/16.
  */
-public abstract class BaseViewModel extends MVVMViewModelWithEventDispatcher {
+public class HomeViewModel extends BaseViewModel {
 
-  protected void startActivity(Context context, Intent intent) {
-    context.startActivity(intent);
+  public HomeViewModel() {
+  }
+
+  public void onAddNewTasksClick(View view) {
+    startActivity(view.getContext(), TaskAddEditActivity.newIntent(view.getContext()));
   }
 }

@@ -28,6 +28,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import me.henrytao.mvvmlifecycledemo.R;
+import me.henrytao.mvvmlifecycledemo.databinding.HomeActivityBinding;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
 import me.henrytao.mvvmlifecycledemo.ui.tasks.TasksFragment;
 
@@ -42,11 +43,15 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     return new Intent(context, HomeActivity.class);
   }
 
+  private HomeActivityBinding mBinding;
+
   private Handler mHandler;
 
   private Runnable mRunner;
 
   private int mSelectedMenuItemId;
+
+  private HomeViewModel mViewModel;
 
   private DrawerLayout vDrawerLayout;
 
@@ -59,6 +64,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
   @Override
   public void onInitializeViewModels() {
+    mViewModel = new HomeViewModel();
+    addViewModel(mViewModel);
   }
 
   @Override
@@ -78,7 +85,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
   @Override
   public void onSetContentView(Bundle savedInstanceState) {
-    DataBindingUtil.setContentView(this, R.layout.home_activity);
+    mBinding = DataBindingUtil.setContentView(this, R.layout.home_activity);
+    mBinding.setViewModel(mViewModel);
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
@@ -105,9 +113,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
   private void onNavigationItemSelected(int id) {
     switch (id) {
-      case R.id.menu_item_list_navigation:
-        // Do nothing, we're already on that screen
-        break;
       case R.id.menu_item_statistics_navigation:
         //Intent intent =
         //    new Intent(TasksActivity.this, StatisticsActivity.class);

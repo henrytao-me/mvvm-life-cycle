@@ -18,6 +18,13 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools">
 
+  <data>
+
+    <variable
+      name="viewModel"
+      type="me.henrytao.mvvmlifecycledemo.ui.home.HomeViewModel" />
+  </data>
+
   <android.support.v4.widget.DrawerLayout
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
@@ -55,6 +62,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_margin="@dimen/mdLayoutSpacing"
+          android:onClick="@{viewModel.onAddNewTasksClick}"
           android:src="@drawable/ic_add"
           app:fabSize="normal"
           app:layout_anchor="@+id/container"

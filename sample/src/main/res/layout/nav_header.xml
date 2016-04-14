@@ -19,12 +19,12 @@
   android:layout_height="192dp"
   android:orientation="vertical"
   android:background="?attr/mdColor_primaryPalette"
-  android:gravity="bottom"
+  android:gravity="center"
   android:padding="@dimen/mdLayoutSpacing">
 
   <ImageView
-    android:layout_width="100dp"
-    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_height="100dp"
     android:layout_gravity="center"
     android:src="@drawable/logo" />
 
