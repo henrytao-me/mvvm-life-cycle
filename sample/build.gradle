@@ -49,13 +49,5 @@ dependencies {
   compile(rootProject.ext.dependencies["me.henrytao:mdcore"]) {
     exclude group: "com.android.support"
   }
-  compile(rootProject.ext.dependencies["me.henrytao:recyclerview"]) {
-    exclude group: "com.android.support"
-  }
-  compile(rootProject.ext.dependencies["me.henrytao:smooth-app-bar-layout"]) {
-    exclude group: "com.android.support"
-  }
   compile project(':mvvm-life-cycle')
-
-  compile rootProject.ext.dependencies["com.jakewharton:butterknife"]
 }

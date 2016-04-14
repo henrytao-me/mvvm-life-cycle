@@ -18,7 +18,7 @@
   android:layout_width="match_parent"
   android:layout_height="192dp"
   android:orientation="vertical"
-  android:background="?attr/mdColor_primaryPalette_dark"
+  android:background="?attr/mdColor_primaryPalette"
   android:gravity="bottom"
   android:padding="@dimen/mdLayoutSpacing">
 

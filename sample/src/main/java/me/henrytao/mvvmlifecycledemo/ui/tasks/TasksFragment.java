@@ -16,6 +16,7 @@
 
 package me.henrytao.mvvmlifecycledemo.ui.tasks;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -26,12 +27,16 @@ import android.view.ViewGroup;
 
 import me.henrytao.mdcore.utils.ResourceUtils;
 import me.henrytao.mvvmlifecycledemo.R;
-import me.henrytao.mvvmlifecycledemo.base.BaseFragment;
+import me.henrytao.mvvmlifecycledemo.ui.base.BaseFragment;
 
 /**
  * Created by henrytao on 4/2/16.
  */
 public class TasksFragment extends BaseFragment {
+
+  public static TasksFragment newInstance() {
+    return new TasksFragment();
+  }
 
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -41,8 +46,8 @@ public class TasksFragment extends BaseFragment {
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.tasks_fragment, container, false);
+  public View onInflateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    return DataBindingUtil.inflate(inflater, R.layout.tasks_fragment, container, false).getRoot();
   }
 
   @Override

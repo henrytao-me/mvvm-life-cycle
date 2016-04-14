@@ -17,11 +17,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
   <item
-    android:id="@+id/list_navigation_menu_item"
+    android:id="@+id/menu_item_list_navigation"
     android:icon="@drawable/ic_format_list_bulleted"
     android:title="@string/list_title" />
   <item
-    android:id="@+id/statistics_navigation_menu_item"
+    android:id="@+id/menu_item_statistics_navigation"
     android:icon="@drawable/ic_assessment"
     android:title="@string/statistics_title" />
 </menu>

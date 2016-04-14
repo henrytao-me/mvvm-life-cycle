@@ -14,26 +14,28 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycledemo.ui;
+package me.henrytao.mvvmlifecycledemo.ui.taskaddedit;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.databinding.ObservableField;
+import android.util.Log;
+import android.view.View;
 
-import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
-import me.henrytao.mvvmlifecycledemo.ui.home.HomeActivity;
+import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
 
-public class MainActivity extends BaseActivity {
+/**
+ * Created by henrytao on 4/5/16.
+ */
+public class TaskAddEditViewModel extends BaseViewModel {
 
-  @Override
-  public void onInitializeViewModels() {
+  public ObservableField<String> description = new ObservableField<>();
+
+  public ObservableField<String> title = new ObservableField<>();
+
+  public TaskAddEditViewModel() {
+
   }
 
-  @Override
-  public void onSetContentView(Bundle savedInstanceState) {
-    Intent intent = HomeActivity.newIntent(this);
-    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-    startActivity(intent);
-    overridePendingTransition(0, 0);
-    finish();
+  public void onCreateClickListener(View view) {
+    Log.d("debug", "test");
   }
 }

@@ -18,14 +18,11 @@ package me.henrytao.mvvmlifecycledemo.ui.taskaddedit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import me.henrytao.mdcore.utils.ResourceUtils;
 import me.henrytao.mvvmlifecycledemo.R;
-import me.henrytao.mvvmlifecycledemo.base.BaseActivity;
+import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
 
 /**
  * Created by henrytao on 4/2/16.
@@ -37,25 +34,25 @@ public class TaskAddEditActivity extends BaseActivity {
     return intent;
   }
 
-  @Bind(R.id.toolbar)
-  Toolbar vToolbar;
+  private TaskAddEditViewModel mViewModel;
 
   @Override
   public void onInitializeViewModels() {
+    mViewModel = new TaskAddEditViewModel();
+    addViewModel(mViewModel);
   }
 
   @Override
   public void onSetContentView(Bundle savedInstanceState) {
-    setContentView(R.layout.task_add_edit_activity);
+    DataBindingUtil.setContentView(this, R.layout.task_add_edit_activity);
   }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    ButterKnife.bind(this);
 
-    setSupportActionBar(vToolbar);
-    vToolbar.setNavigationOnClickListener(v -> onBackPressed());
-    ResourceUtils.supportDrawableTint(this, vToolbar, ResourceUtils.Palette.PRIMARY);
+    //setSupportActionBar(vToolbar);
+    //vToolbar.setNavigationOnClickListener(v -> onBackPressed());
+    //ResourceUtils.supportDrawableTint(this, vToolbar, ResourceUtils.Palette.PRIMARY);
   }
 }

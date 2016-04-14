@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycledemo.base;
+package me.henrytao.mvvmlifecycledemo.ui.base;
 
-import me.henrytao.mvvmlifecycle.MVVMFragment;
+import me.henrytao.mvvmlifecycle.MVVMActivity;
 
 /**
- * Created by henrytao on 4/2/16.
+ * Created by henrytao on 10/11/15.
  */
-public abstract class BaseFragment extends MVVMFragment {
+public abstract class BaseActivity extends MVVMActivity {
 
 }

@@ -61,10 +61,6 @@ ext {
       "com.android.support:recyclerview-v7": "com.android.support:recyclerview-v7:23.2.1",
 
       "me.henrytao:mdcore"                 : "me.henrytao:mdcore:23.2.1.2",
-      "me.henrytao:recyclerview"           : "me.henrytao:recyclerview:23.2.1",
-      "me.henrytao:smooth-app-bar-layout"  : "me.henrytao:smooth-app-bar-layout:23.2.1.1",
-
-      "com.jakewharton:butterknife"        : "com.jakewharton:butterknife:7.0.1",
 
       "io.reactivex:rxjava"                : "io.reactivex:rxjava:1.0.15",
       "io.reactivex:rxandroid"             : "io.reactivex:rxandroid:1.0.1"
