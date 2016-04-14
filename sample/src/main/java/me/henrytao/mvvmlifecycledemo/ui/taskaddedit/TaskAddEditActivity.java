@@ -20,8 +20,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
+import me.henrytao.mdcore.utils.ResourceUtils;
 import me.henrytao.mvvmlifecycledemo.R;
+import me.henrytao.mvvmlifecycledemo.databinding.TaskAddEditActivityBinding;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
 
 /**
@@ -30,8 +33,7 @@ import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
 public class TaskAddEditActivity extends BaseActivity {
 
   public static Intent newIntent(Context context) {
-    Intent intent = new Intent(context, TaskAddEditActivity.class);
-    return intent;
+    return new Intent(context, TaskAddEditActivity.class);
   }
 
   private TaskAddEditViewModel mViewModel;
@@ -44,15 +46,13 @@ public class TaskAddEditActivity extends BaseActivity {
 
   @Override
   public void onSetContentView(Bundle savedInstanceState) {
-    DataBindingUtil.setContentView(this, R.layout.task_add_edit_activity);
-  }
+    TaskAddEditActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.task_add_edit_activity);
+    binding.setViewModel(mViewModel);
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    //setSupportActionBar(vToolbar);
-    //vToolbar.setNavigationOnClickListener(v -> onBackPressed());
-    //ResourceUtils.supportDrawableTint(this, vToolbar, ResourceUtils.Palette.PRIMARY);
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    toolbar.setNavigationOnClickListener(v -> onBackPressed());
+    ResourceUtils.supportDrawableTint(this, toolbar, ResourceUtils.Palette.PRIMARY);
   }
 }

@@ -46,6 +46,12 @@ public class TasksFragment extends BaseFragment {
   }
 
   @Override
+  public void onCreateView() {
+    super.onCreateView();
+    setHasOptionsMenu(true);
+  }
+
+  @Override
   public View onInflateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     return DataBindingUtil.inflate(inflater, R.layout.tasks_fragment, container, false).getRoot();
   }
@@ -53,11 +59,5 @@ public class TasksFragment extends BaseFragment {
   @Override
   public void onInitializeViewModels() {
 
-  }
-
-  @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    setHasOptionsMenu(true);
   }
 }

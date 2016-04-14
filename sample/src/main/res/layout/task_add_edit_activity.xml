@@ -23,8 +23,7 @@
       type="me.henrytao.mvvmlifecycledemo.ui.taskaddedit.TaskAddEditViewModel" />
   </data>
 
-  <FrameLayout
-    android:id="@+id/container"
+  <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -36,20 +35,20 @@
 
       <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        app:navigationIcon="@drawable/ic_toolbar_arrow_back"
         style="@style/AppStyle.Toolbar" />
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginTop="?attr/actionBarSize"
+      android:layout_below="@id/smooth_app_bar_layout"
+      android:layout_marginBottom="64dp"
       android:orientation="vertical"
       android:padding="@dimen/mdLayoutSpacing_sm">
 
       <EditText
         android:hint="Title"
-        android:text="@{viewModel.title}"
+        android:text="@={viewModel.title}"
         style="@style/MdTextField.EditText" />
 
       <EditText
@@ -57,18 +56,18 @@
         android:gravity="top|left"
         android:hint="Enter your TO-DO here"
         android:singleLine="false"
-        android:text="@{viewModel.description}"
+        android:text="@={viewModel.description}"
         style="@style/MdTextField.EditText" />
-
-      <me.henrytao.mdcore.widgets.MdFloatingActionButton
-        android:id="@+id/fab_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
-        android:layout_margin="@dimen/mdLayoutSpacing"
-        android:onClick="@{viewModel.onCreateClickListener}"
-        android:src="@drawable/ic_check"
-        app:fabSize="normal" />
     </LinearLayout>
-  </FrameLayout>
+
+    <me.henrytao.mdcore.widgets.MdFloatingActionButton
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentRight="true"
+      android:layout_margin="@dimen/mdLayoutSpacing"
+      android:onClick="@{viewModel.onAddEditClick}"
+      android:src="@drawable/ic_check"
+      app:fabSize="normal" />
+  </RelativeLayout>
 </layout>

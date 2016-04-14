@@ -43,8 +43,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     return new Intent(context, HomeActivity.class);
   }
 
-  private HomeActivityBinding mBinding;
-
   private Handler mHandler;
 
   private Runnable mRunner;
@@ -85,8 +83,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
   @Override
   public void onSetContentView(Bundle savedInstanceState) {
-    mBinding = DataBindingUtil.setContentView(this, R.layout.home_activity);
-    mBinding.setViewModel(mViewModel);
+    HomeActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.home_activity);
+    binding.setViewModel(mViewModel);
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);

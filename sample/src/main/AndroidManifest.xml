@@ -35,7 +35,7 @@
       android:name=".ui.home.HomeActivity" />
     <activity
       android:label="@string/title_activity_task_add_edit"
-      android:name=".ui.taskaddedit.TaskAddEditActivity" />
+      android:name=".ui.taskaddedit.TaskAddEditActivity"
+      android:windowSoftInputMode="adjustResize" />
   </application>
-
 </manifest>

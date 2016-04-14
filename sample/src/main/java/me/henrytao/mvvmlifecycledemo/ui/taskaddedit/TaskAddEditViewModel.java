@@ -20,6 +20,8 @@ import android.databinding.ObservableField;
 import android.util.Log;
 import android.view.View;
 
+import java.util.Locale;
+
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
 
 /**
@@ -35,7 +37,7 @@ public class TaskAddEditViewModel extends BaseViewModel {
 
   }
 
-  public void onCreateClickListener(View view) {
-    Log.d("debug", "test");
+  public void onAddEditClick(View view) {
+    
   }
 }
