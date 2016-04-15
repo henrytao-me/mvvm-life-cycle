@@ -20,21 +20,29 @@ import android.databinding.ObservableField;
 import android.text.TextUtils;
 import android.view.View;
 
+import javax.inject.Inject;
+
+import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
+import me.henrytao.mvvmlifecycledemo.data.service.TaskService;
+import me.henrytao.mvvmlifecycledemo.di.Injector;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by henrytao on 4/5/16.
  */
 public class TaskAddEditViewModel extends BaseViewModel {
 
-  private final Listener mListener;
-
   public ObservableField<String> description = new ObservableField<>();
 
   public ObservableField<String> title = new ObservableField<>();
 
-  public TaskAddEditViewModel(Listener listener) {
-    mListener = listener;
+  @Inject
+  protected TaskService mTaskService;
+
+  public TaskAddEditViewModel() {
+    Injector.component.inject(this);
   }
 
   public void onAddEditClick(View view) {
@@ -42,15 +50,23 @@ public class TaskAddEditViewModel extends BaseViewModel {
     String description = this.description.get();
     boolean isValid = !TextUtils.isEmpty(title);
 
-    if (!isValid && mListener != null) {
-      mListener.onMissingTitle();
-    } else if (isValid) {
-
+    if (!isValid) {
+      mState.onNext(State.MISSING_TITLE);
+    } else {
+      mState.onNext(State.CREATING_TASK);
+      manageSubscription(mTaskService.create(title, description)
+          .subscribeOn(Schedulers.computation())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(task -> {
+            mState.onNext(State.CREATED_TASK);
+          }, Throwable::printStackTrace), UnsubscribeLifeCycle.STOP);
     }
   }
 
-  public interface Listener {
+  public enum State {
+    MISSING_TITLE,
 
-    void onMissingTitle();
+    CREATING_TASK,
+    CREATED_TASK
   }
 }

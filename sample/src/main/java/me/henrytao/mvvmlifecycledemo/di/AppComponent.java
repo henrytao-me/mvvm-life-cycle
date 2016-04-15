@@ -19,14 +19,17 @@ package me.henrytao.mvvmlifecycledemo.di;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import me.henrytao.mvvmlifecycledemo.ui.taskaddedit.TaskAddEditViewModel;
 
 /**
  * Created by henrytao on 4/14/16.
  */
 @Singleton
 @Component(modules = {
-    AppModule.class
+    AppModule.class,
+    ServiceModule.class
 })
 public interface AppComponent {
 
+  void inject(TaskAddEditViewModel viewModel);
 }

@@ -16,6 +16,8 @@
 
 package me.henrytao.mvvmlifecycledemo.data.adapter.local;
 
+import java.util.HashMap;
+
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
 
 /**
@@ -23,8 +25,12 @@ import me.henrytao.mvvmlifecycledemo.data.model.Task;
  */
 public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.LocalAdapter {
 
+  private static final HashMap<String, Task> sTasks = new HashMap<>();
+
   @Override
   public Task createTask(String title, String description) {
-    return null;
+    Task task = new Task(title, description);
+    sTasks.put(task.getId(), task);
+    return task;
   }
 }

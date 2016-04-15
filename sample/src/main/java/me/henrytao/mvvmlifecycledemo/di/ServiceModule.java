@@ -14,27 +14,26 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycledemo.ui.base;
+package me.henrytao.mvvmlifecycledemo.di;
 
-import android.content.Context;
-import android.content.Intent;
+import javax.inject.Singleton;
 
-import me.henrytao.mvvmlifecycle.MVVMViewModelWithEventDispatcher;
-import rx.Observable;
-import rx.subjects.BehaviorSubject;
+import dagger.Module;
+import dagger.Provides;
+import me.henrytao.mvvmlifecycledemo.data.adapter.LocalAdapter;
+import me.henrytao.mvvmlifecycledemo.data.service.TaskService;
 
 /**
- * Created by henrytao on 4/5/16.
+ * Created by henrytao on 4/15/16.
  */
-public abstract class BaseViewModel<T> extends MVVMViewModelWithEventDispatcher {
+@Module(includes = {
+    AdapterModule.class
+})
+public class ServiceModule {
 
-  protected BehaviorSubject<T> mState = BehaviorSubject.create();
-
-  public Observable<T> getState() {
-    return mState;
-  }
-
-  protected void startActivity(Context context, Intent intent) {
-    context.startActivity(intent);
+  @Singleton
+  @Provides
+  TaskService provideTaskService(LocalAdapter localAdapter) {
+    return new TaskService(localAdapter);
   }
 }

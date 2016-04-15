@@ -26,6 +26,7 @@ public class AppBuilder {
   public static AppComponent build(Application application) {
     return DaggerAppComponent.builder()
         .appModule(new AppModule(application))
+        .serviceModule(new ServiceModule())
         .build();
   }
 }

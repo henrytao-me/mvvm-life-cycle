@@ -26,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import me.henrytao.mdcore.utils.ResourceUtils;
+import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.R;
 import me.henrytao.mvvmlifecycledemo.databinding.TaskAddEditActivityBinding;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
@@ -33,7 +34,7 @@ import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
 /**
  * Created by henrytao on 4/2/16.
  */
-public class TaskAddEditActivity extends BaseActivity implements TaskAddEditViewModel.Listener {
+public class TaskAddEditActivity extends BaseActivity {
 
   public static Intent newIntent(Context context) {
     return new Intent(context, TaskAddEditActivity.class);
@@ -50,13 +51,8 @@ public class TaskAddEditActivity extends BaseActivity implements TaskAddEditView
 
   @Override
   public void onInitializeViewModels() {
-    mViewModel = new TaskAddEditViewModel(this);
+    mViewModel = new TaskAddEditViewModel();
     addViewModel(mViewModel);
-  }
-
-  @Override
-  public void onMissingTitle() {
-    Snackbar.make(findViewById(R.id.coordinator_layout), R.string.empty_task_message, Snackbar.LENGTH_LONG).show();
   }
 
   @Override
@@ -79,5 +75,19 @@ public class TaskAddEditActivity extends BaseActivity implements TaskAddEditView
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     toolbar.setNavigationOnClickListener(v -> onBackPressed());
     ResourceUtils.supportDrawableTint(this, toolbar, ResourceUtils.Palette.PRIMARY);
+
+    manageSubscription(mViewModel.getState().subscribe(state -> {
+      switch ((TaskAddEditViewModel.State) state) {
+        case MISSING_TITLE:
+          Snackbar.make(findViewById(R.id.coordinator_layout), R.string.empty_task_message, Snackbar.LENGTH_SHORT).show();
+          break;
+        case CREATING_TASK:
+          // TODO: should handle progressbar
+          break;
+        case CREATED_TASK:
+          finish();
+          break;
+      }
+    }), UnsubscribeLifeCycle.DESTROY_VIEW);
   }
 }

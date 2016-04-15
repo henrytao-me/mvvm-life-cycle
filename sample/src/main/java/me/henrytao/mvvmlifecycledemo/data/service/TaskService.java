@@ -16,10 +16,27 @@
 
 package me.henrytao.mvvmlifecycledemo.data.service;
 
+import me.henrytao.mvvmlifecycle.rx.SubscriptionUtils;
+import me.henrytao.mvvmlifecycledemo.data.adapter.LocalAdapter;
+import me.henrytao.mvvmlifecycledemo.data.model.Task;
+import rx.Observable;
+
 /**
  * Created by henrytao on 4/14/16.
  */
 public class TaskService {
 
+  private LocalAdapter mLocalAdapter;
 
+  public TaskService(LocalAdapter localAdapter) {
+    mLocalAdapter = localAdapter;
+  }
+
+  public Observable<Task> create(String title, String description) {
+    return Observable.create(subscriber -> {
+      Task task = mLocalAdapter.createTask(title, description);
+      SubscriptionUtils.onNext(subscriber, task);
+      SubscriptionUtils.onComplete(subscriber);
+    });
+  }
 }
