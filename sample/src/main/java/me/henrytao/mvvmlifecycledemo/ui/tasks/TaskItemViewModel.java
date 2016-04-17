@@ -59,6 +59,10 @@ public class TaskItemViewModel extends BaseViewModel {
     title.set(task.getTitle());
     description.set(task.getDescription());
     completed.set(task.isCompleted());
+
+    // test
+    completed.set(true);
+    //completed.set(false);
   }
 
   public enum Event {

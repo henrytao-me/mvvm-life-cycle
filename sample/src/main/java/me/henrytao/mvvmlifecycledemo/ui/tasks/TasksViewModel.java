@@ -78,11 +78,11 @@ public class TasksViewModel extends BaseViewModel<TasksViewModel.State> {
   }
 
   private void onTaskItemActive(Task task) {
-    manageSubscription(mTaskService.active(task.getId())
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(aVoid -> {
-        }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+    //manageSubscription(mTaskService.active(task.getId())
+    //    .subscribeOn(Schedulers.computation())
+    //    .observeOn(AndroidSchedulers.mainThread())
+    //    .subscribe(aVoid -> {
+    //    }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
   }
 
   private void onTaskItemClick(Task task) {
@@ -90,11 +90,11 @@ public class TasksViewModel extends BaseViewModel<TasksViewModel.State> {
   }
 
   private void onTaskItemComplete(Task task) {
-    manageSubscription(mTaskService.complete(task.getId())
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(aVoid -> {
-        }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+    //manageSubscription(mTaskService.complete(task.getId())
+    //    .subscribeOn(Schedulers.computation())
+    //    .observeOn(AndroidSchedulers.mainThread())
+    //    .subscribe(aVoid -> {
+    //    }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
   }
 
   public enum State {
