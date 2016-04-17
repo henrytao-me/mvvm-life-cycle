@@ -23,6 +23,8 @@ import java.util.UUID;
  */
 public class Task {
 
+  private boolean mCompleted;
+
   private String mDescription;
 
   private String mId;
@@ -40,6 +42,14 @@ public class Task {
 
   }
 
+  public void active() {
+    mCompleted = false;
+  }
+
+  public void complete() {
+    mCompleted = true;
+  }
+
   public String getDescription() {
     return mDescription;
   }
@@ -50,5 +60,13 @@ public class Task {
 
   public String getTitle() {
     return mTitle;
+  }
+
+  public boolean isActive() {
+    return !isCompleted();
+  }
+
+  public boolean isCompleted() {
+    return mCompleted;
   }
 }

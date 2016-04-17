@@ -44,14 +44,12 @@ public class TasksViewModel extends BaseViewModel<TasksViewModel.State> {
   public TasksViewModel() {
     Injector.component.inject(this);
 
-    manageSubscription(mTaskService.getAll()
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(tasks -> {
-          mTasks.clear();
-          mTasks.addAll(tasks);
-          mState.onNext(State.ADDED_TASK);
-        }), UnsubscribeLifeCycle.DESTROY);
+    manageSubscription(subscribe(TaskItemViewModel.Event.ON_TASK_ITEM_CLICK, new Event1<>(this::onTaskItemClick)),
+        UnsubscribeLifeCycle.DESTROY);
+    manageSubscription(subscribe(TaskItemViewModel.Event.ON_TASK_ITEM_ACTIVE, new Event1<>(this::onTaskItemActive)),
+        UnsubscribeLifeCycle.DESTROY);
+    manageSubscription(subscribe(TaskItemViewModel.Event.ON_TASK_ITEM_COMPLETE, new Event1<>(this::onTaskItemComplete)),
+        UnsubscribeLifeCycle.DESTROY);
 
     manageSubscription(mTaskService.observeTaskCreate()
         .subscribeOn(Schedulers.computation())
@@ -61,16 +59,42 @@ public class TasksViewModel extends BaseViewModel<TasksViewModel.State> {
           mState.onNext(State.ADDED_TASK);
         }), UnsubscribeLifeCycle.DESTROY);
 
-    manageSubscription(subscribe(TaskItemViewModel.Event.ON_TASK_ITEM_CLICK, new Event1<>(this::onTaskItemClick)),
-        UnsubscribeLifeCycle.DESTROY);
+    reloadData();
   }
 
   public List<Task> getTasks() {
     return mTasks;
   }
 
+  public void reloadData() {
+    manageSubscription(mTaskService.getAll()
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(tasks -> {
+          mTasks.clear();
+          mTasks.addAll(tasks);
+          mState.onNext(State.ADDED_TASK);
+        }), UnsubscribeLifeCycle.DESTROY);
+  }
+
+  private void onTaskItemActive(Task task) {
+    manageSubscription(mTaskService.active(task.getId())
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(aVoid -> {
+        }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+  }
+
   private void onTaskItemClick(Task task) {
     Ln.d("custom | %s | %s", task.getTitle(), task.getDescription());
+  }
+
+  private void onTaskItemComplete(Task task) {
+    manageSubscription(mTaskService.complete(task.getId())
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(aVoid -> {
+        }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
   }
 
   public enum State {

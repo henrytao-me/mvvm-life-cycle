@@ -26,6 +26,10 @@ import rx.Observable;
  */
 public interface LocalAdapter {
 
+  void activeTask(String taskId);
+
+  void completeTask(String taskId);
+
   Task createTask(String title, String description);
 
   List<Task> getTasks();

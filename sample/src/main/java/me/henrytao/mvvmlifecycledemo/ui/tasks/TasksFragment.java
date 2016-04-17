@@ -19,6 +19,7 @@ package me.henrytao.mvvmlifecycledemo.ui.tasks;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,6 +50,8 @@ public class TasksFragment extends BaseFragment {
 
   private TasksViewModel mViewModel;
 
+  private SwipeRefreshLayout vSwipeRefreshLayout;
+
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     super.onCreateOptionsMenu(menu, inflater);
@@ -71,10 +74,14 @@ public class TasksFragment extends BaseFragment {
     recyclerView.setAdapter(mAdapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+    vSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh_layout);
+    vSwipeRefreshLayout.setOnRefreshListener(() -> mViewModel.reloadData());
+
     manageSubscription(mViewModel.getState().subscribe(state -> {
       switch (state) {
         case ADDED_TASK:
           mAdapter.notifyDataSetChanged();
+          vSwipeRefreshLayout.setRefreshing(false);
           break;
       }
     }), UnsubscribeLifeCycle.DESTROY_VIEW);

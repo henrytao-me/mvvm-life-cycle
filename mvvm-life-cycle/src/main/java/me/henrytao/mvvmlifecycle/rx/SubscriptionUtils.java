@@ -40,4 +40,17 @@ public class SubscriptionUtils {
       subscriber.onNext(data);
     }
   }
+
+  public static <T> void onNext(Subscriber<T> subscriber) {
+    onNext(subscriber, null);
+  }
+
+  public static <T> void onNextAndComplete(Subscriber<T> subscriber, T data) {
+    onNext(subscriber, data);
+    onComplete(subscriber);
+  }
+
+  public static <T> void onNextAndComplete(Subscriber<T> subscriber) {
+    onNextAndComplete(subscriber, null);
+  }
 }

@@ -24,17 +24,31 @@
   </data>
 
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:background="?attr/selectableItemBackground"
     android:gravity="left|center"
-    android:minHeight="48dp"
-    android:onClick="@{viewModel.onItemClick}">
+    android:minHeight="@dimen/mdListItemHeight_sm"
+    android:onClick="@{viewModel.onItemClick}"
+    android:paddingBottom="@dimen/mdLayoutSpacing_sm"
+    android:paddingLeft="@dimen/mdLayoutSpacing"
+    android:paddingRight="@dimen/mdLayoutSpacing"
+    android:paddingTop="@dimen/mdLayoutSpacing_sm">
+
+    <CheckBox
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical"
+      android:checked="@{viewModel.completed}"
+      android:onCheckedChanged="@{viewModel.onItemCheck}" />
 
     <TextView
+      android:paddingLeft="@dimen/mdLayoutSpacing"
       android:text="@{viewModel.title}"
-      style="@style/MdText.Body1.SingleLine" />
+      tools:text="Task item"
+      style="@style/MdText.Subhead2.SingleLine" />
   </LinearLayout>
 </layout>
 

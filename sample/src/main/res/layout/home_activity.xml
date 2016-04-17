@@ -44,7 +44,6 @@
 
         <android.support.v7.widget.Toolbar
           android:id="@+id/toolbar"
-          app:titleMarginStart="@dimen/mdLayoutSpacing"
           style="@style/AppStyle.Toolbar" />
       </android.support.design.widget.AppBarLayout>
 

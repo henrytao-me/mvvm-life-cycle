@@ -16,6 +16,8 @@
 
 package me.henrytao.mvvmlifecycledemo.data.adapter.local;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +42,32 @@ public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.
   }
 
   private final PublishSubject<Task> mTaskCreatedSubject = PublishSubject.create();
+
+  @Override
+  public void activeTask(String taskId) {
+    Task task;
+    int n = sTasks.size();
+    for (int i = 0; i < n; i++) {
+      task = sTasks.get(i);
+      if (TextUtils.equals(task.getId(), taskId)) {
+        task.active();
+        break;
+      }
+    }
+  }
+
+  @Override
+  public void completeTask(String taskId) {
+    Task task;
+    int n = sTasks.size();
+    for (int i = 0; i < n; i++) {
+      task = sTasks.get(i);
+      if (TextUtils.equals(task.getId(), taskId)) {
+        task.complete();
+        break;
+      }
+    }
+  }
 
   @Override
   public Task createTask(String title, String description) {

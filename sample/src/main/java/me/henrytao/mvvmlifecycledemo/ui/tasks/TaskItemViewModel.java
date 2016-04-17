@@ -16,6 +16,7 @@
 
 package me.henrytao.mvvmlifecycledemo.ui.tasks;
 
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.view.View;
 
@@ -27,6 +28,8 @@ import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
  */
 public class TaskItemViewModel extends BaseViewModel {
 
+  public ObservableBoolean completed = new ObservableBoolean();
+
   public ObservableField<String> description = new ObservableField<>();
 
   public ObservableField<String> title = new ObservableField<>();
@@ -35,6 +38,16 @@ public class TaskItemViewModel extends BaseViewModel {
 
   public TaskItemViewModel() {
     register(this, Event.ON_TASK_ITEM_CLICK);
+    register(this, Event.ON_TASK_ITEM_ACTIVE);
+    register(this, Event.ON_TASK_ITEM_COMPLETE);
+  }
+
+  public void onItemCheck(View view, boolean isChecked) {
+    if (isChecked) {
+      dispatch(Event.ON_TASK_ITEM_COMPLETE, mTask);
+    } else {
+      dispatch(Event.ON_TASK_ITEM_ACTIVE, mTask);
+    }
   }
 
   public void onItemClick(View view) {
@@ -45,9 +58,13 @@ public class TaskItemViewModel extends BaseViewModel {
     mTask = task;
     title.set(task.getTitle());
     description.set(task.getDescription());
+    completed.set(task.isCompleted());
   }
 
   public enum Event {
-    ON_TASK_ITEM_CLICK
+    ON_TASK_ITEM_CLICK,
+
+    ON_TASK_ITEM_ACTIVE,
+    ON_TASK_ITEM_COMPLETE
   }
 }

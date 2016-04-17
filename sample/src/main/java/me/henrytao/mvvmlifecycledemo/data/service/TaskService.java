@@ -34,19 +34,31 @@ public class TaskService {
     mLocalAdapter = localAdapter;
   }
 
+  public Observable<Void> complete(String taskId) {
+    return Observable.create(subscriber -> {
+      mLocalAdapter.completeTask(taskId);
+      SubscriptionUtils.onNextAndComplete(subscriber);
+    });
+  }
+
+  public Observable<Void> active(String taskId) {
+    return Observable.create(subscriber -> {
+      mLocalAdapter.activeTask(taskId);
+      SubscriptionUtils.onNextAndComplete(subscriber);
+    });
+  }
+
   public Observable<Task> create(String title, String description) {
     return Observable.create(subscriber -> {
       Task task = mLocalAdapter.createTask(title, description);
-      SubscriptionUtils.onNext(subscriber, task);
-      SubscriptionUtils.onComplete(subscriber);
+      SubscriptionUtils.onNextAndComplete(subscriber, task);
     });
   }
 
   public Observable<List<Task>> getAll() {
     return Observable.create(subscriber -> {
       List<Task> tasks = mLocalAdapter.getTasks();
-      SubscriptionUtils.onNext(subscriber, tasks);
-      SubscriptionUtils.onComplete(subscriber);
+      SubscriptionUtils.onNextAndComplete(subscriber, tasks);
     });
   }
 
