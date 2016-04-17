@@ -50,25 +50,8 @@ public class TaskAddEditActivity extends BaseActivity {
   }
 
   @Override
-  public void onInitializeViewModels() {
-    mViewModel = new TaskAddEditViewModel();
-    addViewModel(mViewModel);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.action_done:
-        mViewModel.onAddEditClick(item.getActionView());
-        break;
-    }
-    return true;
-  }
-
-  @Override
-  public void onSetContentView(Bundle savedInstanceState) {
-    TaskAddEditActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.task_add_edit_activity);
-    binding.setViewModel(mViewModel);
+  public void onCreateView() {
+    super.onCreateView();
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
@@ -89,5 +72,27 @@ public class TaskAddEditActivity extends BaseActivity {
           break;
       }
     }), UnsubscribeLifeCycle.DESTROY_VIEW);
+  }
+
+  @Override
+  public void onInitializeViewModels() {
+    mViewModel = new TaskAddEditViewModel();
+    addViewModel(mViewModel);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_done:
+        mViewModel.onAddEditClick(item.getActionView());
+        break;
+    }
+    return true;
+  }
+
+  @Override
+  public void onSetContentView(Bundle savedInstanceState) {
+    TaskAddEditActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.task_add_edit_activity);
+    binding.setViewModel(mViewModel);
   }
 }

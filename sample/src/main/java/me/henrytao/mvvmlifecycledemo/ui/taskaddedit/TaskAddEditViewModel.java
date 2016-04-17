@@ -59,7 +59,7 @@ public class TaskAddEditViewModel extends BaseViewModel {
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(task -> {
             mState.onNext(State.CREATED_TASK);
-          }, Throwable::printStackTrace), UnsubscribeLifeCycle.STOP);
+          }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
   }
 

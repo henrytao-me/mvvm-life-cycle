@@ -13,10 +13,28 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <layout>
 
-  <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/list"
+  <data>
+
+    <variable
+      name="viewModel"
+      type="me.henrytao.mvvmlifecycledemo.ui.tasks.TaskItemViewModel" />
+  </data>
+
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="left|center"
+    android:minHeight="48dp"
+    android:onClick="@{viewModel.onItemClick}">
+
+    <TextView
+      android:text="@{viewModel.title}"
+      style="@style/MdText.Body1.SingleLine" />
+  </LinearLayout>
 </layout>
+

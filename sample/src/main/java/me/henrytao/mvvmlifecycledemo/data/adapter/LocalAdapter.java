@@ -16,7 +16,10 @@
 
 package me.henrytao.mvvmlifecycledemo.data.adapter;
 
+import java.util.List;
+
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
+import rx.Observable;
 
 /**
  * Created by henrytao on 4/14/16.
@@ -24,4 +27,8 @@ import me.henrytao.mvvmlifecycledemo.data.model.Task;
 public interface LocalAdapter {
 
   Task createTask(String title, String description);
+
+  List<Task> getTasks();
+
+  Observable<Task> observeTaskCreate();
 }

@@ -18,6 +18,7 @@ package me.henrytao.mvvmlifecycledemo;
 
 import android.app.Application;
 
+import me.henrytao.mvvmlifecycle.log.Ln;
 import me.henrytao.mvvmlifecycledemo.di.Injector;
 
 /**
@@ -36,6 +37,7 @@ public class App extends Application {
     super.onCreate();
     sApp = this;
 
+    Ln.DEBUG = true;
     Injector.initialize(this);
   }
 }

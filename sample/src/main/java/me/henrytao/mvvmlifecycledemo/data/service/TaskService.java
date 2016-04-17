@@ -16,6 +16,8 @@
 
 package me.henrytao.mvvmlifecycledemo.data.service;
 
+import java.util.List;
+
 import me.henrytao.mvvmlifecycle.rx.SubscriptionUtils;
 import me.henrytao.mvvmlifecycledemo.data.adapter.LocalAdapter;
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
@@ -38,5 +40,17 @@ public class TaskService {
       SubscriptionUtils.onNext(subscriber, task);
       SubscriptionUtils.onComplete(subscriber);
     });
+  }
+
+  public Observable<List<Task>> getAll() {
+    return Observable.create(subscriber -> {
+      List<Task> tasks = mLocalAdapter.getTasks();
+      SubscriptionUtils.onNext(subscriber, tasks);
+      SubscriptionUtils.onComplete(subscriber);
+    });
+  }
+
+  public Observable<Task> observeTaskCreate() {
+    return mLocalAdapter.observeTaskCreate();
   }
 }

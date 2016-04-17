@@ -16,21 +16,46 @@
 
 package me.henrytao.mvvmlifecycledemo.data.adapter.local;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 /**
  * Created by henrytao on 4/14/16.
  */
 public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.LocalAdapter {
 
-  private static final HashMap<String, Task> sTasks = new HashMap<>();
+  private static final List<Task> sTasks = new ArrayList<>();
+
+  static {
+    Task task;
+    for (int i = 0; i < 5; i++) {
+      task = new Task(String.format(Locale.US, "task %d", i + 1), String.format(Locale.US, "description %d", i + 1));
+      sTasks.add(task);
+    }
+  }
+
+  private final PublishSubject<Task> mTaskCreatedSubject = PublishSubject.create();
 
   @Override
   public Task createTask(String title, String description) {
     Task task = new Task(title, description);
-    sTasks.put(task.getId(), task);
+    sTasks.add(task);
+    mTaskCreatedSubject.onNext(task);
     return task;
+  }
+
+  @Override
+  public List<Task> getTasks() {
+    return new ArrayList<>(sTasks);
+  }
+
+  @Override
+  public Observable<Task> observeTaskCreate() {
+    return mTaskCreatedSubject;
   }
 }
