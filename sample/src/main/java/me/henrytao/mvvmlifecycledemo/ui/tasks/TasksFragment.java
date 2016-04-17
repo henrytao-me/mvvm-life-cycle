@@ -19,6 +19,7 @@ package me.henrytao.mvvmlifecycledemo.ui.tasks;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -82,6 +83,12 @@ public class TasksFragment extends BaseFragment {
         case ADDED_TASK:
           mAdapter.notifyDataSetChanged();
           vSwipeRefreshLayout.setRefreshing(false);
+          break;
+        case ACTIVE_TASK:
+          Snackbar.make(getView().findViewById(R.id.swipe_refresh_layout), R.string.task_marked_active, Snackbar.LENGTH_SHORT).show();
+          break;
+        case COMPLETE_TASK:
+          Snackbar.make(getView().findViewById(R.id.swipe_refresh_layout), R.string.task_marked_complete, Snackbar.LENGTH_SHORT).show();
           break;
       }
     }), UnsubscribeLifeCycle.DESTROY_VIEW);
