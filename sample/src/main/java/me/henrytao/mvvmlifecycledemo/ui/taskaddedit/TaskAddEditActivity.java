@@ -60,15 +60,15 @@ public class TaskAddEditActivity extends BaseActivity {
     ResourceUtils.supportDrawableTint(this, toolbar, ResourceUtils.Palette.PRIMARY);
 
     manageSubscription(mViewModel.getState().subscribe(state -> {
-      switch ((TaskAddEditViewModel.State) state) {
-        case MISSING_TITLE:
-          Snackbar.make(findViewById(R.id.coordinator_layout), R.string.empty_task_message, Snackbar.LENGTH_SHORT).show();
+      switch (state.getName()) {
+        case TaskAddEditViewModel.STATE_CREATED_TASK:
+          finish();
           break;
-        case CREATING_TASK:
+        case TaskAddEditViewModel.STATE_CREATING_TASK:
           // TODO: should handle progressbar
           break;
-        case CREATED_TASK:
-          finish();
+        case TaskAddEditViewModel.STATE_MISSING_TITLE:
+          Snackbar.make(findViewById(R.id.coordinator_layout), R.string.empty_task_message, Snackbar.LENGTH_SHORT).show();
           break;
       }
     }), UnsubscribeLifeCycle.DESTROY_VIEW);
@@ -84,7 +84,7 @@ public class TaskAddEditActivity extends BaseActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_done:
-        mViewModel.onAddEditClick(item.getActionView());
+        mViewModel.onAddEditClick();
         break;
     }
     return true;

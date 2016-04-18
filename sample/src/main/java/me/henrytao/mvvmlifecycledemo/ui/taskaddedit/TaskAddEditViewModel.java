@@ -18,10 +18,10 @@ package me.henrytao.mvvmlifecycledemo.ui.taskaddedit;
 
 import android.databinding.ObservableField;
 import android.text.TextUtils;
-import android.view.View;
 
 import javax.inject.Inject;
 
+import me.henrytao.mvvmlifecycle.State;
 import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.data.service.TaskService;
 import me.henrytao.mvvmlifecycledemo.di.Injector;
@@ -32,7 +32,13 @@ import rx.schedulers.Schedulers;
 /**
  * Created by henrytao on 4/5/16.
  */
-public class TaskAddEditViewModel extends BaseViewModel {
+public class TaskAddEditViewModel extends BaseViewModel<State> {
+
+  public static final String STATE_CREATED_TASK = "STATE_CREATED_TASK";
+
+  public static final String STATE_CREATING_TASK = "STATE_CREATING_TASK";
+
+  public static final String STATE_MISSING_TITLE = "STATE_MISSING_TITLE";
 
   public ObservableField<String> description = new ObservableField<>();
 
@@ -45,28 +51,21 @@ public class TaskAddEditViewModel extends BaseViewModel {
     Injector.component.inject(this);
   }
 
-  public void onAddEditClick(View view) {
+  public void onAddEditClick() {
     String title = this.title.get();
     String description = this.description.get();
     boolean isValid = !TextUtils.isEmpty(title);
 
     if (!isValid) {
-      mState.onNext(State.MISSING_TITLE);
+      setState(State.create(STATE_MISSING_TITLE));
     } else {
-      mState.onNext(State.CREATING_TASK);
+      setState(State.create(STATE_CREATED_TASK));
       manageSubscription(mTaskService.create(title, description)
           .subscribeOn(Schedulers.computation())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(task -> {
-            mState.onNext(State.CREATED_TASK);
+            setState(State.create(STATE_CREATED_TASK));
           }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
-  }
-
-  public enum State {
-    MISSING_TITLE,
-
-    CREATING_TASK,
-    CREATED_TASK
   }
 }

@@ -14,24 +14,16 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycledemo.ui.base;
+package me.henrytao.mvvmlifecycledemo.ui.taskdetail;
 
-import me.henrytao.mvvmlifecycle.MVVMViewModelWithEventDispatcher;
-import rx.Observable;
-import rx.subjects.BehaviorSubject;
+import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
 
 /**
- * Created by henrytao on 4/5/16.
+ * Created by henrytao on 4/17/16.
  */
-public abstract class BaseViewModel<T> extends MVVMViewModelWithEventDispatcher {
+public class TaskDetailViewModel extends BaseViewModel {
 
-  private BehaviorSubject<T> mState = BehaviorSubject.create();
+  public TaskDetailViewModel() {
 
-  public Observable<T> getState() {
-    return mState;
-  }
-
-  public void setState(T state) {
-    mState.onNext(state);
   }
 }

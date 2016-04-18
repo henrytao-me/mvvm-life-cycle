@@ -27,10 +27,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.R;
 import me.henrytao.mvvmlifecycledemo.databinding.HomeActivityBinding;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
+import me.henrytao.mvvmlifecycledemo.ui.taskaddedit.TaskAddEditActivity;
 import me.henrytao.mvvmlifecycledemo.ui.tasks.TasksFragment;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by henrytao on 4/13/16.
@@ -107,6 +110,14 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
           .replace(R.id.container, TasksFragment.newInstance())
           .commit();
     }
+
+    manageSubscription(mViewModel.getState().observeOn(AndroidSchedulers.mainThread()).subscribe(state -> {
+      switch (state.getName()) {
+        case HomeViewModel.STATE_CLICK_ADD_NEW_TASKS:
+          startActivity(TaskAddEditActivity.newIntent(this));
+          break;
+      }
+    }), UnsubscribeLifeCycle.DESTROY_VIEW);
   }
 
   private void onNavigationItemSelected(int id) {

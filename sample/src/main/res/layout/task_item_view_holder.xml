@@ -14,7 +14,8 @@
   ~ limitations under the License.
   -->
 
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
@@ -23,15 +24,14 @@
       type="me.henrytao.mvvmlifecycledemo.ui.tasks.TaskItemViewModel" />
   </data>
 
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="?attr/selectableItemBackground"
     android:gravity="left|center"
     android:minHeight="@dimen/mdListItemHeight_sm"
-    android:onClick="@{viewModel.onItemClick}"
+    android:onClick="@{() -> viewModel.onItemClick()}"
     android:paddingBottom="@dimen/mdLayoutSpacing_sm"
     android:paddingLeft="@dimen/mdLayoutSpacing"
     android:paddingRight="@dimen/mdLayoutSpacing"
@@ -41,8 +41,8 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center_vertical"
-      android:checked="@{viewModel.completed}"
-      android:onCheckedChanged="@{viewModel.onItemCheck}" />
+      android:checked="@={viewModel.completed}"
+      android:onCheckedChanged="@{(view, checked) -> viewModel.onItemCheck(checked)}" />
 
     <TextView
       android:paddingLeft="@dimen/mdLayoutSpacing"

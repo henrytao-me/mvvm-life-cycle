@@ -37,6 +37,8 @@ import me.henrytao.mvvmlifecycledemo.R;
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import me.henrytao.mvvmlifecycledemo.databinding.TasksFragmentBinding;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseFragment;
+import me.henrytao.mvvmlifecycledemo.ui.taskdetail.TaskDetailActivity;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by henrytao on 4/2/16.
@@ -71,6 +73,7 @@ public class TasksFragment extends BaseFragment {
         return new TaskItemViewHolder(observer, parent);
       }
     };
+
     RecyclerView recyclerView = (RecyclerView) getView().findViewById(android.R.id.list);
     recyclerView.setAdapter(mAdapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -78,16 +81,20 @@ public class TasksFragment extends BaseFragment {
     vSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh_layout);
     vSwipeRefreshLayout.setOnRefreshListener(() -> mViewModel.reloadData());
 
-    manageSubscription(mViewModel.getState().subscribe(state -> {
-      switch (state) {
-        case ADDED_TASK:
+    manageSubscription(mViewModel.getState().observeOn(AndroidSchedulers.mainThread()).subscribe(state -> {
+      switch (state.getName()) {
+        case TasksViewModel.STATE_ACTIVE_TASK:
+          Snackbar.make(getView().findViewById(R.id.swipe_refresh_layout), R.string.task_marked_active, Snackbar.LENGTH_SHORT).show();
+          break;
+        case TasksViewModel.STATE_ADDED_TASK:
           mAdapter.notifyDataSetChanged();
           vSwipeRefreshLayout.setRefreshing(false);
           break;
-        case ACTIVE_TASK:
-          Snackbar.make(getView().findViewById(R.id.swipe_refresh_layout), R.string.task_marked_active, Snackbar.LENGTH_SHORT).show();
+        case TasksViewModel.STATE_CLICK_TASK:
+          String taskId = (String) state.getData().get(TasksViewModel.KEY_ID);
+          startActivity(TaskDetailActivity.newIntent(getContext(), taskId));
           break;
-        case COMPLETE_TASK:
+        case TasksViewModel.STATE_COMPLETE_TASK:
           Snackbar.make(getView().findViewById(R.id.swipe_refresh_layout), R.string.task_marked_complete, Snackbar.LENGTH_SHORT).show();
           break;
       }

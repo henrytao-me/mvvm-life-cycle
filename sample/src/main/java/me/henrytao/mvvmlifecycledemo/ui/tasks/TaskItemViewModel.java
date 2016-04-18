@@ -20,6 +20,8 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.view.View;
 
+import java.util.Date;
+
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
 
@@ -40,9 +42,15 @@ public class TaskItemViewModel extends BaseViewModel {
     register(this, Event.ON_TASK_ITEM_CLICK);
     register(this, Event.ON_TASK_ITEM_ACTIVE);
     register(this, Event.ON_TASK_ITEM_COMPLETE);
+
+    Class c = Task.class;
+    Task test = new Task(null, null);
+    if (test.getClass() == c) {
+
+    }
   }
 
-  public void onItemCheck(View view, boolean isChecked) {
+  public void onItemCheck(boolean isChecked) {
     if (isChecked) {
       dispatch(Event.ON_TASK_ITEM_COMPLETE, mTask);
     } else {
@@ -50,7 +58,7 @@ public class TaskItemViewModel extends BaseViewModel {
     }
   }
 
-  public void onItemClick(View view) {
+  public void onItemClick() {
     dispatch(Event.ON_TASK_ITEM_CLICK, mTask);
   }
 

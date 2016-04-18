@@ -160,5 +160,6 @@
   <string name="title_activity_info">@string/text_info</string>
   <string name="title_activity_task_add_edit">New TO-DO</string>
   <string name="title_activity_home">TO-DO-MVVM</string>
+  <string name="title_activity_task_detail">TO-DO-MVVM Task Detail</string>
   <string name="action_settings">Settings</string>
 </resources>

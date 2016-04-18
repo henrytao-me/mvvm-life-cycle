@@ -16,20 +16,20 @@
 
 package me.henrytao.mvvmlifecycledemo.ui.home;
 
-import android.view.View;
-
+import me.henrytao.mvvmlifecycle.State;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
-import me.henrytao.mvvmlifecycledemo.ui.taskaddedit.TaskAddEditActivity;
 
 /**
  * Created by henrytao on 4/14/16.
  */
-public class HomeViewModel extends BaseViewModel {
+public class HomeViewModel extends BaseViewModel<State> {
+
+  public static final String STATE_CLICK_ADD_NEW_TASKS = "STATE_CLICK_ADD_NEW_TASKS";
 
   public HomeViewModel() {
   }
 
-  public void onAddNewTasksClick(View view) {
-    startActivity(view.getContext(), TaskAddEditActivity.newIntent(view.getContext()));
+  public void onAddNewTasksClick() {
+    setState(State.create(STATE_CLICK_ADD_NEW_TASKS));
   }
 }

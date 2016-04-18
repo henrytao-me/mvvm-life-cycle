@@ -21,8 +21,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import me.henrytao.mvvmlifecycle.State;
 import me.henrytao.mvvmlifecycle.event.Event1;
-import me.henrytao.mvvmlifecycle.log.Ln;
 import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import me.henrytao.mvvmlifecycledemo.data.service.TaskService;
@@ -34,7 +34,17 @@ import rx.schedulers.Schedulers;
 /**
  * Created by henrytao on 4/15/16.
  */
-public class TasksViewModel extends BaseViewModel<TasksViewModel.State> {
+public class TasksViewModel extends BaseViewModel<State> {
+
+  public static final String KEY_ID = "KEY_ID";
+
+  public static final String STATE_ACTIVE_TASK = "STATE_ACTIVE_TASK";
+
+  public static final String STATE_ADDED_TASK = "STATE_ADDED_TASK";
+
+  public static final String STATE_CLICK_TASK = "STATE_CLICK_TASK";
+
+  public static final String STATE_COMPLETE_TASK = "STATE_COMPLETE_TASK";
 
   @Inject
   protected TaskService mTaskService;
@@ -56,7 +66,7 @@ public class TasksViewModel extends BaseViewModel<TasksViewModel.State> {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(task -> {
           mTasks.add(task);
-          mState.onNext(State.ADDED_TASK);
+          setState(State.create(STATE_ACTIVE_TASK));
         }), UnsubscribeLifeCycle.DESTROY);
 
     reloadData();
@@ -73,7 +83,7 @@ public class TasksViewModel extends BaseViewModel<TasksViewModel.State> {
         .subscribe(tasks -> {
           mTasks.clear();
           mTasks.addAll(tasks);
-          mState.onNext(State.ADDED_TASK);
+          setState(State.create(STATE_ADDED_TASK));
         }), UnsubscribeLifeCycle.DESTROY);
   }
 
@@ -81,23 +91,17 @@ public class TasksViewModel extends BaseViewModel<TasksViewModel.State> {
     manageSubscription(mTaskService.active(task.getId())
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(aVoid -> mState.onNext(State.ACTIVE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+        .subscribe(aVoid -> setState(State.create(STATE_ACTIVE_TASK)), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
   }
 
   private void onTaskItemClick(Task task) {
-    Ln.d("custom | %s | %s", task.getTitle(), task.getDescription());
+    setState(State.create(STATE_CLICK_TASK, KEY_ID, task.getId()));
   }
 
   private void onTaskItemComplete(Task task) {
     manageSubscription(mTaskService.complete(task.getId())
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(aVoid -> mState.onNext(State.COMPLETE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
-  }
-
-  public enum State {
-    ADDED_TASK,
-    COMPLETE_TASK,
-    ACTIVE_TASK
+        .subscribe(aVoid -> setState(State.create(STATE_COMPLETE_TASK)), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
   }
 }
