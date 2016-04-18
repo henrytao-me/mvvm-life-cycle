@@ -30,13 +30,15 @@ import me.henrytao.mvvmlifecycledemo.databinding.TaskItemViewHolderBinding;
  */
 public class TaskItemViewHolder extends RecyclerViewBindingViewHolder<Task> {
 
+  private final TaskItemViewHolderBinding mBinding;
+
   private TaskItemViewModel mViewModel;
 
   public TaskItemViewHolder(MVVMObserver observer, ViewGroup parent) {
     super(observer, parent, R.layout.task_item_view_holder);
 
-    TaskItemViewHolderBinding binding = DataBindingUtil.bind(itemView);
-    binding.setViewModel(mViewModel);
+    mBinding = DataBindingUtil.bind(itemView);
+    mBinding.setViewModel(mViewModel);
   }
 
   @Override

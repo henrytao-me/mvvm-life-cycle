@@ -20,7 +20,6 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import me.henrytao.mvvmlifecycledemo.ui.taskaddedit.TaskAddEditViewModel;
-import me.henrytao.mvvmlifecycledemo.ui.tasks.TaskItemViewModel;
 import me.henrytao.mvvmlifecycledemo.ui.tasks.TasksViewModel;
 
 /**

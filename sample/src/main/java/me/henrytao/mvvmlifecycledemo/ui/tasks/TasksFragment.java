@@ -20,7 +20,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,9 +50,9 @@ public class TasksFragment extends BaseFragment {
 
   private RecyclerView.Adapter mAdapter;
 
-  private TasksViewModel mViewModel;
+  private TasksFragmentBinding mBinding;
 
-  private SwipeRefreshLayout vSwipeRefreshLayout;
+  private TasksViewModel mViewModel;
 
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -74,28 +73,26 @@ public class TasksFragment extends BaseFragment {
       }
     };
 
-    RecyclerView recyclerView = (RecyclerView) getView().findViewById(android.R.id.list);
-    recyclerView.setAdapter(mAdapter);
-    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    mBinding.list.setAdapter(mAdapter);
+    mBinding.list.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-    vSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh_layout);
-    vSwipeRefreshLayout.setOnRefreshListener(() -> mViewModel.reloadData());
+    mBinding.swipeRefreshLayout.setOnRefreshListener(() -> mViewModel.reloadData());
 
     manageSubscription(mViewModel.getState().observeOn(AndroidSchedulers.mainThread()).subscribe(state -> {
       switch (state.getName()) {
         case TasksViewModel.STATE_ACTIVE_TASK:
-          Snackbar.make(getView().findViewById(R.id.swipe_refresh_layout), R.string.task_marked_active, Snackbar.LENGTH_SHORT).show();
+          Snackbar.make(mBinding.swipeRefreshLayout, R.string.task_marked_active, Snackbar.LENGTH_SHORT).show();
           break;
         case TasksViewModel.STATE_ADDED_TASK:
           mAdapter.notifyDataSetChanged();
-          vSwipeRefreshLayout.setRefreshing(false);
+          mBinding.swipeRefreshLayout.setRefreshing(false);
           break;
         case TasksViewModel.STATE_CLICK_TASK:
           String taskId = (String) state.getData().get(TasksViewModel.KEY_ID);
           startActivity(TaskDetailActivity.newIntent(getContext(), taskId));
           break;
         case TasksViewModel.STATE_COMPLETE_TASK:
-          Snackbar.make(getView().findViewById(R.id.swipe_refresh_layout), R.string.task_marked_complete, Snackbar.LENGTH_SHORT).show();
+          Snackbar.make(mBinding.swipeRefreshLayout, R.string.task_marked_complete, Snackbar.LENGTH_SHORT).show();
           break;
       }
     }), UnsubscribeLifeCycle.DESTROY_VIEW);
@@ -103,8 +100,8 @@ public class TasksFragment extends BaseFragment {
 
   @Override
   public View onInflateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    TasksFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.tasks_fragment, container, false);
-    return binding.getRoot();
+    mBinding = DataBindingUtil.inflate(inflater, R.layout.tasks_fragment, container, false);
+    return mBinding.getRoot();
   }
 
   @Override

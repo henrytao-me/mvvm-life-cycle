@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycle;
+package me.henrytao.mvvmlifecycledemo.ui.base;
 
 import java.util.HashMap;
 import java.util.Map;

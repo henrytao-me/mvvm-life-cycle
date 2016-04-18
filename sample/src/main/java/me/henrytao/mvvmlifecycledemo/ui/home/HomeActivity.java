@@ -22,9 +22,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
@@ -46,6 +44,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     return new Intent(context, HomeActivity.class);
   }
 
+  private HomeActivityBinding mBinding;
+
   private Handler mHandler;
 
   private Runnable mRunner;
@@ -53,8 +53,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
   private int mSelectedMenuItemId;
 
   private HomeViewModel mViewModel;
-
-  private DrawerLayout vDrawerLayout;
 
   @Override
   public void onDestroy() {
@@ -72,7 +70,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
     mSelectedMenuItemId = item.getItemId();
-    vDrawerLayout.closeDrawers();
+    mBinding.drawerLayout.closeDrawers();
     mHandler.removeCallbacks(mRunner);
     mHandler.postDelayed(mRunner, DELAY_TIMEOUT);
     return true;
@@ -86,23 +84,20 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
   @Override
   public void onSetContentView(Bundle savedInstanceState) {
-    HomeActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.home_activity);
-    binding.setViewModel(mViewModel);
+    mBinding = DataBindingUtil.setContentView(this, R.layout.home_activity);
+    mBinding.setViewModel(mViewModel);
 
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
+    setSupportActionBar(mBinding.toolbar);
 
-    vDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-    ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, vDrawerLayout, toolbar,
+    ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mBinding.drawerLayout, mBinding.toolbar,
         R.string.text_open, R.string.text_close);
-    vDrawerLayout.addDrawerListener(actionBarDrawerToggle);
+    mBinding.drawerLayout.addDrawerListener(actionBarDrawerToggle);
     actionBarDrawerToggle.syncState();
 
     mHandler = new Handler();
     mRunner = () -> onNavigationItemSelected(mSelectedMenuItemId);
 
-    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-    navigationView.setNavigationItemSelectedListener(this);
+    mBinding.navigationView.setNavigationItemSelectedListener(this);
 
     if (savedInstanceState == null) {
       getSupportFragmentManager()

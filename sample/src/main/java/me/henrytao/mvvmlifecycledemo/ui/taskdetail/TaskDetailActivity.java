@@ -23,6 +23,7 @@ import android.os.Bundle;
 
 import me.henrytao.mvvmlifecycle.log.Ln;
 import me.henrytao.mvvmlifecycledemo.R;
+import me.henrytao.mvvmlifecycledemo.databinding.TaskDetailActivityBinding;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
 
 /**
@@ -40,6 +41,8 @@ public class TaskDetailActivity extends BaseActivity {
     return intent;
   }
 
+  private TaskDetailActivityBinding mBinding;
+
   @Override
   public void onInitializeViewModels() {
 
@@ -47,7 +50,7 @@ public class TaskDetailActivity extends BaseActivity {
 
   @Override
   public void onSetContentView(Bundle savedInstanceState) {
-    DataBindingUtil.setContentView(this, R.layout.task_detail_activity);
+    mBinding = DataBindingUtil.setContentView(this, R.layout.task_detail_activity);
 
     Bundle bundle = getIntent().getExtras();
     String taskId = bundle.getString(ARG_TASK_ID);

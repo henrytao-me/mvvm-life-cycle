@@ -16,13 +16,13 @@
 
 package me.henrytao.mvvmlifecycledemo.ui.home;
 
-import me.henrytao.mvvmlifecycle.State;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
+import me.henrytao.mvvmlifecycledemo.ui.base.State;
 
 /**
  * Created by henrytao on 4/14/16.
  */
-public class HomeViewModel extends BaseViewModel<State> {
+public class HomeViewModel extends BaseViewModel {
 
   public static final String STATE_CLICK_ADD_NEW_TASKS = "STATE_CLICK_ADD_NEW_TASKS";
 

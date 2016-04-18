@@ -21,20 +21,20 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import me.henrytao.mvvmlifecycle.State;
 import me.henrytao.mvvmlifecycle.event.Event1;
 import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import me.henrytao.mvvmlifecycledemo.data.service.TaskService;
 import me.henrytao.mvvmlifecycledemo.di.Injector;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
+import me.henrytao.mvvmlifecycledemo.ui.base.State;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by henrytao on 4/15/16.
  */
-public class TasksViewModel extends BaseViewModel<State> {
+public class TasksViewModel extends BaseViewModel {
 
   public static final String KEY_ID = "KEY_ID";
 
@@ -66,7 +66,7 @@ public class TasksViewModel extends BaseViewModel<State> {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(task -> {
           mTasks.add(task);
-          setState(State.create(STATE_ACTIVE_TASK));
+          setState(State.create(STATE_ADDED_TASK));
         }), UnsubscribeLifeCycle.DESTROY);
 
     reloadData();

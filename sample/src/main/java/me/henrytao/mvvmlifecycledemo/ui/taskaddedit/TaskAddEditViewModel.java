@@ -21,18 +21,18 @@ import android.text.TextUtils;
 
 import javax.inject.Inject;
 
-import me.henrytao.mvvmlifecycle.State;
 import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.data.service.TaskService;
 import me.henrytao.mvvmlifecycledemo.di.Injector;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
+import me.henrytao.mvvmlifecycledemo.ui.base.State;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by henrytao on 4/5/16.
  */
-public class TaskAddEditViewModel extends BaseViewModel<State> {
+public class TaskAddEditViewModel extends BaseViewModel {
 
   public static final String STATE_CREATED_TASK = "STATE_CREATED_TASK";
 
@@ -59,7 +59,7 @@ public class TaskAddEditViewModel extends BaseViewModel<State> {
     if (!isValid) {
       setState(State.create(STATE_MISSING_TITLE));
     } else {
-      setState(State.create(STATE_CREATED_TASK));
+      setState(State.create(STATE_CREATING_TASK));
       manageSubscription(mTaskService.create(title, description)
           .subscribeOn(Schedulers.computation())
           .observeOn(AndroidSchedulers.mainThread())

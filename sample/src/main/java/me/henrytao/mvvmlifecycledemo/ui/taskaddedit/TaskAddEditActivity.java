@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -40,6 +39,8 @@ public class TaskAddEditActivity extends BaseActivity {
     return new Intent(context, TaskAddEditActivity.class);
   }
 
+  private TaskAddEditActivityBinding mBinding;
+
   private TaskAddEditViewModel mViewModel;
 
   @Override
@@ -47,31 +48,6 @@ public class TaskAddEditActivity extends BaseActivity {
     getMenuInflater().inflate(R.menu.menu_task_add_edit, menu);
     ResourceUtils.supportDrawableTint(this, menu, ResourceUtils.Palette.PRIMARY);
     return super.onCreateOptionsMenu(menu);
-  }
-
-  @Override
-  public void onCreateView() {
-    super.onCreateView();
-
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    toolbar.setNavigationOnClickListener(v -> onBackPressed());
-    ResourceUtils.supportDrawableTint(this, toolbar, ResourceUtils.Palette.PRIMARY);
-
-    manageSubscription(mViewModel.getState().subscribe(state -> {
-      switch (state.getName()) {
-        case TaskAddEditViewModel.STATE_CREATED_TASK:
-          finish();
-          break;
-        case TaskAddEditViewModel.STATE_CREATING_TASK:
-          // TODO: should handle progressbar
-          break;
-        case TaskAddEditViewModel.STATE_MISSING_TITLE:
-          Snackbar.make(findViewById(R.id.coordinator_layout), R.string.empty_task_message, Snackbar.LENGTH_SHORT).show();
-          break;
-      }
-    }), UnsubscribeLifeCycle.DESTROY_VIEW);
   }
 
   @Override
@@ -92,7 +68,26 @@ public class TaskAddEditActivity extends BaseActivity {
 
   @Override
   public void onSetContentView(Bundle savedInstanceState) {
-    TaskAddEditActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.task_add_edit_activity);
-    binding.setViewModel(mViewModel);
+    mBinding = DataBindingUtil.setContentView(this, R.layout.task_add_edit_activity);
+    mBinding.setViewModel(mViewModel);
+
+    setSupportActionBar(mBinding.toolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    mBinding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
+    ResourceUtils.supportDrawableTint(this, mBinding.toolbar, ResourceUtils.Palette.PRIMARY);
+
+    manageSubscription(mViewModel.getState().subscribe(state -> {
+      switch (state.getName()) {
+        case TaskAddEditViewModel.STATE_CREATED_TASK:
+          finish();
+          break;
+        case TaskAddEditViewModel.STATE_CREATING_TASK:
+          // TODO: should handle progressbar
+          break;
+        case TaskAddEditViewModel.STATE_MISSING_TITLE:
+          Snackbar.make(findViewById(R.id.coordinator_layout), R.string.empty_task_message, Snackbar.LENGTH_SHORT).show();
+          break;
+      }
+    }), UnsubscribeLifeCycle.DESTROY_VIEW);
   }
 }

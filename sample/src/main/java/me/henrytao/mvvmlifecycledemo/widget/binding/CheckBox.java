@@ -14,24 +14,22 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycledemo.ui.base;
+package me.henrytao.mvvmlifecycledemo.widget.binding;
 
-import me.henrytao.mvvmlifecycle.MVVMViewModelWithEventDispatcher;
-import rx.Observable;
-import rx.subjects.BehaviorSubject;
+import android.databinding.BindingAdapter;
+import android.widget.CompoundButton;
 
 /**
- * Created by henrytao on 4/5/16.
+ * Created by henrytao on 4/18/16.
  */
-public abstract class BaseViewModel extends MVVMViewModelWithEventDispatcher {
+public class CheckBox {
 
-  private BehaviorSubject<State> mState = BehaviorSubject.create();
-
-  public Observable<State> getState() {
-    return mState;
-  }
-
-  public void setState(State state) {
-    mState.onNext(state);
+  @BindingAdapter("app:onCheckedChanged")
+  public static void setOnCheckedChanged(android.widget.CheckBox checkBox, CompoundButton.OnCheckedChangeListener listener) {
+    checkBox.setOnClickListener(v -> {
+      if (listener != null) {
+        listener.onCheckedChanged(checkBox, checkBox.isChecked());
+      }
+    });
   }
 }

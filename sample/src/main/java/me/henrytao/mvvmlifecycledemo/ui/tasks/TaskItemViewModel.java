@@ -18,9 +18,6 @@ package me.henrytao.mvvmlifecycledemo.ui.tasks;
 
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
-import android.view.View;
-
-import java.util.Date;
 
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;

@@ -34,16 +34,16 @@ public class TaskService {
     mLocalAdapter = localAdapter;
   }
 
-  public Observable<Void> complete(String taskId) {
+  public Observable<Void> active(String taskId) {
     return Observable.create(subscriber -> {
-      mLocalAdapter.completeTask(taskId);
+      mLocalAdapter.activeTask(taskId);
       SubscriptionUtils.onNextAndComplete(subscriber);
     });
   }
 
-  public Observable<Void> active(String taskId) {
+  public Observable<Void> complete(String taskId) {
     return Observable.create(subscriber -> {
-      mLocalAdapter.activeTask(taskId);
+      mLocalAdapter.completeTask(taskId);
       SubscriptionUtils.onNextAndComplete(subscriber);
     });
   }
