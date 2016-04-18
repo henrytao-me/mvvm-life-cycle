@@ -87,12 +87,18 @@ public class TasksFragment extends BaseFragment {
           mAdapter.notifyDataSetChanged();
           mBinding.swipeRefreshLayout.setRefreshing(false);
           break;
+        case TasksViewModel.STATE_UPDATE_TASK:
+          mAdapter.notifyDataSetChanged();
+          break;
         case TasksViewModel.STATE_CLICK_TASK:
           String taskId = (String) state.getData().get(TasksViewModel.KEY_ID);
           startActivity(TaskDetailActivity.newIntent(getContext(), taskId));
           break;
         case TasksViewModel.STATE_COMPLETE_TASK:
           Snackbar.make(mBinding.swipeRefreshLayout, R.string.task_marked_complete, Snackbar.LENGTH_SHORT).show();
+          break;
+        case TasksViewModel.STATE_REMOVE_TASK:
+          mAdapter.notifyDataSetChanged();
           break;
       }
     }), UnsubscribeLifeCycle.DESTROY_VIEW);

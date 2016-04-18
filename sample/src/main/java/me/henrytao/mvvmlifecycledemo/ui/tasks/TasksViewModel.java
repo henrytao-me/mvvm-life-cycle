@@ -16,6 +16,8 @@
 
 package me.henrytao.mvvmlifecycledemo.ui.tasks;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +48,10 @@ public class TasksViewModel extends BaseViewModel {
 
   public static final String STATE_COMPLETE_TASK = "STATE_COMPLETE_TASK";
 
+  public static final String STATE_REMOVE_TASK = "STATE_REMOVE_TASK";
+
+  public static final String STATE_UPDATE_TASK = "STATE_UPDATE_TASK";
+
   @Inject
   protected TaskService mTaskService;
 
@@ -67,6 +73,31 @@ public class TasksViewModel extends BaseViewModel {
         .subscribe(task -> {
           mTasks.add(task);
           setState(State.create(STATE_ADDED_TASK));
+        }), UnsubscribeLifeCycle.DESTROY);
+
+    manageSubscription(mTaskService.observeTaskChange()
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(task -> {
+          Task tmp;
+          int n = mTasks.size();
+          for (int i = 0; i < n; i++) {
+            tmp = mTasks.get(i);
+            if (TextUtils.equals(tmp.getId(), task.getId())) {
+              tmp.setTitle(task.getTitle());
+              tmp.setDescription(task.getDescription());
+              tmp.setCompleted(task.isCompleted());
+            }
+          }
+          setState(State.create(STATE_UPDATE_TASK));
+        }), UnsubscribeLifeCycle.DESTROY);
+
+    manageSubscription(mTaskService.observeTaskRemove()
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(task -> {
+          mTasks.remove(task);
+          setState(State.create(STATE_REMOVE_TASK));
         }), UnsubscribeLifeCycle.DESTROY);
 
     reloadData();

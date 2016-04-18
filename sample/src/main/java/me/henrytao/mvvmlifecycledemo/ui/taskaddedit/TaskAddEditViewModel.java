@@ -40,6 +40,12 @@ public class TaskAddEditViewModel extends BaseViewModel {
 
   public static final String STATE_MISSING_TITLE = "STATE_MISSING_TITLE";
 
+  public static final String STATE_UPDATED_TASK = "STATE_UPDATE_TASK";
+
+  public static final String STATE_UPDATING_TASK = "STATE_UPDATING_TASK";
+
+  private final String mTaskId;
+
   public ObservableField<String> description = new ObservableField<>();
 
   public ObservableField<String> title = new ObservableField<>();
@@ -47,11 +53,35 @@ public class TaskAddEditViewModel extends BaseViewModel {
   @Inject
   protected TaskService mTaskService;
 
-  public TaskAddEditViewModel() {
+  public TaskAddEditViewModel(String taskId) {
     Injector.component.inject(this);
+
+    mTaskId = taskId;
+
+    if (isInEditMode()) {
+      manageSubscription(mTaskService.find(taskId)
+          .subscribeOn(Schedulers.computation())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(task -> {
+            title.set(task.getTitle());
+            description.set(task.getDescription());
+          }), UnsubscribeLifeCycle.DESTROY);
+    }
   }
 
-  public void onAddEditClick() {
+  public void onDoneClick() {
+    if (isInEditMode()) {
+      onUpdateTask();
+    } else {
+      onCreateTask();
+    }
+  }
+
+  private boolean isInEditMode() {
+    return !TextUtils.isEmpty(mTaskId);
+  }
+
+  private void onCreateTask() {
     String title = this.title.get();
     String description = this.description.get();
     boolean isValid = !TextUtils.isEmpty(title);
@@ -65,6 +95,24 @@ public class TaskAddEditViewModel extends BaseViewModel {
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(task -> {
             setState(State.create(STATE_CREATED_TASK));
+          }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+    }
+  }
+
+  private void onUpdateTask() {
+    String title = this.title.get();
+    String description = this.description.get();
+    boolean isValid = !TextUtils.isEmpty(title);
+
+    if (!isValid) {
+      setState(State.create(STATE_MISSING_TITLE));
+    } else {
+      setState(State.create(STATE_UPDATING_TASK));
+      manageSubscription(mTaskService.update(mTaskId, title, description)
+          .subscribeOn(Schedulers.computation())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(task -> {
+            setState(State.create(STATE_UPDATED_TASK));
           }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
   }

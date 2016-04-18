@@ -47,7 +47,7 @@ public class TaskItemViewModel extends BaseViewModel {
     }
   }
 
-  public void onItemCheck(boolean isChecked) {
+  public void onItemCheckedChanged(boolean isChecked) {
     if (isChecked) {
       dispatch(Event.ON_TASK_ITEM_COMPLETE, mTask);
     } else {

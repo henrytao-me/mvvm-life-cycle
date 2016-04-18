@@ -14,28 +14,11 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycledemo.di;
-
-import javax.inject.Singleton;
-
-import dagger.Component;
-import me.henrytao.mvvmlifecycledemo.ui.taskaddedit.TaskAddEditViewModel;
-import me.henrytao.mvvmlifecycledemo.ui.taskdetail.TaskDetailViewModel;
-import me.henrytao.mvvmlifecycledemo.ui.tasks.TasksViewModel;
+package me.henrytao.mvvmlifecycledemo.ui.base;
 
 /**
- * Created by henrytao on 4/14/16.
+ * Created by henrytao on 4/18/16.
  */
-@Singleton
-@Component(modules = {
-    AppModule.class,
-    ServiceModule.class
-})
-public interface AppComponent {
+public class Constants {
 
-  void inject(TaskAddEditViewModel viewModel);
-
-  void inject(TasksViewModel viewModel);
-
-  void inject(TaskDetailViewModel viewModel);
 }

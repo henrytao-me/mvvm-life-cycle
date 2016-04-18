@@ -13,7 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout>
 
   <data>
 
@@ -22,10 +22,11 @@
       type="me.henrytao.mvvmlifecycledemo.ui.taskaddedit.TaskAddEditViewModel" />
   </data>
 
-  <android.support.design.widget.CoordinatorLayout
-    android:id="@+id/coordinator_layout"
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
       android:id="@+id/smooth_app_bar_layout"
@@ -39,10 +40,8 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
-      android:id="@+id/container"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginTop="?attr/actionBarSize"
       android:orientation="vertical"
       android:padding="@dimen/mdLayoutSpacing_sm">
 
@@ -59,5 +58,5 @@
         android:text="@={viewModel.description}"
         style="@style/MdTextField.EditText" />
     </LinearLayout>
-  </android.support.design.widget.CoordinatorLayout>
+  </LinearLayout>
 </layout>

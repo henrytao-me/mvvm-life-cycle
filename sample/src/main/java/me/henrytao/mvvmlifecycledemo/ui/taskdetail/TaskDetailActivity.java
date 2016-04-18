@@ -20,11 +20,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import me.henrytao.mvvmlifecycle.log.Ln;
+import me.henrytao.mdcore.utils.ResourceUtils;
+import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.R;
 import me.henrytao.mvvmlifecycledemo.databinding.TaskDetailActivityBinding;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
+import me.henrytao.mvvmlifecycledemo.ui.taskaddedit.TaskAddEditActivity;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by henrytao on 4/2/16.
@@ -43,18 +49,59 @@ public class TaskDetailActivity extends BaseActivity {
 
   private TaskDetailActivityBinding mBinding;
 
+  private TaskDetailViewModel mViewModel;
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_task_detail, menu);
+    ResourceUtils.supportDrawableTint(this, menu, ResourceUtils.Palette.PRIMARY);
+    return super.onCreateOptionsMenu(menu);
+  }
+
   @Override
   public void onInitializeViewModels() {
+    Bundle bundle = getIntent().getExtras();
+    String taskId = bundle.getString(ARG_TASK_ID);
 
+    mViewModel = new TaskDetailViewModel(taskId);
+    addViewModel(mViewModel);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_delete:
+        mViewModel.onDeleteTaskClick();
+        break;
+    }
+    return true;
   }
 
   @Override
   public void onSetContentView(Bundle savedInstanceState) {
     mBinding = DataBindingUtil.setContentView(this, R.layout.task_detail_activity);
+    mBinding.setViewModel(mViewModel);
 
-    Bundle bundle = getIntent().getExtras();
-    String taskId = bundle.getString(ARG_TASK_ID);
+    setSupportActionBar(mBinding.toolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    mBinding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
+    ResourceUtils.supportDrawableTint(this, mBinding.toolbar, ResourceUtils.Palette.PRIMARY);
 
-    Ln.d("custom TaskDetailActivity | %s", taskId);
+    manageSubscription(mViewModel.getState().observeOn(AndroidSchedulers.mainThread()).subscribe(state -> {
+      switch (state.getName()) {
+        case TaskDetailViewModel.STATE_ACTIVE_TASK:
+          Snackbar.make(mBinding.container, R.string.task_marked_active, Snackbar.LENGTH_SHORT).show();
+          break;
+        case TaskDetailViewModel.STATE_COMPLETE_TASK:
+          Snackbar.make(mBinding.container, R.string.task_marked_complete, Snackbar.LENGTH_SHORT).show();
+          break;
+        case TaskDetailViewModel.STATE_CLICK_EDIT_TASK:
+          startActivity(TaskAddEditActivity.newIntent(this, (String) state.getData().get(TaskDetailViewModel.KEY_ID)));
+          break;
+        case TaskDetailViewModel.STATE_DELETE_TASK:
+          finish();
+          break;
+      }
+    }), UnsubscribeLifeCycle.DESTROY_VIEW);
   }
 }

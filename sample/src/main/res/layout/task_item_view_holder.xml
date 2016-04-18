@@ -43,7 +43,7 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center_vertical"
       android:checked="@={viewModel.completed}"
-      app:onCheckedChanged="@{(view, checked) -> viewModel.onItemCheck(checked)}" />
+      app:onCheckedChanged="@{(view, checked) -> viewModel.onItemCheckedChanged(checked)}" />
 
     <TextView
       android:paddingLeft="@dimen/mdLayoutSpacing"

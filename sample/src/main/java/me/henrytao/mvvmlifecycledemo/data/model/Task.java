@@ -16,6 +16,8 @@
 
 package me.henrytao.mvvmlifecycledemo.data.model;
 
+import com.google.common.base.Objects;
+
 import java.util.UUID;
 
 /**
@@ -42,6 +44,11 @@ public class Task {
 
   }
 
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(mId, mTitle, mDescription, mCompleted);
+  }
+
   public void active() {
     mCompleted = false;
   }
@@ -54,6 +61,10 @@ public class Task {
     return mDescription;
   }
 
+  public void setDescription(String description) {
+    mDescription = description;
+  }
+
   public String getId() {
     return mId;
   }
@@ -62,11 +73,19 @@ public class Task {
     return mTitle;
   }
 
+  public void setTitle(String title) {
+    mTitle = title;
+  }
+
   public boolean isActive() {
     return !isCompleted();
   }
 
   public boolean isCompleted() {
     return mCompleted;
+  }
+
+  public void setCompleted(boolean completed) {
+    mCompleted = completed;
   }
 }

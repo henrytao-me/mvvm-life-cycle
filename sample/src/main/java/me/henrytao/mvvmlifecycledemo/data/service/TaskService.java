@@ -20,6 +20,7 @@ import java.util.List;
 
 import me.henrytao.mvvmlifecycle.rx.SubscriptionUtils;
 import me.henrytao.mvvmlifecycledemo.data.adapter.LocalAdapter;
+import me.henrytao.mvvmlifecycledemo.data.exception.DataNotFoundException;
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import rx.Observable;
 
@@ -55,6 +56,17 @@ public class TaskService {
     });
   }
 
+  public Observable<Task> find(String taskId) {
+    return Observable.create(subscriber -> {
+      Task task = mLocalAdapter.findTask(taskId);
+      if (task != null) {
+        SubscriptionUtils.onNextAndComplete(subscriber, task);
+      } else {
+        SubscriptionUtils.onError(subscriber, new DataNotFoundException());
+      }
+    });
+  }
+
   public Observable<List<Task>> getAll() {
     return Observable.create(subscriber -> {
       List<Task> tasks = mLocalAdapter.getTasks();
@@ -62,7 +74,27 @@ public class TaskService {
     });
   }
 
+  public Observable<Task> observeTaskChange() {
+    return mLocalAdapter.observeTaskChange();
+  }
+
   public Observable<Task> observeTaskCreate() {
     return mLocalAdapter.observeTaskCreate();
+  }
+
+  public Observable<Task> observeTaskRemove() {
+    return mLocalAdapter.observeTaskRemove();
+  }
+
+  public Observable<Task> remove(String taskId) {
+    return Observable.create(subscriber -> {
+      SubscriptionUtils.onNextAndComplete(subscriber, mLocalAdapter.removeTask(taskId));
+    });
+  }
+
+  public Observable<Task> update(String taskId, String title, String description) {
+    return Observable.create(subscriber -> {
+      SubscriptionUtils.onNextAndComplete(subscriber, mLocalAdapter.updateTask(taskId, title, description));
+    });
   }
 }

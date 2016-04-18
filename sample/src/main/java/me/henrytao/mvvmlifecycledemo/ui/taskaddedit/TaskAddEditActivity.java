@@ -35,8 +35,18 @@ import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
  */
 public class TaskAddEditActivity extends BaseActivity {
 
+  private static final String ARG_TASK_ID = "ARG_TASK_ID";
+
   public static Intent newIntent(Context context) {
-    return new Intent(context, TaskAddEditActivity.class);
+    return newIntent(context, null);
+  }
+
+  public static Intent newIntent(Context context, String taskId) {
+    Intent intent = new Intent(context, TaskAddEditActivity.class);
+    Bundle bundle = new Bundle();
+    bundle.putString(ARG_TASK_ID, taskId);
+    intent.putExtras(bundle);
+    return intent;
   }
 
   private TaskAddEditActivityBinding mBinding;
@@ -52,7 +62,10 @@ public class TaskAddEditActivity extends BaseActivity {
 
   @Override
   public void onInitializeViewModels() {
-    mViewModel = new TaskAddEditViewModel();
+    Bundle bundle = getIntent().getExtras();
+    String taskId = bundle.getString(ARG_TASK_ID);
+
+    mViewModel = new TaskAddEditViewModel(taskId);
     addViewModel(mViewModel);
   }
 
@@ -60,7 +73,7 @@ public class TaskAddEditActivity extends BaseActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_done:
-        mViewModel.onAddEditClick();
+        mViewModel.onDoneClick();
         break;
     }
     return true;
@@ -85,7 +98,13 @@ public class TaskAddEditActivity extends BaseActivity {
           // TODO: should handle progressbar
           break;
         case TaskAddEditViewModel.STATE_MISSING_TITLE:
-          Snackbar.make(findViewById(R.id.coordinator_layout), R.string.empty_task_message, Snackbar.LENGTH_SHORT).show();
+          Snackbar.make(findViewById(R.id.container), R.string.empty_task_message, Snackbar.LENGTH_SHORT).show();
+          break;
+        case TaskAddEditViewModel.STATE_UPDATING_TASK:
+          // TODO: should handle progressbar
+          break;
+        case TaskAddEditViewModel.STATE_UPDATED_TASK:
+          finish();
           break;
       }
     }), UnsubscribeLifeCycle.DESTROY_VIEW);

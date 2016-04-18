@@ -35,13 +35,17 @@ public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.
 
   static {
     Task task;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 10; i++) {
       task = new Task(String.format(Locale.US, "task %d", i + 1), String.format(Locale.US, "description %d", i + 1));
       sTasks.add(task);
     }
   }
 
+  private final PublishSubject<Task> mTaskChangedSubject = PublishSubject.create();
+
   private final PublishSubject<Task> mTaskCreatedSubject = PublishSubject.create();
+
+  private final PublishSubject<Task> mTaskRemoveSubject = PublishSubject.create();
 
   @Override
   public void activeTask(String taskId) {
@@ -51,6 +55,7 @@ public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.
       task = sTasks.get(i);
       if (TextUtils.equals(task.getId(), taskId)) {
         task.active();
+        mTaskChangedSubject.onNext(task);
         break;
       }
     }
@@ -64,6 +69,7 @@ public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.
       task = sTasks.get(i);
       if (TextUtils.equals(task.getId(), taskId)) {
         task.complete();
+        mTaskChangedSubject.onNext(task);
         break;
       }
     }
@@ -78,12 +84,52 @@ public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.
   }
 
   @Override
+  public Task findTask(String taskId) {
+    Task task = null;
+    int n = sTasks.size();
+    for (int i = 0; i < n; i++) {
+      if (TextUtils.equals(sTasks.get(i).getId(), taskId)) {
+        task = sTasks.get(i);
+        break;
+      }
+    }
+    return task;
+  }
+
+  @Override
   public List<Task> getTasks() {
     return new ArrayList<>(sTasks);
   }
 
   @Override
+  public Observable<Task> observeTaskChange() {
+    return mTaskChangedSubject;
+  }
+
+  @Override
   public Observable<Task> observeTaskCreate() {
     return mTaskCreatedSubject;
+  }
+
+  @Override
+  public Observable<Task> observeTaskRemove() {
+    return mTaskRemoveSubject;
+  }
+
+  @Override
+  public Task removeTask(String taskId) {
+    Task task = findTask(taskId);
+    sTasks.remove(task);
+    mTaskRemoveSubject.onNext(task);
+    return task;
+  }
+
+  @Override
+  public Task updateTask(String taskId, String title, String description) {
+    Task task = findTask(taskId);
+    task.setTitle(title);
+    task.setDescription(description);
+    mTaskChangedSubject.onNext(task);
+    return task;
   }
 }

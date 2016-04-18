@@ -14,19 +14,24 @@
   ~ limitations under the License.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout>
 
   <data>
+
+    <import type="android.view.View" />
 
     <variable
       name="viewModel"
       type="me.henrytao.mvvmlifecycledemo.ui.taskdetail.TaskDetailViewModel" />
   </data>
 
-  <android.support.design.widget.CoordinatorLayout
+  <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
       android:id="@+id/smooth_app_bar_layout"
@@ -39,24 +44,61 @@
         style="@style/AppStyle.Toolbar" />
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+    <ScrollView
       android:id="@+id/container"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_marginTop="?attr/actionBarSize"
-      android:orientation="vertical"
-      android:padding="@dimen/mdLayoutSpacing_sm">
+      android:clipToPadding="false"
+      android:paddingTop="@dimen/mdLayoutSpacing_sm">
 
-      <EditText
-        android:hint="Title"
-        style="@style/MdTextField.EditText" />
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/mdLayoutSpacing_sm"
+        android:paddingLeft="@dimen/mdLayoutSpacing"
+        android:paddingRight="@dimen/mdLayoutSpacing"
+        android:paddingTop="@dimen/mdLayoutSpacing_sm"
+        android:visibility="@{viewModel.visible ? View.VISIBLE : View.GONE}">
 
-      <EditText
-        android:layout_weight="1"
-        android:gravity="top|left"
-        android:hint="Enter your TO-DO here"
-        android:singleLine="false"
-        style="@style/MdTextField.EditText" />
-    </LinearLayout>
+        <CheckBox
+          android:id="@+id/checkbox"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:checked="@={viewModel.completed}"
+          app:onCheckedChanged="@{(view, checked) -> viewModel.onTaskCheckedChanged(checked)}" />
+
+        <TextView
+          android:id="@+id/title"
+          android:layout_marginTop="@dimen/mdLayoutSpacing_xs"
+          android:layout_toRightOf="@+id/checkbox"
+          android:paddingLeft="@dimen/mdLayoutSpacing"
+          android:text="@{viewModel.title}"
+          tools:text="Task item"
+          style="@style/MdText.Subhead2.SingleLine" />
+
+        <TextView
+          android:id="@+id/description"
+          android:layout_below="@+id/title"
+          android:layout_marginTop="@dimen/mdLayoutSpacing_xs"
+          android:layout_toRightOf="@+id/checkbox"
+          android:paddingLeft="@dimen/mdLayoutSpacing"
+          android:text="@{viewModel.description}"
+          tools:text="Task item"
+          style="@style/MdText.Subhead2.SingleLine" />
+      </RelativeLayout>
+    </ScrollView>
+
+    <me.henrytao.mdcore.widgets.MdFloatingActionButton
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/mdLayoutSpacing"
+      android:onClick="@{() -> viewModel.onEditTaskClick()}"
+      android:src="@drawable/ic_menu_edit"
+      android:visibility="@{viewModel.visible ? View.VISIBLE : View.GONE}"
+      app:fabSize="normal"
+      app:layout_anchor="@id/container"
+      app:layout_anchorGravity="bottom|right|end" />
   </android.support.design.widget.CoordinatorLayout>
 </layout>

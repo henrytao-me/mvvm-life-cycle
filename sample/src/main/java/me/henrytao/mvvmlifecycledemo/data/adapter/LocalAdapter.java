@@ -32,7 +32,17 @@ public interface LocalAdapter {
 
   Task createTask(String title, String description);
 
+  Task findTask(String taskId);
+
   List<Task> getTasks();
 
+  Observable<Task> observeTaskChange();
+
   Observable<Task> observeTaskCreate();
+
+  Observable<Task> observeTaskRemove();
+
+  Task removeTask(String taskId);
+
+  Task updateTask(String taskId, String title, String description);
 }
