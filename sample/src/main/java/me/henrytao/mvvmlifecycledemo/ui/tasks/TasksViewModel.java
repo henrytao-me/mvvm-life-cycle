@@ -58,7 +58,7 @@ public class TasksViewModel extends BaseViewModel<TasksViewModel.State> {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(task -> {
           mTasks.add(task);
-          setState(State.CREATED_TASK);
+          setState(State.CREATED_TASK, Constants.Key.INDEX, mTasks.size() - 1);
         }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
 
     manageSubscription(mTaskService.observeTaskUpdate()
@@ -73,7 +73,8 @@ public class TasksViewModel extends BaseViewModel<TasksViewModel.State> {
               tmp.setTitle(task.getTitle());
               tmp.setDescription(task.getDescription());
               tmp.setCompleted(task.isCompleted());
-              setState(State.UPDATED_TASK);
+              setState(State.UPDATED_TASK, Constants.Key.INDEX, i);
+              break;
             }
           }
         }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
