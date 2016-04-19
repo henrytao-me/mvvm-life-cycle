@@ -36,5 +36,6 @@ public class Constants {
   public interface Key {
 
     String ID = "ID";
+    String INDEX = "INDEX";
   }
 }
