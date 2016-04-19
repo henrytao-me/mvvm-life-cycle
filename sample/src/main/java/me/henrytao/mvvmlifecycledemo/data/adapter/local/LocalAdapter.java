@@ -40,7 +40,7 @@ public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.
     }
   }
 
-  private final PublishSubject<Task> mTaskAddedSubject = PublishSubject.create();
+  private final PublishSubject<Task> mTaskCreatedSubject = PublishSubject.create();
 
   private final PublishSubject<Task> mTaskRemovedSubject = PublishSubject.create();
 
@@ -72,7 +72,7 @@ public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.
   public Task createTask(String title, String description) {
     Task task = new Task(title, description);
     sTasks.add(task);
-    mTaskAddedSubject.onNext(task);
+    mTaskCreatedSubject.onNext(task);
     return task;
   }
 
@@ -95,8 +95,8 @@ public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.
   }
 
   @Override
-  public Observable<Task> observeTaskAdd() {
-    return mTaskAddedSubject;
+  public Observable<Task> observeTaskCreate() {
+    return mTaskCreatedSubject;
   }
 
   @Override

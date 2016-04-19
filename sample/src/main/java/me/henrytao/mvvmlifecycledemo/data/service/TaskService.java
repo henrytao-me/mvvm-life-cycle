@@ -82,16 +82,16 @@ public class TaskService {
     });
   }
 
-  public Observable<Task> observeTaskChange() {
-    return mLocalAdapter.observeTaskUpdate();
-  }
-
   public Observable<Task> observeTaskCreate() {
-    return mLocalAdapter.observeTaskAdd();
+    return mLocalAdapter.observeTaskCreate();
   }
 
   public Observable<Task> observeTaskRemove() {
     return mLocalAdapter.observeTaskRemove();
+  }
+
+  public Observable<Task> observeTaskUpdate() {
+    return mLocalAdapter.observeTaskUpdate();
   }
 
   public Observable<Void> remove(String taskId) {

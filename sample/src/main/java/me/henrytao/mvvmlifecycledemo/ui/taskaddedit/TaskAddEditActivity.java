@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -64,6 +65,8 @@ public class TaskAddEditActivity extends BaseActivity {
     Bundle bundle = getIntent().getExtras();
     String taskId = bundle.getString(Constants.Extra.ID);
 
+    setTitle(!TextUtils.isEmpty(taskId) ? R.string.edit_task : R.string.add_task);
+
     mViewModel = new TaskAddEditViewModel(taskId);
     addViewModel(mViewModel);
   }
@@ -90,19 +93,19 @@ public class TaskAddEditActivity extends BaseActivity {
 
     manageSubscription(mViewModel.getState().subscribe(state -> {
       switch (state.getName()) {
-        case STATE_CREATED_TASK:
+        case CREATED_TASK:
           finish();
           break;
-        case STATE_CREATING_TASK:
+        case CREATING_TASK:
           // TODO: should handle progressbar
           break;
-        case STATE_MISSING_TITLE:
+        case MISSING_TITLE:
           Snackbar.make(findViewById(R.id.container), R.string.empty_task_message, Snackbar.LENGTH_SHORT).show();
           break;
-        case STATE_UPDATING_TASK:
+        case UPDATING_TASK:
           // TODO: should handle progressbar
           break;
-        case STATE_UPDATED_TASK:
+        case UPDATED_TASK:
           finish();
           break;
       }

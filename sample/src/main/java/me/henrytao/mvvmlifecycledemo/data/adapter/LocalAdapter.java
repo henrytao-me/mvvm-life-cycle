@@ -37,7 +37,7 @@ public interface LocalAdapter {
 
   List<Task> getTasks();
 
-  Observable<Task> observeTaskAdd();
+  Observable<Task> observeTaskCreate();
 
   Observable<Task> observeTaskRemove();
 

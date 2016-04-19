@@ -80,24 +80,27 @@ public class TasksFragment extends BaseFragment {
 
     manageSubscription(mViewModel.getState().subscribe(state -> {
       switch (state.getName()) {
-        case STATE_ACTIVE_TASK:
+        case ACTIVE_TASK:
           Snackbar.make(mBinding.swipeRefreshLayout, R.string.task_marked_active, Snackbar.LENGTH_SHORT).show();
           break;
-        case STATE_ADDED_TASK:
-          mAdapter.notifyDataSetChanged();
-          mBinding.swipeRefreshLayout.setRefreshing(false);
+        case COMPLETE_TASK:
+          Snackbar.make(mBinding.swipeRefreshLayout, R.string.task_marked_complete, Snackbar.LENGTH_SHORT).show();
           break;
-        case STATE_UPDATE_TASK:
-          mAdapter.notifyDataSetChanged();
-          break;
-        case STATE_CLICK_TASK:
+        case CLICK_TASK:
           String taskId = (String) state.getData().get(Constants.Key.ID);
           startActivity(TaskDetailActivity.newIntent(getContext(), taskId));
           break;
-        case STATE_COMPLETE_TASK:
-          Snackbar.make(mBinding.swipeRefreshLayout, R.string.task_marked_complete, Snackbar.LENGTH_SHORT).show();
+        case RELOADED_TASKS:
+          mAdapter.notifyDataSetChanged();
+          mBinding.swipeRefreshLayout.setRefreshing(false);
           break;
-        case STATE_REMOVE_TASK:
+        case CREATED_TASK:
+          mAdapter.notifyDataSetChanged();
+          break;
+        case UPDATED_TASK:
+          mAdapter.notifyDataSetChanged();
+          break;
+        case REMOVED_TASK:
           mAdapter.notifyDataSetChanged();
           break;
       }

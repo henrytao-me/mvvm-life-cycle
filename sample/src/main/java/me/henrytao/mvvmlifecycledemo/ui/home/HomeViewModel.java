@@ -27,10 +27,10 @@ public class HomeViewModel extends BaseViewModel<HomeViewModel.State> {
   }
 
   public void onAddNewTasksClick() {
-    setState(State.STATE_CLICK_ADD_NEW_TASKS);
+    setState(State.CLICK_ADD_NEW_TASKS);
   }
 
   public enum State {
-    STATE_CLICK_ADD_NEW_TASKS
+    CLICK_ADD_NEW_TASKS
   }
 }

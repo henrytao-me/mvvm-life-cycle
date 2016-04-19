@@ -87,16 +87,16 @@ public class TaskDetailActivity extends BaseActivity {
 
     manageSubscription(mViewModel.getState().subscribe(state -> {
       switch (state.getName()) {
-        case STATE_ACTIVE_TASK:
+        case ACTIVE_TASK:
           Snackbar.make(mBinding.container, R.string.task_marked_active, Snackbar.LENGTH_SHORT).show();
           break;
-        case STATE_COMPLETE_TASK:
+        case COMPLETE_TASK:
           Snackbar.make(mBinding.container, R.string.task_marked_complete, Snackbar.LENGTH_SHORT).show();
           break;
-        case STATE_CLICK_EDIT_TASK:
+        case CLICK_EDIT_TASK:
           startActivity(TaskAddEditActivity.newIntent(this, (String) state.getData().get(Constants.Key.ID)));
           break;
-        case STATE_DELETE_TASK:
+        case DELETE_TASK:
           finish();
           break;
       }

@@ -39,6 +39,13 @@ public class Task {
     mDescription = description;
   }
 
+  protected Task(String id, String title, String description, boolean completed) {
+    mId = id;
+    mTitle = title;
+    mDescription = description;
+    mCompleted = completed;
+  }
+
   public Task(String title, String description) {
     this(UUID.randomUUID().toString(), title, description);
   }

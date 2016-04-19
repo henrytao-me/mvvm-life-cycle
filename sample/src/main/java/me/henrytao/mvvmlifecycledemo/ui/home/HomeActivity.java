@@ -86,7 +86,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     manageSubscription(mViewModel.getState().subscribe(state -> {
       switch (state.getName()) {
-        case STATE_CLICK_ADD_NEW_TASKS:
+        case CLICK_ADD_NEW_TASKS:
           startActivity(TaskAddEditActivity.newIntent(this));
           break;
       }

@@ -62,7 +62,7 @@ public class TaskDetailViewModel extends BaseViewModel<TaskDetailViewModel.State
           completed.set(task.isCompleted());
         }), UnsubscribeLifeCycle.DESTROY);
 
-    manageSubscription(mTaskService.observeTaskChange()
+    manageSubscription(mTaskService.observeTaskUpdate()
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(task -> {
@@ -77,11 +77,11 @@ public class TaskDetailViewModel extends BaseViewModel<TaskDetailViewModel.State
     manageSubscription(mTaskService.remove(mTask.getId())
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(task -> setState(State.STATE_DELETE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+        .subscribe(task -> setState(State.DELETE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
   }
 
   public void onEditTaskClick() {
-    setState(State.STATE_CLICK_EDIT_TASK, Constants.Key.ID, mTask.getId());
+    setState(State.CLICK_EDIT_TASK, Constants.Key.ID, mTask.getId());
   }
 
   public void onTaskCheckedChanged(boolean isChecked) {
@@ -89,21 +89,21 @@ public class TaskDetailViewModel extends BaseViewModel<TaskDetailViewModel.State
       manageSubscription(mTaskService.complete(mTask.getId())
           .subscribeOn(Schedulers.computation())
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(aVoid -> setState(State.STATE_COMPLETE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+          .subscribe(aVoid -> setState(State.COMPLETE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     } else {
       manageSubscription(mTaskService.active(mTask.getId())
           .subscribeOn(Schedulers.computation())
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(aVoid -> setState(State.STATE_ACTIVE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+          .subscribe(aVoid -> setState(State.ACTIVE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
   }
 
   public enum State {
-    STATE_CLICK_EDIT_TASK,
+    CLICK_EDIT_TASK,
 
-    STATE_ACTIVE_TASK,
-    STATE_COMPLETE_TASK,
+    ACTIVE_TASK,
+    COMPLETE_TASK,
 
-    STATE_DELETE_TASK
+    DELETE_TASK
   }
 }

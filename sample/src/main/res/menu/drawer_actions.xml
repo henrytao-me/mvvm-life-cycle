@@ -19,5 +19,6 @@
   <item
     android:id="@+id/menu_item_statistics_navigation"
     android:icon="@drawable/ic_assessment"
-    android:title="@string/statistics_title" />
+    android:title="@string/statistics_title"
+    android:visible="false" />
 </menu>

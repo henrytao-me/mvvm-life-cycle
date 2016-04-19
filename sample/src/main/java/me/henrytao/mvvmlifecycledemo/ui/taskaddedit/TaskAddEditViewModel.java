@@ -54,7 +54,7 @@ public class TaskAddEditViewModel extends BaseViewModel<TaskAddEditViewModel.Sta
           .subscribe(task -> {
             title.set(task.getTitle());
             description.set(task.getDescription());
-          }), UnsubscribeLifeCycle.DESTROY);
+          }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
   }
 
@@ -76,15 +76,13 @@ public class TaskAddEditViewModel extends BaseViewModel<TaskAddEditViewModel.Sta
     boolean isValid = !TextUtils.isEmpty(title);
 
     if (!isValid) {
-      setState(State.STATE_MISSING_TITLE);
+      setState(State.MISSING_TITLE);
     } else {
-      setState(State.STATE_CREATING_TASK);
+      setState(State.CREATING_TASK);
       manageSubscription(mTaskService.create(title, description)
           .subscribeOn(Schedulers.computation())
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(task -> {
-            setState(State.STATE_CREATED_TASK);
-          }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+          .subscribe(task -> setState(State.CREATED_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
   }
 
@@ -94,25 +92,23 @@ public class TaskAddEditViewModel extends BaseViewModel<TaskAddEditViewModel.Sta
     boolean isValid = !TextUtils.isEmpty(title);
 
     if (!isValid) {
-      setState(State.STATE_MISSING_TITLE);
+      setState(State.MISSING_TITLE);
     } else {
-      setState(State.STATE_UPDATING_TASK);
+      setState(State.UPDATING_TASK);
       manageSubscription(mTaskService.update(mTaskId, title, description)
           .subscribeOn(Schedulers.computation())
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(task -> {
-            setState(State.STATE_UPDATED_TASK);
-          }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+          .subscribe(task -> setState(State.UPDATED_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
   }
 
   public enum State {
-    STATE_MISSING_TITLE,
+    MISSING_TITLE,
 
-    STATE_CREATED_TASK,
-    STATE_CREATING_TASK,
+    CREATED_TASK,
+    CREATING_TASK,
 
-    STATE_UPDATED_TASK,
-    STATE_UPDATING_TASK
+    UPDATED_TASK,
+    UPDATING_TASK
   }
 }
