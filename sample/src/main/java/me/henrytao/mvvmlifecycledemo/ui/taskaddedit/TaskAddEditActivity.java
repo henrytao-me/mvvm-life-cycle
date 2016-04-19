@@ -18,14 +18,19 @@ package me.henrytao.mvvmlifecycledemo.ui.taskaddedit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import me.henrytao.mdcore.utils.ResourceUtils;
+import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.R;
-import me.henrytao.mvvmlifecycledemo.base.BaseActivity;
+import me.henrytao.mvvmlifecycledemo.databinding.TaskAddEditActivityBinding;
+import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
+import me.henrytao.mvvmlifecycledemo.ui.base.Constants;
 
 /**
  * Created by henrytao on 4/2/16.
@@ -33,29 +38,77 @@ import me.henrytao.mvvmlifecycledemo.base.BaseActivity;
 public class TaskAddEditActivity extends BaseActivity {
 
   public static Intent newIntent(Context context) {
+    return newIntent(context, null);
+  }
+
+  public static Intent newIntent(Context context, String taskId) {
     Intent intent = new Intent(context, TaskAddEditActivity.class);
+    Bundle bundle = new Bundle();
+    bundle.putString(Constants.Extra.ID, taskId);
+    intent.putExtras(bundle);
     return intent;
   }
 
-  @Bind(R.id.toolbar)
-  Toolbar vToolbar;
+  private TaskAddEditActivityBinding mBinding;
+
+  private TaskAddEditViewModel mViewModel;
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_task_add_edit, menu);
+    ResourceUtils.supportDrawableTint(this, menu, ResourceUtils.Palette.PRIMARY);
+    return super.onCreateOptionsMenu(menu);
+  }
 
   @Override
   public void onInitializeViewModels() {
+    Bundle bundle = getIntent().getExtras();
+    String taskId = bundle.getString(Constants.Extra.ID);
+
+    setTitle(!TextUtils.isEmpty(taskId) ? R.string.edit_task : R.string.add_task);
+
+    mViewModel = new TaskAddEditViewModel(taskId);
+    addViewModel(mViewModel);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_done:
+        mViewModel.onDoneClick();
+        break;
+    }
+    return true;
   }
 
   @Override
   public void onSetContentView(Bundle savedInstanceState) {
-    setContentView(R.layout.task_add_edit_activity);
-  }
+    mBinding = DataBindingUtil.setContentView(this, R.layout.task_add_edit_activity);
+    mBinding.setViewModel(mViewModel);
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    ButterKnife.bind(this);
+    setSupportActionBar(mBinding.toolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    mBinding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
+    ResourceUtils.supportDrawableTint(this, mBinding.toolbar, ResourceUtils.Palette.PRIMARY);
 
-    setSupportActionBar(vToolbar);
-    vToolbar.setNavigationOnClickListener(v -> onBackPressed());
-    ResourceUtils.supportDrawableTint(this, vToolbar, ResourceUtils.Palette.PRIMARY);
+    manageSubscription(mViewModel.getState().subscribe(state -> {
+      switch (state.getName()) {
+        case CREATED_TASK:
+          finish();
+          break;
+        case CREATING_TASK:
+          // TODO: should handle progressbar
+          break;
+        case MISSING_TITLE:
+          Snackbar.make(findViewById(R.id.container), R.string.empty_task_message, Snackbar.LENGTH_SHORT).show();
+          break;
+        case UPDATING_TASK:
+          // TODO: should handle progressbar
+          break;
+        case UPDATED_TASK:
+          finish();
+          break;
+      }
+    }), UnsubscribeLifeCycle.DESTROY_VIEW);
   }
 }

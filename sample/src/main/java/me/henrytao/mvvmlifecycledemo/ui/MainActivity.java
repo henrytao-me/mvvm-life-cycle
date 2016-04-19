@@ -19,8 +19,8 @@ package me.henrytao.mvvmlifecycledemo.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
-import me.henrytao.mvvmlifecycledemo.base.BaseActivity;
-import me.henrytao.mvvmlifecycledemo.ui.tasks.TasksActivity;
+import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
+import me.henrytao.mvvmlifecycledemo.ui.home.HomeActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -30,8 +30,8 @@ public class MainActivity extends BaseActivity {
 
   @Override
   public void onSetContentView(Bundle savedInstanceState) {
-    Intent intent = TasksActivity.newIntent(this);
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+    Intent intent = HomeActivity.newIntent(this);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
     startActivity(intent);
     overridePendingTransition(0, 0);
     finish();

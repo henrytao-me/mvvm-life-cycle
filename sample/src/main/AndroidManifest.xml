@@ -16,12 +16,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="me.henrytao.mvvmlifecycledemo">
 
-  <uses-permission android:name="com.android.vending.BILLING" />
-
   <application
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
+    android:name=".App"
     android:theme="@style/AppTheme">
     <activity
       android:label="@string/app_name"
@@ -33,14 +32,14 @@
       </intent-filter>
     </activity>
     <activity
-      android:label="@string/title_activity_info"
-      android:name=".ui.info.InfoActivity" />
-    <activity
-      android:label="@string/title_activity_tasks"
-      android:name=".ui.tasks.TasksActivity" />
+      android:label="@string/title_activity_home"
+      android:name=".ui.home.HomeActivity" />
     <activity
       android:label="@string/title_activity_task_add_edit"
-      android:name=".ui.taskaddedit.TaskAddEditActivity" />
+      android:name=".ui.taskaddedit.TaskAddEditActivity"
+      android:windowSoftInputMode="adjustResize" />
+    <activity
+      android:label="@string/title_activity_task_detail"
+      android:name=".ui.taskdetail.TaskDetailActivity" />
   </application>
-
 </manifest>

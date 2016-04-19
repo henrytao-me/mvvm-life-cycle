@@ -39,6 +39,7 @@
   <string name="menu_filter">Filter</string>
   <string name="menu_clear">Clear completed</string>
   <string name="menu_delete_task">Delete task</string>
+  <string name="menu_done">Done</string>
   <string name="navigation_view_header_title">TO-DOs</string>
   <string name="title_hint">Title</string>
   <string name="description_hint">Enter your TO-DO here.</string>
@@ -157,7 +158,8 @@
   <string name="hello_world" translatable="false">Hello world!</string>
   <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="title_activity_info">@string/text_info</string>
-  <string name="title_activity_tasks">TO-DO-MVVM</string>
   <string name="title_activity_task_add_edit">New TO-DO</string>
+  <string name="title_activity_home">TO-DO-MVVM</string>
+  <string name="title_activity_task_detail">TO-DO-MVVM Task Detail</string>
   <string name="action_settings">Settings</string>
 </resources>
