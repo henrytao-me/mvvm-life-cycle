@@ -72,6 +72,15 @@ public abstract class MVVMViewModelWithEventDispatcher extends MVVMViewModel {
     return sEventSubject.get(eventName).subscribe(event, onError);
   }
 
+  protected static Subscription subscribe(Enum eventName, Event event) {
+    return subscribe(eventName.toString(), event);
+  }
+
+  protected static Subscription subscribe(String eventName, Event event) {
+    initEventSubject(eventName);
+    return sEventSubject.get(eventName).subscribe(event);
+  }
+
   private static void initEventSubject(String eventName) {
     if (!sEventSubject.containsKey(eventName)) {
       sEventSubject.put(eventName, PublishSubject.create());

@@ -28,15 +28,9 @@ import java.util.Locale;
  */
 public class Ln {
 
-  private static final String TAG = "ln";
+  private static final String TAG = "MVVMLifeCycle";
 
   public static boolean DEBUG = false;
-
-  public static void d(String tag, String format, Object... args) {
-    if (DEBUG) {
-      Log.d(tag, String.format(Locale.US, format, args));
-    }
-  }
 
   public static void d(String format, Object... args) {
     d(TAG, format, args);
@@ -52,12 +46,6 @@ public class Ln {
     d(TAG, throwable);
   }
 
-  public static void e(String tag, String format, Object... args) {
-    if (DEBUG) {
-      Log.e(tag, String.format(Locale.US, format, args));
-    }
-  }
-
   public static void e(String format, Object... args) {
     e(TAG, format, args);
   }
@@ -70,12 +58,6 @@ public class Ln {
 
   public static void e(Throwable throwable) {
     e(TAG, throwable);
-  }
-
-  public static void i(String tag, String format, Object... args) {
-    if (DEBUG) {
-      Log.i(tag, String.format(Locale.US, format, args));
-    }
   }
 
   public static void i(String format, Object... args) {
@@ -94,12 +76,6 @@ public class Ln {
     }
   }
 
-  public static void v(String tag, String format, Object... args) {
-    if (DEBUG) {
-      Log.v(tag, String.format(Locale.US, format, args));
-    }
-  }
-
   public static void v(String format, Object... args) {
     v(TAG, format, args);
   }
@@ -114,12 +90,6 @@ public class Ln {
     v(TAG, throwable);
   }
 
-  public static void w(String tag, String format, Object... args) {
-    if (DEBUG) {
-      Log.w(tag, String.format(Locale.US, format, args));
-    }
-  }
-
   public static void w(String format, Object... args) {
     w(TAG, format, args);
   }
@@ -132,6 +102,18 @@ public class Ln {
 
   public static void w(Throwable throwable) {
     w(TAG, throwable);
+  }
+
+  protected static void d(String tag, String format, Object... args) {
+    if (DEBUG) {
+      Log.d(tag, String.format(Locale.US, format, args));
+    }
+  }
+
+  protected static void e(String tag, String format, Object... args) {
+    if (DEBUG) {
+      Log.e(tag, String.format(Locale.US, format, args));
+    }
   }
 
   protected static String getStackTraceString(Throwable tr) {
@@ -154,5 +136,23 @@ public class Ln {
     tr.printStackTrace(pw);
     pw.flush();
     return sw.toString();
+  }
+
+  protected static void i(String tag, String format, Object... args) {
+    if (DEBUG) {
+      Log.i(tag, String.format(Locale.US, format, args));
+    }
+  }
+
+  protected static void v(String tag, String format, Object... args) {
+    if (DEBUG) {
+      Log.v(tag, String.format(Locale.US, format, args));
+    }
+  }
+
+  protected static void w(String tag, String format, Object... args) {
+    if (DEBUG) {
+      Log.w(tag, String.format(Locale.US, format, args));
+    }
   }
 }

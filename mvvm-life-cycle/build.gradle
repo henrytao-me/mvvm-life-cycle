@@ -41,7 +41,14 @@ dependencies {
 
   compile rootProject.ext.dependencies["io.reactivex:rxjava"]
   compile rootProject.ext.dependencies["io.reactivex:rxandroid"]
+
+  testCompile rootProject.ext.dependencies["junit:junit"]
+  testCompile rootProject.ext.dependencies["org.hamcrest:hamcrest-core"]
+  testCompile rootProject.ext.dependencies["org.hamcrest:hamcrest-library"]
+  testCompile rootProject.ext.dependencies["org.hamcrest:hamcrest-integration"]
+  testCompile rootProject.ext.dependencies["org.robolectric:robolectric"]
+  testCompile rootProject.ext.dependencies["org.robolectric:shadows-support-v4"]
 }
 
-apply from: "https://raw.githubusercontent.com/henrytao-me/bintray/master/installv1.gradle"
-apply from: "https://raw.githubusercontent.com/henrytao-me/bintray/master/bintrayv1.gradle"
+//apply from: "https://raw.githubusercontent.com/henrytao-me/bintray/master/installv1.gradle"
+//apply from: "https://raw.githubusercontent.com/henrytao-me/bintray/master/bintrayv1.gradle"

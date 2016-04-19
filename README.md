@@ -26,6 +26,8 @@ Please note that the app on the Play store is not always the latest version.
 
 ![Feature](./screenshots/mvvm-life-cycle.jpg)
 
+![Data Flow](./screenshots/mvvm-data-flow.jpg)
+
 
 ## Contributing
 
