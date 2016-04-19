@@ -29,20 +29,18 @@ import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.R;
 import me.henrytao.mvvmlifecycledemo.databinding.TaskDetailActivityBinding;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
+import me.henrytao.mvvmlifecycledemo.ui.base.Constants;
 import me.henrytao.mvvmlifecycledemo.ui.taskaddedit.TaskAddEditActivity;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by henrytao on 4/2/16.
  */
 public class TaskDetailActivity extends BaseActivity {
 
-  private static final String ARG_TASK_ID = "ARG_TASK_ID";
-
   public static Intent newIntent(Context context, String taskId) {
     Intent intent = new Intent(context, TaskDetailActivity.class);
     Bundle bundle = new Bundle();
-    bundle.putString(ARG_TASK_ID, taskId);
+    bundle.putString(Constants.Extra.ID, taskId);
     intent.putExtras(bundle);
     return intent;
   }
@@ -61,7 +59,7 @@ public class TaskDetailActivity extends BaseActivity {
   @Override
   public void onInitializeViewModels() {
     Bundle bundle = getIntent().getExtras();
-    String taskId = bundle.getString(ARG_TASK_ID);
+    String taskId = bundle.getString(Constants.Extra.ID);
 
     mViewModel = new TaskDetailViewModel(taskId);
     addViewModel(mViewModel);
@@ -87,18 +85,18 @@ public class TaskDetailActivity extends BaseActivity {
     mBinding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
     ResourceUtils.supportDrawableTint(this, mBinding.toolbar, ResourceUtils.Palette.PRIMARY);
 
-    manageSubscription(mViewModel.getState().observeOn(AndroidSchedulers.mainThread()).subscribe(state -> {
+    manageSubscription(mViewModel.getState().subscribe(state -> {
       switch (state.getName()) {
-        case TaskDetailViewModel.STATE_ACTIVE_TASK:
+        case STATE_ACTIVE_TASK:
           Snackbar.make(mBinding.container, R.string.task_marked_active, Snackbar.LENGTH_SHORT).show();
           break;
-        case TaskDetailViewModel.STATE_COMPLETE_TASK:
+        case STATE_COMPLETE_TASK:
           Snackbar.make(mBinding.container, R.string.task_marked_complete, Snackbar.LENGTH_SHORT).show();
           break;
-        case TaskDetailViewModel.STATE_CLICK_EDIT_TASK:
-          startActivity(TaskAddEditActivity.newIntent(this, (String) state.getData().get(TaskDetailViewModel.KEY_ID)));
+        case STATE_CLICK_EDIT_TASK:
+          startActivity(TaskAddEditActivity.newIntent(this, (String) state.getData().get(Constants.Key.ID)));
           break;
-        case TaskDetailViewModel.STATE_DELETE_TASK:
+        case STATE_DELETE_TASK:
           finish();
           break;
       }

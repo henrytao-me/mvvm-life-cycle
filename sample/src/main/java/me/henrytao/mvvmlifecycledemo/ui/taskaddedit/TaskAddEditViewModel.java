@@ -25,24 +25,13 @@ import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.data.service.TaskService;
 import me.henrytao.mvvmlifecycledemo.di.Injector;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
-import me.henrytao.mvvmlifecycledemo.ui.base.State;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by henrytao on 4/5/16.
  */
-public class TaskAddEditViewModel extends BaseViewModel {
-
-  public static final String STATE_CREATED_TASK = "STATE_CREATED_TASK";
-
-  public static final String STATE_CREATING_TASK = "STATE_CREATING_TASK";
-
-  public static final String STATE_MISSING_TITLE = "STATE_MISSING_TITLE";
-
-  public static final String STATE_UPDATED_TASK = "STATE_UPDATE_TASK";
-
-  public static final String STATE_UPDATING_TASK = "STATE_UPDATING_TASK";
+public class TaskAddEditViewModel extends BaseViewModel<TaskAddEditViewModel.State> {
 
   private final String mTaskId;
 
@@ -87,14 +76,14 @@ public class TaskAddEditViewModel extends BaseViewModel {
     boolean isValid = !TextUtils.isEmpty(title);
 
     if (!isValid) {
-      setState(State.create(STATE_MISSING_TITLE));
+      setState(State.STATE_MISSING_TITLE);
     } else {
-      setState(State.create(STATE_CREATING_TASK));
+      setState(State.STATE_CREATING_TASK);
       manageSubscription(mTaskService.create(title, description)
           .subscribeOn(Schedulers.computation())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(task -> {
-            setState(State.create(STATE_CREATED_TASK));
+            setState(State.STATE_CREATED_TASK);
           }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
   }
@@ -105,15 +94,25 @@ public class TaskAddEditViewModel extends BaseViewModel {
     boolean isValid = !TextUtils.isEmpty(title);
 
     if (!isValid) {
-      setState(State.create(STATE_MISSING_TITLE));
+      setState(State.STATE_MISSING_TITLE);
     } else {
-      setState(State.create(STATE_UPDATING_TASK));
+      setState(State.STATE_UPDATING_TASK);
       manageSubscription(mTaskService.update(mTaskId, title, description)
           .subscribeOn(Schedulers.computation())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(task -> {
-            setState(State.create(STATE_UPDATED_TASK));
+            setState(State.STATE_UPDATED_TASK);
           }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
+  }
+
+  public enum State {
+    STATE_MISSING_TITLE,
+
+    STATE_CREATED_TASK,
+    STATE_CREATING_TASK,
+
+    STATE_UPDATED_TASK,
+    STATE_UPDATING_TASK
   }
 }

@@ -18,6 +18,7 @@ package me.henrytao.mvvmlifecycledemo.data.adapter;
 
 import java.util.List;
 
+import me.henrytao.mvvmlifecycledemo.data.exception.DataNotFoundException;
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import rx.Observable;
 
@@ -26,9 +27,9 @@ import rx.Observable;
  */
 public interface LocalAdapter {
 
-  void activeTask(String taskId);
+  void activeTask(String taskId) throws DataNotFoundException;
 
-  void completeTask(String taskId);
+  void completeTask(String taskId) throws DataNotFoundException;
 
   Task createTask(String title, String description);
 
@@ -36,13 +37,13 @@ public interface LocalAdapter {
 
   List<Task> getTasks();
 
-  Observable<Task> observeTaskChange();
-
-  Observable<Task> observeTaskCreate();
+  Observable<Task> observeTaskAdd();
 
   Observable<Task> observeTaskRemove();
 
-  Task removeTask(String taskId);
+  Observable<Task> observeTaskUpdate();
 
-  Task updateTask(String taskId, String title, String description);
+  void removeTask(String taskId) throws DataNotFoundException;
+
+  void updateTask(String taskId, String title, String description) throws DataNotFoundException;
 }

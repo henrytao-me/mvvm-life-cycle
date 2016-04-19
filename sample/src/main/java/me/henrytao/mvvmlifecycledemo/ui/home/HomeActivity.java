@@ -20,25 +20,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
+
+import java.util.concurrent.TimeUnit;
 
 import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.R;
 import me.henrytao.mvvmlifecycledemo.databinding.HomeActivityBinding;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
+import me.henrytao.mvvmlifecycledemo.ui.base.Constants;
 import me.henrytao.mvvmlifecycledemo.ui.taskaddedit.TaskAddEditActivity;
 import me.henrytao.mvvmlifecycledemo.ui.tasks.TasksFragment;
-import rx.android.schedulers.AndroidSchedulers;
+import rx.Observable;
 
 /**
  * Created by henrytao on 4/13/16.
  */
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-  protected static final int DELAY_TIMEOUT = 200;
 
   public static Intent newIntent(Context context) {
     return new Intent(context, HomeActivity.class);
@@ -46,20 +46,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
   private HomeActivityBinding mBinding;
 
-  private Handler mHandler;
-
-  private Runnable mRunner;
-
-  private int mSelectedMenuItemId;
-
   private HomeViewModel mViewModel;
-
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-    mRunner = null;
-    mHandler = null;
-  }
 
   @Override
   public void onInitializeViewModels() {
@@ -69,17 +56,11 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
-    mSelectedMenuItemId = item.getItemId();
     mBinding.drawerLayout.closeDrawers();
-    mHandler.removeCallbacks(mRunner);
-    mHandler.postDelayed(mRunner, DELAY_TIMEOUT);
+    manageSubscription(Observable
+        .timer(Constants.Animation.SHORT, TimeUnit.MILLISECONDS)
+        .subscribe(l -> onNavigationItemSelected(item.getItemId())), UnsubscribeLifeCycle.DESTROY_VIEW);
     return true;
-  }
-
-  @Override
-  public void onPause() {
-    super.onPause();
-    mHandler.removeCallbacks(mRunner);
   }
 
   @Override
@@ -89,13 +70,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     setSupportActionBar(mBinding.toolbar);
 
-    ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mBinding.drawerLayout, mBinding.toolbar,
-        R.string.text_open, R.string.text_close);
+    ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+        this, mBinding.drawerLayout, mBinding.toolbar, R.string.text_open, R.string.text_close);
     mBinding.drawerLayout.addDrawerListener(actionBarDrawerToggle);
     actionBarDrawerToggle.syncState();
-
-    mHandler = new Handler();
-    mRunner = () -> onNavigationItemSelected(mSelectedMenuItemId);
 
     mBinding.navigationView.setNavigationItemSelectedListener(this);
 
@@ -106,9 +84,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
           .commit();
     }
 
-    manageSubscription(mViewModel.getState().observeOn(AndroidSchedulers.mainThread()).subscribe(state -> {
+    manageSubscription(mViewModel.getState().subscribe(state -> {
       switch (state.getName()) {
-        case HomeViewModel.STATE_CLICK_ADD_NEW_TASKS:
+        case STATE_CLICK_ADD_NEW_TASKS:
           startActivity(TaskAddEditActivity.newIntent(this));
           break;
       }

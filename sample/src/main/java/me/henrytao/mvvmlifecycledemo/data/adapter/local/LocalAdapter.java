@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import me.henrytao.mvvmlifecycledemo.data.exception.DataNotFoundException;
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import rx.Observable;
 import rx.subjects.PublishSubject;
@@ -34,44 +35,36 @@ public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.
   private static final List<Task> sTasks = new ArrayList<>();
 
   static {
-    Task task;
     for (int i = 0; i < 5; i++) {
-      task = new Task(String.format(Locale.US, "task %d", i + 1), String.format(Locale.US, "description %d", i + 1));
-      sTasks.add(task);
+      sTasks.add(new Task(String.format(Locale.US, "task %d", i + 1), String.format(Locale.US, "description %d", i + 1)));
     }
   }
 
-  private final PublishSubject<Task> mTaskChangedSubject = PublishSubject.create();
+  private final PublishSubject<Task> mTaskAddedSubject = PublishSubject.create();
 
-  private final PublishSubject<Task> mTaskCreatedSubject = PublishSubject.create();
+  private final PublishSubject<Task> mTaskRemovedSubject = PublishSubject.create();
 
-  private final PublishSubject<Task> mTaskRemoveSubject = PublishSubject.create();
+  private final PublishSubject<Task> mTaskUpdatedSubject = PublishSubject.create();
 
   @Override
-  public void activeTask(String taskId) {
-    Task task;
-    int n = sTasks.size();
-    for (int i = 0; i < n; i++) {
-      task = sTasks.get(i);
-      if (TextUtils.equals(task.getId(), taskId)) {
-        task.active();
-        mTaskChangedSubject.onNext(task);
-        break;
-      }
+  public void activeTask(String taskId) throws DataNotFoundException {
+    Task task = findTask(taskId);
+    if (task != null) {
+      task.active();
+      mTaskUpdatedSubject.onNext(task);
+    } else {
+      throw new DataNotFoundException();
     }
   }
 
   @Override
-  public void completeTask(String taskId) {
-    Task task;
-    int n = sTasks.size();
-    for (int i = 0; i < n; i++) {
-      task = sTasks.get(i);
-      if (TextUtils.equals(task.getId(), taskId)) {
-        task.complete();
-        mTaskChangedSubject.onNext(task);
-        break;
-      }
+  public void completeTask(String taskId) throws DataNotFoundException {
+    Task task = findTask(taskId);
+    if (task != null) {
+      task.complete();
+      mTaskUpdatedSubject.onNext(task);
+    } else {
+      throw new DataNotFoundException();
     }
   }
 
@@ -79,21 +72,21 @@ public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.
   public Task createTask(String title, String description) {
     Task task = new Task(title, description);
     sTasks.add(task);
-    mTaskCreatedSubject.onNext(task);
+    mTaskAddedSubject.onNext(task);
     return task;
   }
 
   @Override
   public Task findTask(String taskId) {
-    Task task = null;
+    Task task;
     int n = sTasks.size();
     for (int i = 0; i < n; i++) {
-      if (TextUtils.equals(sTasks.get(i).getId(), taskId)) {
-        task = sTasks.get(i);
-        break;
+      task = sTasks.get(i);
+      if (TextUtils.equals(task.getId(), taskId)) {
+        return task;
       }
     }
-    return task;
+    return null;
   }
 
   @Override
@@ -102,34 +95,40 @@ public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.
   }
 
   @Override
-  public Observable<Task> observeTaskChange() {
-    return mTaskChangedSubject;
-  }
-
-  @Override
-  public Observable<Task> observeTaskCreate() {
-    return mTaskCreatedSubject;
+  public Observable<Task> observeTaskAdd() {
+    return mTaskAddedSubject;
   }
 
   @Override
   public Observable<Task> observeTaskRemove() {
-    return mTaskRemoveSubject;
+    return mTaskRemovedSubject;
   }
 
   @Override
-  public Task removeTask(String taskId) {
-    Task task = findTask(taskId);
-    sTasks.remove(task);
-    mTaskRemoveSubject.onNext(task);
-    return task;
+  public Observable<Task> observeTaskUpdate() {
+    return mTaskUpdatedSubject;
   }
 
   @Override
-  public Task updateTask(String taskId, String title, String description) {
+  public void removeTask(String taskId) throws DataNotFoundException {
     Task task = findTask(taskId);
-    task.setTitle(title);
-    task.setDescription(description);
-    mTaskChangedSubject.onNext(task);
-    return task;
+    if (task != null) {
+      sTasks.remove(task);
+      mTaskRemovedSubject.onNext(task);
+    } else {
+      throw new DataNotFoundException();
+    }
+  }
+
+  @Override
+  public void updateTask(String taskId, String title, String description) throws DataNotFoundException {
+    Task task = findTask(taskId);
+    if (task != null) {
+      task.setTitle(title);
+      task.setDescription(description);
+      mTaskUpdatedSubject.onNext(task);
+    } else {
+      throw new DataNotFoundException();
+    }
   }
 }

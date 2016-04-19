@@ -29,13 +29,12 @@ import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.R;
 import me.henrytao.mvvmlifecycledemo.databinding.TaskAddEditActivityBinding;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
+import me.henrytao.mvvmlifecycledemo.ui.base.Constants;
 
 /**
  * Created by henrytao on 4/2/16.
  */
 public class TaskAddEditActivity extends BaseActivity {
-
-  private static final String ARG_TASK_ID = "ARG_TASK_ID";
 
   public static Intent newIntent(Context context) {
     return newIntent(context, null);
@@ -44,7 +43,7 @@ public class TaskAddEditActivity extends BaseActivity {
   public static Intent newIntent(Context context, String taskId) {
     Intent intent = new Intent(context, TaskAddEditActivity.class);
     Bundle bundle = new Bundle();
-    bundle.putString(ARG_TASK_ID, taskId);
+    bundle.putString(Constants.Extra.ID, taskId);
     intent.putExtras(bundle);
     return intent;
   }
@@ -63,7 +62,7 @@ public class TaskAddEditActivity extends BaseActivity {
   @Override
   public void onInitializeViewModels() {
     Bundle bundle = getIntent().getExtras();
-    String taskId = bundle.getString(ARG_TASK_ID);
+    String taskId = bundle.getString(Constants.Extra.ID);
 
     mViewModel = new TaskAddEditViewModel(taskId);
     addViewModel(mViewModel);
@@ -91,19 +90,19 @@ public class TaskAddEditActivity extends BaseActivity {
 
     manageSubscription(mViewModel.getState().subscribe(state -> {
       switch (state.getName()) {
-        case TaskAddEditViewModel.STATE_CREATED_TASK:
+        case STATE_CREATED_TASK:
           finish();
           break;
-        case TaskAddEditViewModel.STATE_CREATING_TASK:
+        case STATE_CREATING_TASK:
           // TODO: should handle progressbar
           break;
-        case TaskAddEditViewModel.STATE_MISSING_TITLE:
+        case STATE_MISSING_TITLE:
           Snackbar.make(findViewById(R.id.container), R.string.empty_task_message, Snackbar.LENGTH_SHORT).show();
           break;
-        case TaskAddEditViewModel.STATE_UPDATING_TASK:
+        case STATE_UPDATING_TASK:
           // TODO: should handle progressbar
           break;
-        case TaskAddEditViewModel.STATE_UPDATED_TASK:
+        case STATE_UPDATED_TASK:
           finish();
           break;
       }

@@ -26,24 +26,14 @@ import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import me.henrytao.mvvmlifecycledemo.data.service.TaskService;
 import me.henrytao.mvvmlifecycledemo.di.Injector;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
-import me.henrytao.mvvmlifecycledemo.ui.base.State;
+import me.henrytao.mvvmlifecycledemo.ui.base.Constants;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by henrytao on 4/17/16.
  */
-public class TaskDetailViewModel extends BaseViewModel {
-
-  public static final String KEY_ID = "KEY_ID";
-
-  public static final String STATE_ACTIVE_TASK = "STATE_ACTIVE_TASK";
-
-  public static final String STATE_CLICK_EDIT_TASK = "STATE_CLICK_EDIT_TASK";
-
-  public static final String STATE_COMPLETE_TASK = "STATE_COMPLETE_TASK";
-
-  public static final String STATE_DELETE_TASK = "STATE_DELETE_TASK";
+public class TaskDetailViewModel extends BaseViewModel<TaskDetailViewModel.State> {
 
   public ObservableBoolean completed = new ObservableBoolean();
 
@@ -87,11 +77,11 @@ public class TaskDetailViewModel extends BaseViewModel {
     manageSubscription(mTaskService.remove(mTask.getId())
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(task -> setState(State.create(STATE_DELETE_TASK)), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+        .subscribe(task -> setState(State.STATE_DELETE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
   }
 
   public void onEditTaskClick() {
-    setState(State.create(STATE_CLICK_EDIT_TASK, KEY_ID, mTask.getId()));
+    setState(State.STATE_CLICK_EDIT_TASK, Constants.Key.ID, mTask.getId());
   }
 
   public void onTaskCheckedChanged(boolean isChecked) {
@@ -99,12 +89,21 @@ public class TaskDetailViewModel extends BaseViewModel {
       manageSubscription(mTaskService.complete(mTask.getId())
           .subscribeOn(Schedulers.computation())
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(aVoid -> setState(State.create(STATE_COMPLETE_TASK)), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+          .subscribe(aVoid -> setState(State.STATE_COMPLETE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     } else {
       manageSubscription(mTaskService.active(mTask.getId())
           .subscribeOn(Schedulers.computation())
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(aVoid -> setState(State.create(STATE_ACTIVE_TASK)), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+          .subscribe(aVoid -> setState(State.STATE_ACTIVE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
+  }
+
+  public enum State {
+    STATE_CLICK_EDIT_TASK,
+
+    STATE_ACTIVE_TASK,
+    STATE_COMPLETE_TASK,
+
+    STATE_DELETE_TASK
   }
 }

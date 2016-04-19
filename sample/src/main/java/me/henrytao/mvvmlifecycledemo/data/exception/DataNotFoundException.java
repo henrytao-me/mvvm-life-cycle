@@ -19,6 +19,6 @@ package me.henrytao.mvvmlifecycledemo.data.exception;
 /**
  * Created by henrytao on 4/18/16.
  */
-public class DataNotFoundException extends Throwable {
+public class DataNotFoundException extends Exception {
 
 }

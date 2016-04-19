@@ -37,15 +37,23 @@ public class TaskService {
 
   public Observable<Void> active(String taskId) {
     return Observable.create(subscriber -> {
-      mLocalAdapter.activeTask(taskId);
-      SubscriptionUtils.onNextAndComplete(subscriber);
+      try {
+        mLocalAdapter.activeTask(taskId);
+        SubscriptionUtils.onNextAndComplete(subscriber);
+      } catch (Exception e) {
+        SubscriptionUtils.onError(subscriber, e);
+      }
     });
   }
 
   public Observable<Void> complete(String taskId) {
     return Observable.create(subscriber -> {
-      mLocalAdapter.completeTask(taskId);
-      SubscriptionUtils.onNextAndComplete(subscriber);
+      try {
+        mLocalAdapter.completeTask(taskId);
+        SubscriptionUtils.onNextAndComplete(subscriber);
+      } catch (Exception e) {
+        SubscriptionUtils.onError(subscriber, e);
+      }
     });
   }
 
@@ -75,26 +83,36 @@ public class TaskService {
   }
 
   public Observable<Task> observeTaskChange() {
-    return mLocalAdapter.observeTaskChange();
+    return mLocalAdapter.observeTaskUpdate();
   }
 
   public Observable<Task> observeTaskCreate() {
-    return mLocalAdapter.observeTaskCreate();
+    return mLocalAdapter.observeTaskAdd();
   }
 
   public Observable<Task> observeTaskRemove() {
     return mLocalAdapter.observeTaskRemove();
   }
 
-  public Observable<Task> remove(String taskId) {
+  public Observable<Void> remove(String taskId) {
     return Observable.create(subscriber -> {
-      SubscriptionUtils.onNextAndComplete(subscriber, mLocalAdapter.removeTask(taskId));
+      try {
+        mLocalAdapter.removeTask(taskId);
+        SubscriptionUtils.onNextAndComplete(subscriber);
+      } catch (Exception e) {
+        SubscriptionUtils.onError(subscriber, e);
+      }
     });
   }
 
-  public Observable<Task> update(String taskId, String title, String description) {
+  public Observable<Void> update(String taskId, String title, String description) {
     return Observable.create(subscriber -> {
-      SubscriptionUtils.onNextAndComplete(subscriber, mLocalAdapter.updateTask(taskId, title, description));
+      try {
+        mLocalAdapter.updateTask(taskId, title, description);
+        SubscriptionUtils.onNextAndComplete(subscriber);
+      } catch (Exception e) {
+        SubscriptionUtils.onError(subscriber, e);
+      }
     });
   }
 }

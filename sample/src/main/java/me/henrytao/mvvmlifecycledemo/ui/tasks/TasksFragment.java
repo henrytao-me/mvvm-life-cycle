@@ -36,8 +36,8 @@ import me.henrytao.mvvmlifecycledemo.R;
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import me.henrytao.mvvmlifecycledemo.databinding.TasksFragmentBinding;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseFragment;
+import me.henrytao.mvvmlifecycledemo.ui.base.Constants;
 import me.henrytao.mvvmlifecycledemo.ui.taskdetail.TaskDetailActivity;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by henrytao on 4/2/16.
@@ -80,24 +80,24 @@ public class TasksFragment extends BaseFragment {
 
     manageSubscription(mViewModel.getState().subscribe(state -> {
       switch (state.getName()) {
-        case TasksViewModel.STATE_ACTIVE_TASK:
+        case STATE_ACTIVE_TASK:
           Snackbar.make(mBinding.swipeRefreshLayout, R.string.task_marked_active, Snackbar.LENGTH_SHORT).show();
           break;
-        case TasksViewModel.STATE_ADDED_TASK:
+        case STATE_ADDED_TASK:
           mAdapter.notifyDataSetChanged();
           mBinding.swipeRefreshLayout.setRefreshing(false);
           break;
-        case TasksViewModel.STATE_UPDATE_TASK:
+        case STATE_UPDATE_TASK:
           mAdapter.notifyDataSetChanged();
           break;
-        case TasksViewModel.STATE_CLICK_TASK:
-          String taskId = (String) state.getData().get(TasksViewModel.KEY_ID);
+        case STATE_CLICK_TASK:
+          String taskId = (String) state.getData().get(Constants.Key.ID);
           startActivity(TaskDetailActivity.newIntent(getContext(), taskId));
           break;
-        case TasksViewModel.STATE_COMPLETE_TASK:
+        case STATE_COMPLETE_TASK:
           Snackbar.make(mBinding.swipeRefreshLayout, R.string.task_marked_complete, Snackbar.LENGTH_SHORT).show();
           break;
-        case TasksViewModel.STATE_REMOVE_TASK:
+        case STATE_REMOVE_TASK:
           mAdapter.notifyDataSetChanged();
           break;
       }

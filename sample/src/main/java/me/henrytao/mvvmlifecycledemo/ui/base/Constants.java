@@ -21,4 +21,20 @@ package me.henrytao.mvvmlifecycledemo.ui.base;
  */
 public class Constants {
 
+  public interface Animation {
+
+    int LONG = 600;
+    int MEDIUM = 400;
+    int SHORT = 200;
+  }
+
+  public interface Extra {
+
+    String ID = "ID";
+  }
+
+  public interface Key {
+
+    String ID = "ID";
+  }
 }

@@ -29,28 +29,14 @@ import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import me.henrytao.mvvmlifecycledemo.data.service.TaskService;
 import me.henrytao.mvvmlifecycledemo.di.Injector;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
-import me.henrytao.mvvmlifecycledemo.ui.base.State;
+import me.henrytao.mvvmlifecycledemo.ui.base.Constants;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by henrytao on 4/15/16.
  */
-public class TasksViewModel extends BaseViewModel {
-
-  public static final String KEY_ID = "KEY_ID";
-
-  public static final String STATE_ACTIVE_TASK = "STATE_ACTIVE_TASK";
-
-  public static final String STATE_ADDED_TASK = "STATE_ADDED_TASK";
-
-  public static final String STATE_CLICK_TASK = "STATE_CLICK_TASK";
-
-  public static final String STATE_COMPLETE_TASK = "STATE_COMPLETE_TASK";
-
-  public static final String STATE_REMOVE_TASK = "STATE_REMOVE_TASK";
-
-  public static final String STATE_UPDATE_TASK = "STATE_UPDATE_TASK";
+public class TasksViewModel extends BaseViewModel<TasksViewModel.State> {
 
   @Inject
   protected TaskService mTaskService;
@@ -72,7 +58,7 @@ public class TasksViewModel extends BaseViewModel {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(task -> {
           mTasks.add(task);
-          setState(State.create(STATE_ADDED_TASK));
+          setState(State.STATE_ADDED_TASK);
         }), UnsubscribeLifeCycle.DESTROY);
 
     manageSubscription(mTaskService.observeTaskChange()
@@ -89,7 +75,7 @@ public class TasksViewModel extends BaseViewModel {
               tmp.setCompleted(task.isCompleted());
             }
           }
-          setState(State.create(STATE_UPDATE_TASK));
+          setState(State.STATE_UPDATE_TASK);
         }), UnsubscribeLifeCycle.DESTROY);
 
     manageSubscription(mTaskService.observeTaskRemove()
@@ -97,7 +83,7 @@ public class TasksViewModel extends BaseViewModel {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(task -> {
           mTasks.remove(task);
-          setState(State.create(STATE_REMOVE_TASK));
+          setState(State.STATE_REMOVE_TASK);
         }), UnsubscribeLifeCycle.DESTROY);
 
     reloadData();
@@ -114,7 +100,7 @@ public class TasksViewModel extends BaseViewModel {
         .subscribe(tasks -> {
           mTasks.clear();
           mTasks.addAll(tasks);
-          setState(State.create(STATE_ADDED_TASK));
+          setState(State.STATE_ADDED_TASK);
         }), UnsubscribeLifeCycle.DESTROY);
   }
 
@@ -122,17 +108,28 @@ public class TasksViewModel extends BaseViewModel {
     manageSubscription(mTaskService.active(task.getId())
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(aVoid -> setState(State.create(STATE_ACTIVE_TASK)), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+        .subscribe(aVoid -> setState(State.STATE_ACTIVE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
   }
 
   private void onTaskItemClick(Task task) {
-    setState(State.create(STATE_CLICK_TASK, KEY_ID, task.getId()));
+    setState(State.STATE_CLICK_TASK, Constants.Key.ID, task.getId());
   }
 
   private void onTaskItemComplete(Task task) {
     manageSubscription(mTaskService.complete(task.getId())
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(aVoid -> setState(State.create(STATE_COMPLETE_TASK)), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+        .subscribe(aVoid -> setState(State.STATE_COMPLETE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+  }
+
+  public enum State {
+    STATE_ACTIVE_TASK,
+    STATE_COMPLETE_TASK,
+
+    STATE_CLICK_TASK,
+
+    STATE_ADDED_TASK,
+    STATE_REMOVE_TASK,
+    STATE_UPDATE_TASK
   }
 }
