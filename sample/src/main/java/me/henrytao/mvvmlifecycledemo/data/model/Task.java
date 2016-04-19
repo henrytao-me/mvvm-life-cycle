@@ -41,7 +41,6 @@ public class Task {
 
   public Task(String title, String description) {
     this(UUID.randomUUID().toString(), title, description);
-
   }
 
   @Override

@@ -78,7 +78,7 @@ public class TasksFragment extends BaseFragment {
 
     mBinding.swipeRefreshLayout.setOnRefreshListener(() -> mViewModel.reloadData());
 
-    manageSubscription(mViewModel.getState().observeOn(AndroidSchedulers.mainThread()).subscribe(state -> {
+    manageSubscription(mViewModel.getState().subscribe(state -> {
       switch (state.getName()) {
         case TasksViewModel.STATE_ACTIVE_TASK:
           Snackbar.make(mBinding.swipeRefreshLayout, R.string.task_marked_active, Snackbar.LENGTH_SHORT).show();

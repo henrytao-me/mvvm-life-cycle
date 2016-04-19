@@ -44,6 +44,7 @@ public class TaskItemViewHolder extends RecyclerViewBindingViewHolder<Task> {
   @Override
   public void bind(Task data) {
     mViewModel.setTask(data);
+    mBinding.executePendingBindings();
   }
 
   @Override

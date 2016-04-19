@@ -18,7 +18,6 @@ package me.henrytao.mvvmlifecycle.recyclerview;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import java.util.List;

@@ -19,13 +19,19 @@ package me.henrytao.mvvmlifecycledemo.ui.tasks;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 
+import java.util.concurrent.TimeUnit;
+
+import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
+import rx.Observable;
 
 /**
  * Created by henrytao on 4/15/16.
  */
 public class TaskItemViewModel extends BaseViewModel {
+
+  private static final int MEDIUM = 400;
 
   public ObservableBoolean completed = new ObservableBoolean();
 
@@ -39,20 +45,16 @@ public class TaskItemViewModel extends BaseViewModel {
     register(this, Event.ON_TASK_ITEM_CLICK);
     register(this, Event.ON_TASK_ITEM_ACTIVE);
     register(this, Event.ON_TASK_ITEM_COMPLETE);
-
-    Class c = Task.class;
-    Task test = new Task(null, null);
-    if (test.getClass() == c) {
-
-    }
   }
 
   public void onItemCheckedChanged(boolean isChecked) {
-    if (isChecked) {
-      dispatch(Event.ON_TASK_ITEM_COMPLETE, mTask);
-    } else {
-      dispatch(Event.ON_TASK_ITEM_ACTIVE, mTask);
-    }
+    manageSubscription(Observable.timer(MEDIUM, TimeUnit.MILLISECONDS).subscribe(aBoolean -> {
+      if (isChecked) {
+        dispatch(Event.ON_TASK_ITEM_COMPLETE, mTask);
+      } else {
+        dispatch(Event.ON_TASK_ITEM_ACTIVE, mTask);
+      }
+    }), UnsubscribeLifeCycle.DESTROY);
   }
 
   public void onItemClick() {

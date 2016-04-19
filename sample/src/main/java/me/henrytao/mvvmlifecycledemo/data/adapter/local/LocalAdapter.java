@@ -35,7 +35,7 @@ public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.
 
   static {
     Task task;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 5; i++) {
       task = new Task(String.format(Locale.US, "task %d", i + 1), String.format(Locale.US, "description %d", i + 1));
       sTasks.add(task);
     }
