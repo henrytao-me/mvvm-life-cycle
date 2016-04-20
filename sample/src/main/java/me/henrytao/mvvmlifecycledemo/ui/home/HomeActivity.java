@@ -35,6 +35,7 @@ import me.henrytao.mvvmlifecycledemo.ui.base.Constants;
 import me.henrytao.mvvmlifecycledemo.ui.taskaddedit.TaskAddEditActivity;
 import me.henrytao.mvvmlifecycledemo.ui.tasks.TasksFragment;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by henrytao on 4/13/16.
@@ -60,6 +61,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     mBinding.drawerLayout.closeDrawers();
     manageSubscription(Observable
         .timer(Constants.Animation.SHORT, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(l -> onNavigationItemSelected(item.getItemId())), UnsubscribeLifeCycle.DESTROY_VIEW);
     return true;
   }
