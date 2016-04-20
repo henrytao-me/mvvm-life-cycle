@@ -25,9 +25,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import me.henrytao.mdcore.utils.AlertDialogBuilder;
 import me.henrytao.mdcore.utils.ResourceUtils;
 import me.henrytao.mvvmlifecycle.MVVMObserver;
 import me.henrytao.mvvmlifecycle.recyclerview.RecyclerViewBindingAdapter;
@@ -116,5 +118,18 @@ public class TasksFragment extends BaseFragment {
   public void onInitializeViewModels() {
     mViewModel = new TasksViewModel();
     addViewModel(mViewModel);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_filter:
+        new AlertDialogBuilder(getContext())
+            .setMessage("Let's try to implement this feature with MVVMLifeCycle. Don't hesitate to send me a question hi@henrytao.me")
+            .setPositiveButton("Close")
+            .show();
+        break;
+    }
+    return true;
   }
 }

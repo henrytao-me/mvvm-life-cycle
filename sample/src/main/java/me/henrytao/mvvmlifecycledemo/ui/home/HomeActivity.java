@@ -26,6 +26,7 @@ import android.view.MenuItem;
 
 import java.util.concurrent.TimeUnit;
 
+import me.henrytao.mdcore.utils.AlertDialogBuilder;
 import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.R;
 import me.henrytao.mvvmlifecycledemo.databinding.HomeActivityBinding;
@@ -34,6 +35,7 @@ import me.henrytao.mvvmlifecycledemo.ui.base.Constants;
 import me.henrytao.mvvmlifecycledemo.ui.taskaddedit.TaskAddEditActivity;
 import me.henrytao.mvvmlifecycledemo.ui.tasks.TasksFragment;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by henrytao on 4/13/16.
@@ -59,6 +61,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     mBinding.drawerLayout.closeDrawers();
     manageSubscription(Observable
         .timer(Constants.Animation.SHORT, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(l -> onNavigationItemSelected(item.getItemId())), UnsubscribeLifeCycle.DESTROY_VIEW);
     return true;
   }
@@ -96,11 +99,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
   private void onNavigationItemSelected(int id) {
     switch (id) {
       case R.id.menu_item_statistics_navigation:
-        //Intent intent =
-        //    new Intent(TasksActivity.this, StatisticsActivity.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-        //    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        //startActivity(intent);
+        new AlertDialogBuilder(this)
+            .setMessage("Let's try to implement this feature with MVVMLifeCycle. Don't hesitate to send me a question hi@henrytao.me")
+            .setPositiveButton("Close")
+            .show();
         break;
     }
   }

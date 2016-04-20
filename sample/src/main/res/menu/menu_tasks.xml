@@ -23,6 +23,5 @@
     android:id="@+id/action_filter"
     android:icon="@drawable/ic_menu_filter_list"
     android:title="@string/menu_filter"
-    android:visible="false"
     compat:showAsAction="always" />
 </menu>
