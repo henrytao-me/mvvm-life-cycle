@@ -78,11 +78,14 @@ public class LocalAdapter implements me.henrytao.mvvmlifecycledemo.data.adapter.
 
   @Override
   public Task findTask(String taskId) {
+    if (taskId == null) {
+      return null;
+    }
     Task task;
     int n = sTasks.size();
     for (int i = 0; i < n; i++) {
       task = sTasks.get(i);
-      if (TextUtils.equals(task.getId(), taskId)) {
+      if (taskId.equals(task.getId())) {
         return task;
       }
     }

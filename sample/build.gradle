@@ -18,6 +18,8 @@ apply plugin: "com.android.application"
 apply plugin: "com.neenbedankt.android-apt"
 apply plugin: "me.tatarka.retrolambda"
 
+apply from: "../jacoco.gradle"
+
 android {
   dataBinding {
     enabled = true
@@ -70,4 +72,8 @@ dependencies {
 
   compile rootProject.ext.dependencies["com.google.dagger:dagger"]
   apt rootProject.ext.dependencies["com.google.dagger:dagger-compiler"]
+
+  testCompile rootProject.ext.dependencies["junit:junit"]
+  testCompile rootProject.ext.dependencies["org.mockito:mockito-core"]
+  testCompile rootProject.ext.dependencies["org.hamcrest:hamcrest-library"]
 }
