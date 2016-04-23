@@ -37,15 +37,15 @@ public class TaskItemViewModel extends BaseViewModel {
 
   public TaskItemViewModel() {
     register(this, Event.ON_TASK_ITEM_CLICK);
-    register(this, Event.ON_TASK_ITEM_ACTIVE);
-    register(this, Event.ON_TASK_ITEM_COMPLETE);
+    register(this, Event.ON_ACTIVE_TASK_ITEM_CLICK);
+    register(this, Event.ON_COMPLETE_TASK_ITEM_CLICK);
   }
 
   public void onItemCheckedChanged(boolean isChecked) {
     if (isChecked) {
-      dispatch(Event.ON_TASK_ITEM_COMPLETE, mTask);
+      dispatch(Event.ON_COMPLETE_TASK_ITEM_CLICK, mTask);
     } else {
-      dispatch(Event.ON_TASK_ITEM_ACTIVE, mTask);
+      dispatch(Event.ON_ACTIVE_TASK_ITEM_CLICK, mTask);
     }
   }
 
@@ -63,7 +63,7 @@ public class TaskItemViewModel extends BaseViewModel {
   public enum Event {
     ON_TASK_ITEM_CLICK,
 
-    ON_TASK_ITEM_ACTIVE,
-    ON_TASK_ITEM_COMPLETE
+    ON_ACTIVE_TASK_ITEM_CLICK,
+    ON_COMPLETE_TASK_ITEM_CLICK
   }
 }

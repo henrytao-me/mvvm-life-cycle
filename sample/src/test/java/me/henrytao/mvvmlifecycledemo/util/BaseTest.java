@@ -14,21 +14,28 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycledemo.di;
+package me.henrytao.mvvmlifecycledemo.util;
 
-import android.app.Application;
+import org.junit.After;
+import org.junit.Before;
+import org.mockito.MockitoAnnotations;
 
 import me.henrytao.mvvmlifecycledemo.widget.rx.Transformer;
+import rx.schedulers.Schedulers;
 
 /**
- * Created by henrytao on 6/18/15.
+ * Created by henrytao on 4/23/16.
  */
-public class Injector {
+public class BaseTest {
 
-  public static AppComponent component;
+  @Before
+  public void initialize() {
+    MockitoAnnotations.initMocks(this);
+    Transformer.overrideMainThreadScheduler(Schedulers.immediate());
+  }
 
-  public static AppComponent initialize(Application application) {
-    component = AppBuilder.build(application);
-    return component;
+  @After
+  public void release() {
+    Transformer.resetMainThreadScheduler();
   }
 }

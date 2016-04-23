@@ -16,13 +16,12 @@
 
 package me.henrytao.mvvmlifecycledemo.data.service;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import me.henrytao.mvvmlifecycledemo.data.adapter.LocalAdapter;
 import me.henrytao.mvvmlifecycledemo.data.exception.DataNotFoundException;
+import me.henrytao.mvvmlifecycledemo.util.BaseTest;
 import rx.observers.TestSubscriber;
 
 import static org.mockito.Matchers.any;
@@ -32,16 +31,16 @@ import static org.mockito.Mockito.verify;
 /**
  * Created by henrytao on 4/21/16.
  */
-public class TaskServiceTest {
+public class TaskServiceTest extends BaseTest {
 
   @Mock
   private LocalAdapter mLocalAdapter;
 
   private TaskService mTaskService;
 
-  @Before
+  @Override
   public void initialize() {
-    MockitoAnnotations.initMocks(this);
+    super.initialize();
     mTaskService = new TaskService(mLocalAdapter);
   }
 

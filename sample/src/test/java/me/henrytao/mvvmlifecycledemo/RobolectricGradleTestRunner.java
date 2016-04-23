@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycledemo.di;
+package me.henrytao.mvvmlifecycledemo;
 
-import android.app.Application;
+import org.junit.runners.model.InitializationError;
 
-import me.henrytao.mvvmlifecycledemo.widget.rx.Transformer;
+import android.os.Build;
 
 /**
- * Created by henrytao on 6/18/15.
+ * Created by henrytao on 4/23/16.
  */
-public class Injector {
+public class RobolectricGradleTestRunner extends org.robolectric.RobolectricGradleTestRunner {
 
-  public static AppComponent component;
+  public static final int SDK = Build.VERSION_CODES.LOLLIPOP;
 
-  public static AppComponent initialize(Application application) {
-    component = AppBuilder.build(application);
-    return component;
+  public RobolectricGradleTestRunner(Class<?> klass) throws InitializationError {
+    super(klass);
   }
 }

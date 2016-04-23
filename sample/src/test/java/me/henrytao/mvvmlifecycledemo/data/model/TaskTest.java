@@ -20,18 +20,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 
+import me.henrytao.mvvmlifecycledemo.util.BaseTest;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 /**
  * Created by henrytao on 4/23/16.
  */
-public class TaskTest {
-
-  @Before
-  public void initialize() {
-    MockitoAnnotations.initMocks(this);
-  }
+public class TaskTest extends BaseTest {
 
   @Test
   public void testIsActive() throws Exception {

@@ -16,12 +16,11 @@
 
 package me.henrytao.mvvmlifecycledemo.data.adapter.local;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.MockitoAnnotations;
 
 import me.henrytao.mvvmlifecycledemo.data.exception.DataNotFoundException;
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
+import me.henrytao.mvvmlifecycledemo.util.BaseTest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -32,13 +31,13 @@ import static org.mockito.Mockito.spy;
 /**
  * Created by henrytao on 4/22/16.
  */
-public class LocalAdapterTest {
+public class LocalAdapterTest extends BaseTest {
 
   private LocalAdapter mLocalAdapter;
 
-  @Before
+  @Override
   public void initialize() {
-    MockitoAnnotations.initMocks(this);
+    super.initialize();
     mLocalAdapter = spy(new LocalAdapter());
   }
 
