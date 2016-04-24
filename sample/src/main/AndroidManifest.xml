@@ -41,5 +41,10 @@
     <activity
       android:label="@string/title_activity_task_detail"
       android:name=".ui.taskdetail.TaskDetailActivity" />
+
+    <!-- test -->
+    <activity
+      android:label="TestActivity"
+      android:name=".test.TestActivity" />
   </application>
 </manifest>
