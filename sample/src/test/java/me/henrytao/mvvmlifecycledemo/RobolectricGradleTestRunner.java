@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycle.test;
+package me.henrytao.mvvmlifecycledemo;
 
 import org.junit.runners.model.InitializationError;
-import org.robolectric.RobolectricTestRunner;
 
-public class RobolectricGradleTestRunner extends RobolectricTestRunner {
+import android.os.Build;
 
-  public static final int SDK = 21;
+/**
+ * Created by henrytao on 4/23/16.
+ */
+public class RobolectricGradleTestRunner extends org.robolectric.RobolectricGradleTestRunner {
 
-  /**
-   * Creates a runner to run {@code testClass}. Looks in your working directory for your AndroidManifest.xml file
-   * and res directory by default. Use the {@link Config} annotation to configure.
-   *
-   * @param testClass the test class to be run
-   * @throws InitializationError if junit says so
-   */
-  public RobolectricGradleTestRunner(Class<?> testClass) throws InitializationError {
-    super(testClass);
+  public static final int SDK = Build.VERSION_CODES.LOLLIPOP;
+
+  public RobolectricGradleTestRunner(Class<?> klass) throws InitializationError {
+    super(klass);
   }
 }

@@ -25,8 +25,7 @@ import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.data.service.TaskService;
 import me.henrytao.mvvmlifecycledemo.di.Injector;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import me.henrytao.mvvmlifecycledemo.widget.rx.Transformer;
 
 /**
  * Created by henrytao on 4/5/16.
@@ -49,8 +48,7 @@ public class TaskAddEditViewModel extends BaseViewModel<TaskAddEditViewModel.Sta
 
     if (isInEditMode()) {
       manageSubscription(mTaskService.find(taskId)
-          .subscribeOn(Schedulers.computation())
-          .observeOn(AndroidSchedulers.mainThread())
+          .compose(Transformer.applyComputationScheduler())
           .subscribe(task -> {
             title.set(task.getTitle());
             description.set(task.getDescription());
@@ -80,8 +78,7 @@ public class TaskAddEditViewModel extends BaseViewModel<TaskAddEditViewModel.Sta
     } else {
       setState(State.CREATING_TASK);
       manageSubscription(mTaskService.create(title, description)
-          .subscribeOn(Schedulers.computation())
-          .observeOn(AndroidSchedulers.mainThread())
+          .compose(Transformer.applyComputationScheduler())
           .subscribe(task -> setState(State.CREATED_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
   }
@@ -96,8 +93,7 @@ public class TaskAddEditViewModel extends BaseViewModel<TaskAddEditViewModel.Sta
     } else {
       setState(State.UPDATING_TASK);
       manageSubscription(mTaskService.update(mTaskId, title, description)
-          .subscribeOn(Schedulers.computation())
-          .observeOn(AndroidSchedulers.mainThread())
+          .compose(Transformer.applyComputationScheduler())
           .subscribe(task -> setState(State.UPDATED_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
   }

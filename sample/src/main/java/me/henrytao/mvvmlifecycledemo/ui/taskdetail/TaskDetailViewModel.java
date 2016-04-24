@@ -27,8 +27,7 @@ import me.henrytao.mvvmlifecycledemo.data.service.TaskService;
 import me.henrytao.mvvmlifecycledemo.di.Injector;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
 import me.henrytao.mvvmlifecycledemo.ui.base.Constants;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import me.henrytao.mvvmlifecycledemo.widget.rx.Transformer;
 
 /**
  * Created by henrytao on 4/17/16.
@@ -52,8 +51,7 @@ public class TaskDetailViewModel extends BaseViewModel<TaskDetailViewModel.State
     Injector.component.inject(this);
 
     manageSubscription(mTaskService.find(taskId)
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(Transformer.applyComputationScheduler())
         .subscribe(task -> {
           mTask = task;
           visible.set(true);
@@ -63,8 +61,7 @@ public class TaskDetailViewModel extends BaseViewModel<TaskDetailViewModel.State
         }), UnsubscribeLifeCycle.DESTROY);
 
     manageSubscription(mTaskService.observeTaskUpdate()
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(Transformer.applyComputationScheduler())
         .subscribe(task -> {
           mTask = task;
           title.set(task.getTitle());
@@ -75,8 +72,7 @@ public class TaskDetailViewModel extends BaseViewModel<TaskDetailViewModel.State
 
   public void onDeleteTaskClick() {
     manageSubscription(mTaskService.remove(mTask.getId())
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
+        .compose(Transformer.applyComputationScheduler())
         .subscribe(task -> setState(State.DELETE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
   }
 
@@ -87,13 +83,11 @@ public class TaskDetailViewModel extends BaseViewModel<TaskDetailViewModel.State
   public void onTaskCheckedChanged(boolean isChecked) {
     if (isChecked) {
       manageSubscription(mTaskService.complete(mTask.getId())
-          .subscribeOn(Schedulers.computation())
-          .observeOn(AndroidSchedulers.mainThread())
+          .compose(Transformer.applyComputationScheduler())
           .subscribe(aVoid -> setState(State.COMPLETE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     } else {
       manageSubscription(mTaskService.active(mTask.getId())
-          .subscribeOn(Schedulers.computation())
-          .observeOn(AndroidSchedulers.mainThread())
+          .compose(Transformer.applyComputationScheduler())
           .subscribe(aVoid -> setState(State.ACTIVE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
   }

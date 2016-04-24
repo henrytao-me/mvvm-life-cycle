@@ -36,21 +36,27 @@ public abstract class MVVMViewModelWithEventDispatcher extends MVVMViewModel {
 
   private static Map<String, String> sRegisteredEvents = new HashMap<>();
 
-  protected static void dispatch(Enum eventName, Object... objects) {
+  private static void initEventSubject(String eventName) {
+    if (!sEventSubject.containsKey(eventName)) {
+      sEventSubject.put(eventName, PublishSubject.create());
+    }
+  }
+
+  public void dispatch(Enum eventName, Object... objects) {
     dispatch(eventName.toString(), objects);
   }
 
-  protected static void dispatch(String eventName, Object... objects) {
+  public void dispatch(String eventName, Object... objects) {
     if (sEventSubject.containsKey(eventName)) {
       sEventSubject.get(eventName).onNext(objects);
     }
   }
 
-  protected static void register(Object owner, Enum event) {
+  public void register(Object owner, Enum event) {
     register(owner, event.toString());
   }
 
-  protected static void register(Object owner, String eventName) {
+  public void register(Object owner, String eventName) {
     String ownerClassName = owner.getClass().toString();
     if (sRegisteredEvents.containsKey(eventName)) {
       if (!TextUtils.equals(sRegisteredEvents.get(eventName), ownerClassName)) {
@@ -63,28 +69,22 @@ public abstract class MVVMViewModelWithEventDispatcher extends MVVMViewModel {
     initEventSubject(eventName);
   }
 
-  protected static Subscription subscribe(Enum eventName, Event event, Action1<Throwable> onError) {
+  public Subscription subscribe(Enum eventName, Event event, Action1<Throwable> onError) {
     return subscribe(eventName.toString(), event, onError);
   }
 
-  protected static Subscription subscribe(String eventName, Event event, Action1<Throwable> onError) {
+  public Subscription subscribe(String eventName, Event event, Action1<Throwable> onError) {
     initEventSubject(eventName);
     return sEventSubject.get(eventName).subscribe(event, onError);
   }
 
-  protected static Subscription subscribe(Enum eventName, Event event) {
+  public Subscription subscribe(Enum eventName, Event event) {
     return subscribe(eventName.toString(), event);
   }
 
-  protected static Subscription subscribe(String eventName, Event event) {
+  public Subscription subscribe(String eventName, Event event) {
     initEventSubject(eventName);
     return sEventSubject.get(eventName).subscribe(event);
-  }
-
-  private static void initEventSubject(String eventName) {
-    if (!sEventSubject.containsKey(eventName)) {
-      sEventSubject.put(eventName, PublishSubject.create());
-    }
   }
 
   public static class DuplicatedEventException extends RuntimeException {
