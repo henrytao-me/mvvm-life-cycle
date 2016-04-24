@@ -25,68 +25,69 @@ import me.henrytao.mvvmlifecycle.MVVMViewModel;
  */
 public class TestViewModel extends MVVMViewModel {
 
-  private TestLogger mTestLogger = TestLogger.getInstance();
+  private TestLogger mTestLogger;
 
-  public TestViewModel() {
+  public TestViewModel(String tag) {
+    mTestLogger = TestLogger.getInstance(tag);
   }
 
   @Override
   public void onCreate() {
-    mTestLogger.push("TestViewModel.onCreate");
     super.onCreate();
+    mTestLogger.push("TestViewModel.onCreate");
   }
 
   @Override
   public void onCreateView() {
-    mTestLogger.push("TestViewModel.onCreateView");
     super.onCreateView();
+    mTestLogger.push("TestViewModel.onCreateView");
   }
 
   @Override
   public void onDestroy() {
-    mTestLogger.push("TestViewModel.onDestroy");
     super.onDestroy();
+    mTestLogger.push("TestViewModel.onDestroy");
   }
 
   @Override
   public void onDestroyView() {
-    mTestLogger.push("TestViewModel.onDestroyView");
     super.onDestroyView();
+    mTestLogger.push("TestViewModel.onDestroyView");
   }
 
   @Override
   public void onPause() {
-    mTestLogger.push("TestViewModel.onPause");
     super.onPause();
+    mTestLogger.push("TestViewModel.onPause");
   }
 
   @Override
   public void onRestoreInstanceState(Bundle savedInstanceState) {
-    mTestLogger.push("TestViewModel.onRestoreInstanceState");
     super.onRestoreInstanceState(savedInstanceState);
+    mTestLogger.push("TestViewModel.onRestoreInstanceState");
   }
 
   @Override
   public void onResume() {
-    mTestLogger.push("TestViewModel.onResume");
     super.onResume();
+    mTestLogger.push("TestViewModel.onResume");
   }
 
   @Override
   public void onSaveInstanceState(Bundle outState) {
-    mTestLogger.push("TestViewModel.onSaveInstanceState");
     super.onSaveInstanceState(outState);
+    mTestLogger.push("TestViewModel.onSaveInstanceState");
   }
 
   @Override
   public void onStart() {
-    mTestLogger.push("TestViewModel.onStart");
     super.onStart();
+    mTestLogger.push("TestViewModel.onStart");
   }
 
   @Override
   public void onStop() {
-    mTestLogger.push("TestViewModel.onStop");
     super.onStop();
+    mTestLogger.push("TestViewModel.onStop");
   }
 }

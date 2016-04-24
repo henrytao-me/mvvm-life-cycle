@@ -17,23 +17,27 @@
 package me.henrytao.mvvmlifecycledemo.test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by henrytao on 4/24/16.
  */
 public class TestLogger {
 
-  private static TestLogger sTestLogger;
+  private static Map<String, TestLogger> sLoggers = new HashMap<>();
 
-  public static TestLogger getInstance() {
-    if (sTestLogger == null) {
-      sTestLogger = new TestLogger();
+  public static TestLogger getInstance(String tag) {
+    if (!sLoggers.containsKey(tag)) {
+      sLoggers.put(tag, new TestLogger());
     }
-    return sTestLogger;
+    return sLoggers.get(tag);
   }
 
   private List<String> mLogs = new ArrayList<>();
+
+  private String mTag;
 
   protected TestLogger() {
   }

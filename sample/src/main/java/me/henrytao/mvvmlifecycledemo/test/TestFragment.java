@@ -17,16 +17,19 @@
 package me.henrytao.mvvmlifecycledemo.test;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import me.henrytao.mvvmlifecycle.MVVMActivity;
+import me.henrytao.mvvmlifecycle.MVVMFragment;
 
 /**
  * Created by henrytao on 4/24/16.
  */
-public class TestActivity extends MVVMActivity {
+public class TestFragment extends MVVMFragment {
 
-  public static final String TAG = TestActivity.class.toString();
+  public static final String TAG = TestFragment.class.toString();
 
   private TestLogger mTestLogger = TestLogger.getInstance(TAG);
 
@@ -35,25 +38,30 @@ public class TestActivity extends MVVMActivity {
   @Override
   public void onCreate() {
     super.onCreate();
-    mTestLogger.push("TestActivity.onCreate");
+    mTestLogger.push("TestFragment.onCreate");
   }
 
   @Override
   public void onCreateView() {
     super.onCreateView();
-    mTestLogger.push("TestActivity.onCreateView");
+    mTestLogger.push("TestFragment.onCreateView");
   }
 
   @Override
   public void onDestroy() {
     super.onDestroy();
-    mTestLogger.push("TestActivity.onDestroy");
+    mTestLogger.push("TestFragment.onDestroy");
   }
 
   @Override
   public void onDestroyView() {
     super.onDestroyView();
-    mTestLogger.push("TestActivity.onDestroyView");
+    mTestLogger.push("TestFragment.onDestroyView");
+  }
+
+  @Override
+  public View onInflateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    return new View(getContext());
   }
 
   @Override
@@ -65,41 +73,36 @@ public class TestActivity extends MVVMActivity {
   @Override
   public void onPause() {
     super.onPause();
-    mTestLogger.push("TestActivity.onPause");
+    mTestLogger.push("TestFragment.onPause");
   }
 
   @Override
   public void onRestoreInstanceState(Bundle savedInstanceState) {
     super.onRestoreInstanceState(savedInstanceState);
-    mTestLogger.push("TestActivity.onRestoreInstanceState");
+    mTestLogger.push("TestFragment.onRestoreInstanceState");
   }
 
   @Override
   public void onResume() {
     super.onResume();
-    mTestLogger.push("TestActivity.onResume");
+    mTestLogger.push("TestFragment.onResume");
   }
 
   @Override
   public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
-    mTestLogger.push("TestActivity.onSaveInstanceState");
-  }
-
-  @Override
-  public void onSetContentView(Bundle savedInstanceState) {
-    setContentView(new View(this));
+    mTestLogger.push("TestFragment.onSaveInstanceState");
   }
 
   @Override
   public void onStart() {
     super.onStart();
-    mTestLogger.push("TestActivity.onStart");
+    mTestLogger.push("TestFragment.onStart");
   }
 
   @Override
   public void onStop() {
     super.onStop();
-    mTestLogger.push("TestActivity.onStop");
+    mTestLogger.push("TestFragment.onStop");
   }
 }
