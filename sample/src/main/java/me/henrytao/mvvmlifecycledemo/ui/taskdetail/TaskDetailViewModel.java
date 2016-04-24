@@ -34,6 +34,8 @@ import me.henrytao.mvvmlifecycledemo.widget.rx.Transformer;
  */
 public class TaskDetailViewModel extends BaseViewModel<TaskDetailViewModel.State> {
 
+  private final String mTaskId;
+
   public ObservableBoolean completed = new ObservableBoolean();
 
   public ObservableField<String> description = new ObservableField<>();
@@ -49,25 +51,18 @@ public class TaskDetailViewModel extends BaseViewModel<TaskDetailViewModel.State
 
   public TaskDetailViewModel(String taskId) {
     Injector.component.inject(this);
+    mTaskId = taskId;
+  }
 
-    manageSubscription(mTaskService.find(taskId)
-        .compose(Transformer.applyComputationScheduler())
-        .subscribe(task -> {
-          mTask = task;
-          visible.set(true);
-          title.set(task.getTitle());
-          description.set(task.getDescription());
-          completed.set(task.isCompleted());
-        }), UnsubscribeLifeCycle.DESTROY);
+  @Override
+  public void onCreate() {
+    super.onCreate();
 
-    manageSubscription(mTaskService.observeTaskUpdate()
-        .compose(Transformer.applyComputationScheduler())
-        .subscribe(task -> {
-          mTask = task;
-          title.set(task.getTitle());
-          description.set(task.getDescription());
-          completed.set(task.isCompleted());
-        }), UnsubscribeLifeCycle.DESTROY);
+    manageSubscription(mTaskService.observeTaskUpdate().compose(Transformer.applyComputationScheduler())
+        .subscribe(this::onTaskUpdate), UnsubscribeLifeCycle.DESTROY);
+
+    manageSubscription(mTaskService.find(mTaskId).compose(Transformer.applyComputationScheduler())
+        .subscribe(this::onTaskFind), UnsubscribeLifeCycle.DESTROY);
   }
 
   public void onDeleteTaskClick() {
@@ -82,14 +77,27 @@ public class TaskDetailViewModel extends BaseViewModel<TaskDetailViewModel.State
 
   public void onTaskCheckedChanged(boolean isChecked) {
     if (isChecked) {
-      manageSubscription(mTaskService.complete(mTask.getId())
-          .compose(Transformer.applyComputationScheduler())
+      manageSubscription(mTaskService.complete(mTask.getId()).compose(Transformer.applyComputationScheduler())
           .subscribe(aVoid -> setState(State.COMPLETE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     } else {
-      manageSubscription(mTaskService.active(mTask.getId())
-          .compose(Transformer.applyComputationScheduler())
+      manageSubscription(mTaskService.active(mTask.getId()).compose(Transformer.applyComputationScheduler())
           .subscribe(aVoid -> setState(State.ACTIVE_TASK), Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
+  }
+
+  protected void onTaskFind(Task task) {
+    mTask = task;
+    visible.set(true);
+    title.set(task.getTitle());
+    description.set(task.getDescription());
+    completed.set(task.isCompleted());
+  }
+
+  protected void onTaskUpdate(Task task) {
+    mTask = task;
+    title.set(task.getTitle());
+    description.set(task.getDescription());
+    completed.set(task.isCompleted());
   }
 
   public enum State {

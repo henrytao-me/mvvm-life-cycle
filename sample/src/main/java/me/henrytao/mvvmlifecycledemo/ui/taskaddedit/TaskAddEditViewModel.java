@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import javax.inject.Inject;
 
 import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
+import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import me.henrytao.mvvmlifecycledemo.data.service.TaskService;
 import me.henrytao.mvvmlifecycledemo.di.Injector;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
@@ -43,32 +44,32 @@ public class TaskAddEditViewModel extends BaseViewModel<TaskAddEditViewModel.Sta
 
   public TaskAddEditViewModel(String taskId) {
     Injector.component.inject(this);
-
     mTaskId = taskId;
+  }
+
+  @Override
+  public void onCreate() {
+    super.onCreate();
 
     if (isInEditMode()) {
-      manageSubscription(mTaskService.find(taskId)
-          .compose(Transformer.applyComputationScheduler())
-          .subscribe(task -> {
-            title.set(task.getTitle());
-            description.set(task.getDescription());
-          }, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
+      manageSubscription(mTaskService.find(mTaskId).compose(Transformer.applyComputationScheduler())
+          .subscribe(this::onTaskLoadInEditMode, Throwable::printStackTrace), UnsubscribeLifeCycle.DESTROY);
     }
   }
 
   public void onDoneClick() {
     if (isInEditMode()) {
-      onUpdateTask();
+      onUpdateTaskClick();
     } else {
-      onCreateTask();
+      onCreateTaskClick();
     }
   }
 
-  private boolean isInEditMode() {
+  protected boolean isInEditMode() {
     return !TextUtils.isEmpty(mTaskId);
   }
 
-  private void onCreateTask() {
+  protected void onCreateTaskClick() {
     String title = this.title.get();
     String description = this.description.get();
     boolean isValid = !TextUtils.isEmpty(title);
@@ -83,7 +84,12 @@ public class TaskAddEditViewModel extends BaseViewModel<TaskAddEditViewModel.Sta
     }
   }
 
-  private void onUpdateTask() {
+  protected void onTaskLoadInEditMode(Task task) {
+    title.set(task.getTitle());
+    description.set(task.getDescription());
+  }
+
+  protected void onUpdateTaskClick() {
     String title = this.title.get();
     String description = this.description.get();
     boolean isValid = !TextUtils.isEmpty(title);
