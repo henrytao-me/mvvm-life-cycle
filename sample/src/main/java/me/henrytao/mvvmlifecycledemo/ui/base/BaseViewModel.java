@@ -16,50 +16,11 @@
 
 package me.henrytao.mvvmlifecycledemo.ui.base;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import me.henrytao.mvvmlifecycle.MVVMViewModelWithEventDispatcher;
-import rx.Observable;
-import rx.subjects.BehaviorSubject;
+import me.henrytao.mvvmlifecycle.MVVMViewModel;
 
 /**
  * Created by henrytao on 4/5/16.
  */
-public abstract class BaseViewModel<T> extends MVVMViewModelWithEventDispatcher {
+public abstract class BaseViewModel<T> extends MVVMViewModel<T> {
 
-  private BehaviorSubject<State<T>> mState = BehaviorSubject.create();
-
-  public Observable<State<T>> getState() {
-    return mState;
-  }
-
-  public void setState(T name, Object... objects) {
-    mState.onNext(new State<>(name, objects));
-  }
-
-  public static class State<T> {
-
-    private final Map<String, Object> mData = new HashMap<>();
-
-    private final T mName;
-
-    protected State(T name, Object... data) {
-      mName = name;
-      int i = 0;
-      while (i < data.length) {
-        String key = (String) data[i++];
-        Object value = data[i++];
-        mData.put(key, value);
-      }
-    }
-
-    public Map<String, Object> getData() {
-      return mData;
-    }
-
-    public T getName() {
-      return mName;
-    }
-  }
 }

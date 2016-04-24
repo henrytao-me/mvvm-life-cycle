@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycle;
+package me.henrytao.mvvmlifecycle.viewmodel;
 
 import android.text.TextUtils;
 
@@ -28,9 +28,9 @@ import rx.functions.Action1;
 import rx.subjects.PublishSubject;
 
 /**
- * Created by henrytao on 11/10/15.
+ * Created by henrytao on 4/24/16.
  */
-public abstract class MVVMViewModelWithEventDispatcher extends MVVMViewModel {
+public class ViewModelWithEventDispatcher extends SimpleViewModel {
 
   private static Map<String, PublishSubject<Object>> sEventSubject = new HashMap<>();
 
