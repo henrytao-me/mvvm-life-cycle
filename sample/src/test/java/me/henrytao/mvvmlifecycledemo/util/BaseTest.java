@@ -31,11 +31,17 @@ public class BaseTest {
   @Before
   public void initialize() {
     MockitoAnnotations.initMocks(this);
+    Transformer.overrideComputationScheduler(Schedulers.immediate());
+    Transformer.overrideIoScheduler(Schedulers.immediate());
     Transformer.overrideMainThreadScheduler(Schedulers.immediate());
+    Transformer.overrideNewThreadScheduler(Schedulers.immediate());
   }
 
   @After
   public void release() {
+    Transformer.resetComputationScheduler();
+    Transformer.resetIoScheduler();
     Transformer.resetMainThreadScheduler();
+    Transformer.resetNewThreadScheduler();
   }
 }

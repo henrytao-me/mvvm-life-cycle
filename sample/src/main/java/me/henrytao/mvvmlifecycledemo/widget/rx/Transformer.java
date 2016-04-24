@@ -16,8 +16,6 @@
 
 package me.henrytao.mvvmlifecycledemo.widget.rx;
 
-import com.google.common.annotations.VisibleForTesting;
-
 import rx.Observable;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
@@ -28,36 +26,89 @@ import rx.schedulers.Schedulers;
  */
 public class Transformer {
 
-  private static Scheduler sMainThreadScheduler;
+  private static SchedulerManager sComputationScheduler = new SchedulerManager(Schedulers::computation);
+
+  private static SchedulerManager sIoScheduler = new SchedulerManager(Schedulers::io);
+
+  private static SchedulerManager sMainThreadScheduler = new SchedulerManager(AndroidSchedulers::mainThread);
+
+  private static SchedulerManager sNewThreadScheduler = new SchedulerManager(Schedulers::newThread);
 
   public static <T> Observable.Transformer<T, T> applyComputationScheduler() {
     return observable -> observable
-        .subscribeOn(Schedulers.computation())
-        .observeOn(getMainThreadScheduler());
+        .subscribeOn(sComputationScheduler.get())
+        .observeOn(sMainThreadScheduler.get());
   }
 
   public static <T> Observable.Transformer<T, T> applyIoScheduler() {
     return observable -> observable
-        .subscribeOn(Schedulers.io())
-        .observeOn(getMainThreadScheduler());
+        .subscribeOn(sIoScheduler.get())
+        .observeOn(sMainThreadScheduler.get());
   }
 
   public static <T> Observable.Transformer<T, T> applyNewThreadScheduler() {
     return observable -> observable
-        .subscribeOn(Schedulers.newThread())
-        .observeOn(getMainThreadScheduler());
+        .subscribeOn(sNewThreadScheduler.get())
+        .observeOn(sMainThreadScheduler.get());
   }
 
-  @VisibleForTesting
+  public static void overrideComputationScheduler(Scheduler scheduler) {
+    sComputationScheduler.set(scheduler);
+  }
+
+  public static void overrideIoScheduler(Scheduler scheduler) {
+    sIoScheduler.set(scheduler);
+  }
+
   public static void overrideMainThreadScheduler(Scheduler scheduler) {
-    sMainThreadScheduler = scheduler;
+    sMainThreadScheduler.set(scheduler);
+  }
+
+  public static void overrideNewThreadScheduler(Scheduler scheduler) {
+    sNewThreadScheduler.set(scheduler);
+  }
+
+  public static void resetComputationScheduler() {
+    sComputationScheduler.reset();
+  }
+
+  public static void resetIoScheduler() {
+    sIoScheduler.reset();
   }
 
   public static void resetMainThreadScheduler() {
-    sMainThreadScheduler = null;
+    sMainThreadScheduler.reset();
   }
 
-  private static Scheduler getMainThreadScheduler() {
-    return sMainThreadScheduler != null ? sMainThreadScheduler : AndroidSchedulers.mainThread();
+  public static void resetNewThreadScheduler() {
+    sNewThreadScheduler.reset();
+  }
+
+  private static class SchedulerManager {
+
+    private Callback mDefaultSchedulerCallback;
+
+    private Scheduler mScheduler;
+
+    public SchedulerManager(Callback defaultSchedulerCallback) {
+      mDefaultSchedulerCallback = defaultSchedulerCallback;
+    }
+
+    public Scheduler get() {
+      return mScheduler != null ? mScheduler : mDefaultSchedulerCallback.get();
+    }
+
+    public void reset() {
+      set(null);
+    }
+
+    public void set(Scheduler scheduler) {
+      mScheduler = scheduler;
+    }
+
+    private interface Callback {
+
+      Scheduler get();
+    }
   }
 }

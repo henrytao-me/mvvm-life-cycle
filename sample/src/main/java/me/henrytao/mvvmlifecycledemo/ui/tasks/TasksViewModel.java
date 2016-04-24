@@ -16,8 +16,6 @@
 
 package me.henrytao.mvvmlifecycledemo.ui.tasks;
 
-import android.text.TextUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,7 +106,7 @@ public class TasksViewModel extends BaseViewModel<TasksViewModel.State> {
     int n = mTasks.size();
     for (int i = 0; i < n; i++) {
       tmp = mTasks.get(i);
-      if (TextUtils.equals(tmp.getId(), task.getId())) {
+      if (task.getId().equals(tmp.getId())) {
         tmp.setTitle(task.getTitle());
         tmp.setDescription(task.getDescription());
         tmp.setCompleted(task.isCompleted());

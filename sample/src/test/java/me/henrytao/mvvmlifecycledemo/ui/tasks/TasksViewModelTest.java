@@ -19,12 +19,18 @@ package me.henrytao.mvvmlifecycledemo.ui.tasks;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.List;
+
+import me.henrytao.mvvmlifecycle.event.Event1;
+import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import me.henrytao.mvvmlifecycledemo.di.Injector;
+import me.henrytao.mvvmlifecycledemo.ui.base.Constants;
 import me.henrytao.mvvmlifecycledemo.util.BaseTest;
 import rx.Observable;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -49,12 +55,22 @@ public class TasksViewModelTest extends BaseTest {
 
   @Test
   public void testOnActiveTaskItemClick() throws Exception {
+    Task task = new Task("title", "description");
+    doReturn(Observable.just(null)).when(mTasksViewModel.mTaskService).active(anyString());
 
+    mTasksViewModel.onActiveTaskItemClick(task);
+
+    verify(mTasksViewModel, times(1)).setState(eq(TasksViewModel.State.ACTIVE_TASK));
   }
 
   @Test
   public void testOnCompleteTaskItemClick() throws Exception {
+    Task task = new Task("title", "description");
+    doReturn(Observable.just(null)).when(mTasksViewModel.mTaskService).complete(anyString());
 
+    mTasksViewModel.onCompleteTaskItemClick(task);
+
+    verify(mTasksViewModel, times(1)).setState(eq(TasksViewModel.State.COMPLETE_TASK));
   }
 
   @Test
@@ -69,7 +85,7 @@ public class TasksViewModelTest extends BaseTest {
 
     mTasksViewModel.onCreate();
 
-    verify(mTasksViewModel, Mockito.times(3)).subscribe(any(Enum.class), any());
+    verify(mTasksViewModel, Mockito.times(3)).subscribe(any(Enum.class), any(Event1.class));
     verify(mTasksViewModel, times(1)).subscribe(eq(TaskItemViewModel.Event.ON_TASK_ITEM_CLICK), any());
     verify(mTasksViewModel, times(1)).subscribe(eq(TaskItemViewModel.Event.ON_ACTIVE_TASK_ITEM_CLICK), any());
     verify(mTasksViewModel, times(1)).subscribe(eq(TaskItemViewModel.Event.ON_COMPLETE_TASK_ITEM_CLICK), any());
@@ -83,22 +99,44 @@ public class TasksViewModelTest extends BaseTest {
 
   @Test
   public void testOnTaskCreate() throws Exception {
+    Task task = new Task("title", "description");
+    List<Task> tasks = mTasksViewModel.getTasks();
 
+    mTasksViewModel.onTaskCreate(task);
+
+    verify(mTasksViewModel, times(1)).setState(eq(TasksViewModel.State.CREATED_TASK), eq(Constants.Key.INDEX), eq(tasks.size() - 1));
   }
 
   @Test
   public void testOnTaskItemClick() throws Exception {
+    Task task = new Task("title", "description");
 
+    mTasksViewModel.onTaskItemClick(task);
+
+    verify(mTasksViewModel, times(1)).setState(eq(TasksViewModel.State.CLICK_TASK), eq(Constants.Key.ID), eq(task.getId()));
   }
 
   @Test
   public void testOnTaskRemove() throws Exception {
+    Task task = new Task("title", "description");
+    List<Task> tasks = mTasksViewModel.getTasks();
+    tasks.add(task);
 
+    mTasksViewModel.onTaskRemove(task);
+
+    verify(mTasksViewModel, times(1)).setState(eq(TasksViewModel.State.REMOVED_TASK));
   }
 
   @Test
   public void testOnTaskUpdate() throws Exception {
+    Task taskA = new Task("title a", "description a");
+    List<Task> tasks = mTasksViewModel.getTasks();
+    tasks.add(taskA);
+    Task taskB = new Task(taskA.getId(), "title b", "description b");
 
+    mTasksViewModel.onTaskUpdate(taskB);
+
+    verify(mTasksViewModel, times(1)).setState(eq(TasksViewModel.State.UPDATED_TASK), eq(Constants.Key.INDEX), eq(tasks.size() - 1));
   }
 
   @Test
