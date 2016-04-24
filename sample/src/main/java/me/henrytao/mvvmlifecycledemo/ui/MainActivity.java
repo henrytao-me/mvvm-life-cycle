@@ -19,6 +19,7 @@ package me.henrytao.mvvmlifecycledemo.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
+import me.henrytao.mvvmlifecycledemo.test.TestActivity;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseActivity;
 import me.henrytao.mvvmlifecycledemo.ui.home.HomeActivity;
 

@@ -14,112 +14,92 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycle.test.mvvm;
+package me.henrytao.mvvmlifecycledemo.test;
 
 import android.os.Bundle;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import android.view.View;
 
 import me.henrytao.mvvmlifecycle.MVVMActivity;
 
 /**
- * Created by henrytao on 12/14/15.
+ * Created by henrytao on 4/24/16.
  */
 public class TestActivity extends MVVMActivity {
 
-  private Map<String, Integer> mEvents = new HashMap<>();
+  public static final String TAG = TestActivity.class.toString();
 
-  private List<String> mKeys = new ArrayList<>();
+  private TestLogger mTestLogger = TestLogger.getInstance(TAG);
 
   private TestViewModel mViewModel;
 
   @Override
   public void onCreate() {
     super.onCreate();
-    log(TestUtils.ON_CREATE);
+    mTestLogger.push("TestActivity.onCreate");
   }
 
   @Override
   public void onCreateView() {
     super.onCreateView();
-    log(TestUtils.ON_CREATE_VIEW);
+    mTestLogger.push("TestActivity.onCreateView");
   }
 
   @Override
   public void onDestroy() {
     super.onDestroy();
-    log(TestUtils.ON_DESTROY);
+    mTestLogger.push("TestActivity.onDestroy");
   }
 
   @Override
   public void onDestroyView() {
     super.onDestroyView();
-    log(TestUtils.ON_DESTROY_VIEW);
+    mTestLogger.push("TestActivity.onDestroyView");
   }
 
   @Override
   public void onInitializeViewModels() {
-    mViewModel = new TestViewModel();
-    mViewModels.add(mViewModel);
+    mViewModel = new TestViewModel(TAG);
+    addViewModel(mViewModel);
   }
 
   @Override
   public void onPause() {
     super.onPause();
-    log(TestUtils.ON_PAUSE);
+    mTestLogger.push("TestActivity.onPause");
   }
 
   @Override
   public void onRestoreInstanceState(Bundle savedInstanceState) {
     super.onRestoreInstanceState(savedInstanceState);
-    log(TestUtils.ON_RESTORE_INSTANCE_STATE);
+    mTestLogger.push("TestActivity.onRestoreInstanceState");
   }
 
   @Override
   public void onResume() {
     super.onResume();
-    log(TestUtils.ON_RESUME);
+    mTestLogger.push("TestActivity.onResume");
   }
 
   @Override
   public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
-    log(TestUtils.ON_SAVE_INSTANCE_STATE);
+    mTestLogger.push("TestActivity.onSaveInstanceState");
   }
 
   @Override
   public void onSetContentView(Bundle savedInstanceState) {
+    setContentView(new View(this));
   }
 
   @Override
   public void onStart() {
     super.onStart();
-    log(TestUtils.ON_START);
+    mTestLogger.push("TestActivity.onStart");
   }
 
   @Override
   public void onStop() {
     super.onStop();
-    log(TestUtils.ON_STOP);
-  }
-
-  public Map<String, Integer> getEvents() {
-    return mEvents;
-  }
-
-  public List<String> getKeys() {
-    return mKeys;
-  }
-
-  public TestViewModel getViewModel() {
-    return mViewModel;
-  }
-
-  private void log(String key) {
-    mKeys.add(key);
-    mEvents.put(key, TestUtils.getNextIndex());
+    mTestLogger.push("TestActivity.onStop");
   }
 }

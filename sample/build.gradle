@@ -34,7 +34,7 @@ android {
   buildToolsVersion rootProject.ext.android.buildToolsVersion
 
   defaultConfig {
-    applicationId rootProject.ext.android.applicationId
+    applicationId "me.henrytao.mvvmlifecycledemo"
     minSdkVersion 11
     targetSdkVersion rootProject.ext.android.targetSdkVersion
     versionCode rootProject.ext.android.versionCode
