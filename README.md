@@ -1,4 +1,4 @@
-[ ![Download](https://api.bintray.com/packages/henrytao-me/maven/mvvm-life-cycle/images/download.svg) ](https://bintray.com/henrytao-me/maven/mvvm-life-cycle/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/henrytao-me/maven/mvvm-life-cycle/images/download.svg) ](https://bintray.com/henrytao-me/maven/mvvm-life-cycle/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-mvvm--life--cycle-green.svg?style=true)](https://android-arsenal.com/details/1/3496)
 
 MVVM Life Cycle
 ================
