@@ -25,6 +25,10 @@ android {
     enabled = true
   }
 
+  defaultConfig {
+    vectorDrawables.useSupportLibrary = true
+  }
+
   compileOptions {
     sourceCompatibility rootProject.ext.java.sourceCompatibility
     targetCompatibility rootProject.ext.java.targetCompatibility
