@@ -29,7 +29,7 @@ import me.henrytao.mvvmlifecycle.MVVMObserver;
  */
 public abstract class RecyclerViewBindingAdapter<D, V extends RecyclerViewBindingViewHolder<D>> extends RecyclerView.Adapter<V> {
 
-  public abstract V onCreateViewHolder(MVVMObserver observer, ViewGroup parent);
+  public abstract V onCreateViewHolder(MVVMObserver observer, ViewGroup parent, int viewType);
 
   protected final List<D> mData;
 
@@ -52,6 +52,6 @@ public abstract class RecyclerViewBindingAdapter<D, V extends RecyclerViewBindin
 
   @Override
   public V onCreateViewHolder(ViewGroup parent, int viewType) {
-    return onCreateViewHolder(mObserver, parent);
+    return onCreateViewHolder(mObserver, parent, viewType);
   }
 }
