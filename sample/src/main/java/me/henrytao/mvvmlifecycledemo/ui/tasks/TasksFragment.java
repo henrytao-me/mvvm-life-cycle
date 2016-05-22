@@ -70,7 +70,7 @@ public class TasksFragment extends BaseFragment {
 
     mAdapter = new RecyclerViewBindingAdapter<Task, TaskItemViewHolder>(this, mViewModel.getTasks()) {
       @Override
-      public TaskItemViewHolder onCreateViewHolder(MVVMObserver observer, ViewGroup parent) {
+      public TaskItemViewHolder onCreateViewHolder(MVVMObserver observer, ViewGroup parent, int viewType) {
         return new TaskItemViewHolder(observer, parent);
       }
     };
