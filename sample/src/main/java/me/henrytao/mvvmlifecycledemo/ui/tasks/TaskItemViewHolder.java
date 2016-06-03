@@ -36,7 +36,6 @@ public class TaskItemViewHolder extends RecyclerViewBindingViewHolder<Task> {
 
   public TaskItemViewHolder(MVVMObserver observer, ViewGroup parent) {
     super(observer, parent, R.layout.task_item_view_holder);
-
     mBinding = DataBindingUtil.bind(itemView);
     mBinding.setViewModel(mViewModel);
   }
