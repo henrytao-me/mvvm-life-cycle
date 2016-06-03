@@ -31,11 +31,9 @@ import android.view.ViewGroup;
 
 import me.henrytao.mdcore.utils.AlertDialogBuilder;
 import me.henrytao.mdcore.utils.ResourceUtils;
-import me.henrytao.mvvmlifecycle.MVVMObserver;
 import me.henrytao.mvvmlifecycle.recyclerview.RecyclerViewBindingAdapter;
 import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.R;
-import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import me.henrytao.mvvmlifecycledemo.databinding.TasksFragmentBinding;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseFragment;
 import me.henrytao.mvvmlifecycledemo.ui.base.Constants;
@@ -68,13 +66,7 @@ public class TasksFragment extends BaseFragment {
     super.onCreateView();
     setHasOptionsMenu(true);
 
-    mAdapter = new RecyclerViewBindingAdapter<Task, TaskItemViewHolder>(this, mViewModel.getTasks()) {
-      @Override
-      public TaskItemViewHolder onCreateViewHolder(MVVMObserver observer, ViewGroup parent, int viewType) {
-        return new TaskItemViewHolder(observer, parent);
-      }
-    };
-
+    mAdapter = new RecyclerViewBindingAdapter<>(TaskItemViewHolder.class, this, mViewModel.getTasks());
     mBinding.list.setAdapter(mAdapter);
     mBinding.list.setLayoutManager(new LinearLayoutManager(getActivity()));
 

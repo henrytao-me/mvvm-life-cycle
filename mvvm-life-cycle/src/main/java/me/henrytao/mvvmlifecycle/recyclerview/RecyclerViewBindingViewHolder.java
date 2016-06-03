@@ -35,7 +35,14 @@ public abstract class RecyclerViewBindingViewHolder<D> extends RecyclerView.View
 
   protected MVVMObserver mObserver;
 
-  public RecyclerViewBindingViewHolder(MVVMObserver observer, ViewGroup parent, @LayoutRes int layoutId) {
+  /**
+   * This constructor should be extended and set proper layoutId
+   */
+  public RecyclerViewBindingViewHolder(MVVMObserver observer, ViewGroup parent) {
+    this(observer, parent, 0);
+  }
+
+  protected RecyclerViewBindingViewHolder(MVVMObserver observer, ViewGroup parent, @LayoutRes int layoutId) {
     super(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
     mObserver = observer;
     onInitializeViewModels();

@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import me.henrytao.mvvmlifecycle.MVVMObserver;
@@ -27,15 +28,16 @@ import me.henrytao.mvvmlifecycle.MVVMObserver;
 /**
  * Created by henrytao on 4/15/16.
  */
-public abstract class RecyclerViewBindingAdapter<D, V extends RecyclerViewBindingViewHolder<D>> extends RecyclerView.Adapter<V> {
-
-  public abstract V onCreateViewHolder(MVVMObserver observer, ViewGroup parent, int viewType);
+public class RecyclerViewBindingAdapter<D, V extends RecyclerViewBindingViewHolder<D>> extends RecyclerView.Adapter<V> {
 
   protected final List<D> mData;
 
   protected final MVVMObserver mObserver;
 
-  public RecyclerViewBindingAdapter(MVVMObserver observer, @NonNull List<D> data) {
+  private final Class<V> mClsView;
+
+  public RecyclerViewBindingAdapter(Class<V> clsView, MVVMObserver observer, @NonNull List<D> data) {
+    mClsView = clsView;
     mObserver = observer;
     mData = data;
   }
@@ -52,6 +54,17 @@ public abstract class RecyclerViewBindingAdapter<D, V extends RecyclerViewBindin
 
   @Override
   public V onCreateViewHolder(ViewGroup parent, int viewType) {
-    return onCreateViewHolder(mObserver, parent, viewType);
+    try {
+      return mClsView.getDeclaredConstructor(MVVMObserver.class, ViewGroup.class).newInstance(mObserver, parent);
+    } catch (InstantiationException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (NoSuchMethodException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 }
