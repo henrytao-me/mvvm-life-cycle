@@ -16,12 +16,15 @@
 
 package me.henrytao.mvvmlifecycle;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 /**
  * Created by henrytao on 12/15/15.
  */
 public interface MVVMLifeCycle {
+
+  void onActivityResult(int requestCode, int resultCode, Intent data);
 
   void onCreate();
 

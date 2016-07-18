@@ -16,6 +16,7 @@
 
 package me.henrytao.mvvmlifecycle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -103,13 +104,21 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
   }
 
   @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    // dispatching
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onActivityResult(requestCode, resultCode, data);
+    }
+  }
+
+  @Override
   public void onCreate() {
     mState = Constants.State.ON_CREATE;
     mIsDestroy = false;
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onCreate();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onCreate();
     }
   }
 
@@ -131,9 +140,8 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
     mState = Constants.State.ON_CREATE_VIEW;
     mIsDestroyView = false;
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onCreateView();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onCreateView();
     }
   }
 
@@ -145,9 +153,8 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
     mSubscriptionManager.unsubscribe();
     super.onDestroy();
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onDestroy();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onDestroy();
     }
     mViewModels.clear();
     mViewModels = null;
@@ -160,9 +167,8 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
     mSubscriptionManager.unsubscribe(UnsubscribeLifeCycle.DESTROY_VIEW);
     super.onDestroyView();
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onDestroyView();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onDestroyView();
     }
   }
 
@@ -173,18 +179,16 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
     mSubscriptionManager.unsubscribe(UnsubscribeLifeCycle.PAUSE);
     super.onPause();
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onPause();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onPause();
     }
   }
 
   public void onRestoreInstanceState(Bundle savedInstanceState) {
     savedInstanceState = savedInstanceState != null ? savedInstanceState : new Bundle();
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onRestoreInstanceState(savedInstanceState);
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onRestoreInstanceState(savedInstanceState);
     }
   }
 
@@ -198,9 +202,8 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
     mIsPause = false;
     super.onResume();
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onResume();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onResume();
     }
   }
 
@@ -208,9 +211,8 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
   public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onSaveInstanceState(outState);
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onSaveInstanceState(outState);
     }
   }
 
@@ -220,9 +222,8 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
     mIsStop = false;
     super.onStart();
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onStart();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onStart();
     }
   }
 
@@ -233,9 +234,8 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
     mSubscriptionManager.unsubscribe(UnsubscribeLifeCycle.STOP);
     super.onStop();
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onStop();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onStop();
     }
   }
 
