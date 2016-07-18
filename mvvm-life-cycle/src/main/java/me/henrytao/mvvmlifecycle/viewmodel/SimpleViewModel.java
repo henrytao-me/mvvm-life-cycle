@@ -16,6 +16,7 @@
 
 package me.henrytao.mvvmlifecycle.viewmodel;
 
+import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.os.Bundle;
 
@@ -38,6 +39,11 @@ public class SimpleViewModel extends BaseObservable implements MVVMLifeCycle {
   private boolean mIsStop;
 
   private SubscriptionManager mSubscriptionManager = new SubscriptionManager();
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    // do nothing
+  }
 
   public void onCreate() {
     mIsDestroy = false;
