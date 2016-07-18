@@ -16,6 +16,7 @@
 
 package me.henrytao.mvvmlifecycle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -89,13 +90,21 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
   }
 
   @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    // dispatching
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onActivityResult(requestCode, resultCode, data);
+    }
+  }
+
+  @Override
   public void onCreate() {
     mState = Constants.State.ON_CREATE;
     mIsDestroy = false;
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onCreate();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onCreate();
     }
   }
 
@@ -104,9 +113,8 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
     mState = Constants.State.ON_CREATE_VIEW;
     mIsDestroyView = false;
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onCreateView();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onCreateView();
     }
   }
 
@@ -119,9 +127,8 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
     mSubscriptionManager.unsubscribe();
     super.onDestroy();
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onDestroy();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onDestroy();
     }
     mViewModels.clear();
     mViewModels = null;
@@ -133,9 +140,8 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
     mIsDestroyView = true;
     mSubscriptionManager.unsubscribe(UnsubscribeLifeCycle.DESTROY_VIEW);
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onDestroyView();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onDestroyView();
     }
   }
 
@@ -146,9 +152,8 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
     mSubscriptionManager.unsubscribe(UnsubscribeLifeCycle.PAUSE);
     super.onPause();
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onPause();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onPause();
     }
   }
 
@@ -157,9 +162,8 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
     savedInstanceState = savedInstanceState != null ? savedInstanceState : new Bundle();
     super.onRestoreInstanceState(savedInstanceState);
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onRestoreInstanceState(savedInstanceState);
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onRestoreInstanceState(savedInstanceState);
     }
   }
 
@@ -169,9 +173,8 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
     mIsPause = false;
     super.onResume();
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onResume();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onResume();
     }
   }
 
@@ -179,9 +182,8 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
   public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onSaveInstanceState(outState);
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onSaveInstanceState(outState);
     }
   }
 
@@ -191,9 +193,8 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
     mIsStop = false;
     super.onStart();
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onStart();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onStart();
     }
   }
 
@@ -204,9 +205,8 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
     mSubscriptionManager.unsubscribe(UnsubscribeLifeCycle.STOP);
     super.onStop();
     // dispatching
-    int i = 0;
-    for (int n = mViewModels.size(); i < n; i++) {
-      mViewModels.get(i).onStop();
+    for (MVVMViewModel viewModel : mViewModels) {
+      viewModel.onStop();
     }
   }
 
