@@ -26,6 +26,8 @@ public interface MVVMObserver {
 
   void addViewModel(MVVMViewModel viewModel);
 
+  void manageSubscription(UnsubscribeLifeCycle unsubscribeLifeCycle, Subscription... subscriptions);
+
   void manageSubscription(String id, Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle);
 
   void manageSubscription(Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle);
