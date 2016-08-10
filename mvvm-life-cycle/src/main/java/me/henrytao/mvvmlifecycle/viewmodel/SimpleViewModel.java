@@ -88,6 +88,12 @@ public class SimpleViewModel extends BaseObservable implements MVVMLifeCycle {
     mSubscriptionManager.unsubscribe(UnsubscribeLifeCycle.STOP);
   }
 
+  protected void manageSubscription(UnsubscribeLifeCycle unsubscribeLifeCycle, Subscription... subscriptions) {
+    for (Subscription subscription : subscriptions) {
+      manageSubscription(subscription, unsubscribeLifeCycle);
+    }
+  }
+
   protected void manageSubscription(Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle) {
     if ((unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY && mIsDestroy) ||
         (unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY_VIEW && mIsDestroyView) ||

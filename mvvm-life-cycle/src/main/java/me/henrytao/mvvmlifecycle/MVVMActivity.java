@@ -60,6 +60,13 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
   }
 
   @Override
+  public void manageSubscription(UnsubscribeLifeCycle unsubscribeLifeCycle, Subscription... subscriptions) {
+    for (Subscription subscription : subscriptions) {
+      manageSubscription(subscription, unsubscribeLifeCycle);
+    }
+  }
+
+  @Override
   public void manageSubscription(Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle) {
     if ((unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY && mIsDestroy) ||
         (unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY_VIEW && mIsDestroyView) ||

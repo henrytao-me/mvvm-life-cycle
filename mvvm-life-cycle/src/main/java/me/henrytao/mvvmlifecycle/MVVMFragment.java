@@ -67,6 +67,13 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
   }
 
   @Override
+  public void manageSubscription(UnsubscribeLifeCycle unsubscribeLifeCycle, Subscription... subscriptions) {
+    for (Subscription subscription : subscriptions) {
+      manageSubscription(subscription, unsubscribeLifeCycle);
+    }
+  }
+
+  @Override
   public void manageSubscription(String id, Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle) {
     if ((unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY && mIsDestroy) ||
         (unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY_VIEW && mIsDestroyView) ||
