@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.henrytao.mvvmlifecycledemo.widget.rx;
+package me.henrytao.mvvmlifecycle.rx;
 
 import rx.Observable;
 import rx.Scheduler;

@@ -21,12 +21,12 @@ import android.text.TextUtils;
 
 import javax.inject.Inject;
 
+import me.henrytao.mvvmlifecycle.rx.Transformer;
 import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import me.henrytao.mvvmlifecycledemo.data.service.TaskService;
 import me.henrytao.mvvmlifecycledemo.di.Injector;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
-import me.henrytao.mvvmlifecycledemo.widget.rx.Transformer;
 
 /**
  * Created by henrytao on 4/5/16.

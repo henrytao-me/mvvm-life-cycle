@@ -20,7 +20,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.mockito.MockitoAnnotations;
 
-import me.henrytao.mvvmlifecycledemo.widget.rx.Transformer;
+import me.henrytao.mvvmlifecycle.rx.Transformer;
 import rx.schedulers.Schedulers;
 
 /**

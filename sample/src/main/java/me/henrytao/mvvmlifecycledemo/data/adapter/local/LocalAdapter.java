@@ -16,8 +16,6 @@
 
 package me.henrytao.mvvmlifecycledemo.data.adapter.local;
 
-import android.text.TextUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
