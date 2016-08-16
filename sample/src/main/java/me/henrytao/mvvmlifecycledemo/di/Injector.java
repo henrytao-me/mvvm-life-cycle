@@ -18,8 +18,6 @@ package me.henrytao.mvvmlifecycledemo.di;
 
 import android.app.Application;
 
-import me.henrytao.mvvmlifecycledemo.widget.rx.Transformer;
-
 /**
  * Created by henrytao on 6/18/15.
  */

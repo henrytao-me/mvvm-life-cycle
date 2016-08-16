@@ -16,9 +16,7 @@
 
 package me.henrytao.mvvmlifecycledemo.data.model;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.MockitoAnnotations;
 
 import me.henrytao.mvvmlifecycledemo.util.BaseTest;
 

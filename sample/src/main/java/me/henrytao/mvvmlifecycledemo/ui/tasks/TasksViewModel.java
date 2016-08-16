@@ -22,13 +22,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 import me.henrytao.mvvmlifecycle.event.Event1;
+import me.henrytao.mvvmlifecycle.rx.Transformer;
 import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import me.henrytao.mvvmlifecycledemo.data.model.Task;
 import me.henrytao.mvvmlifecycledemo.data.service.TaskService;
 import me.henrytao.mvvmlifecycledemo.di.Injector;
 import me.henrytao.mvvmlifecycledemo.ui.base.BaseViewModel;
 import me.henrytao.mvvmlifecycledemo.ui.base.Constants;
-import me.henrytao.mvvmlifecycledemo.widget.rx.Transformer;
 
 /**
  * Created by henrytao on 4/15/16.
