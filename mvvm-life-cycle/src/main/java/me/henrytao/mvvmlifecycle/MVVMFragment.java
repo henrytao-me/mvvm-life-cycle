@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.henrytao.mvvmlifecycle.log.Ln;
 import me.henrytao.mvvmlifecycle.rx.SubscriptionManager;
 import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
 import rx.Subscription;
@@ -82,7 +81,6 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
       if (subscription != null && !subscription.isUnsubscribed()) {
         subscription.unsubscribe();
       }
-      Ln.w("Cancel manage subscription | %s | %s", getClass().getName(), unsubscribeLifeCycle.toString());
       return;
     }
     mSubscriptionManager.manageSubscription(id, subscription, unsubscribeLifeCycle);
@@ -97,7 +95,6 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
       if (subscription != null && !subscription.isUnsubscribed()) {
         subscription.unsubscribe();
       }
-      Ln.w("Cancel manage subscription | %s | %s", getClass().getName(), unsubscribeLifeCycle.toString());
       return;
     }
     mSubscriptionManager.manageSubscription(subscription, unsubscribeLifeCycle);
