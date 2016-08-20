@@ -52,6 +52,22 @@ public class Transformer {
         .observeOn(sMainThreadScheduler.get());
   }
 
+  public static Scheduler getComputationScheduler() {
+    return sComputationScheduler.get();
+  }
+
+  public static Scheduler getIoScheduler() {
+    return sIoScheduler.get();
+  }
+
+  public static Scheduler getMainThreadScheduler() {
+    return sMainThreadScheduler.get();
+  }
+
+  public static Scheduler getNewThreadScheduler() {
+    return sNewThreadScheduler.get();
+  }
+
   public static void overrideComputationScheduler(Scheduler scheduler) {
     sComputationScheduler.set(scheduler);
   }
