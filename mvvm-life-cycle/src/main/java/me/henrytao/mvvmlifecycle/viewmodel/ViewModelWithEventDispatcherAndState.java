@@ -39,7 +39,7 @@ public class ViewModelWithEventDispatcherAndState<T> extends ViewModelWithEventD
 
   public static class State<T> {
 
-    private final Map<String, Object> mData = new HashMap<>();
+    private final Map<Object, Object> mData = new HashMap<>();
 
     private final T mName;
 
@@ -47,13 +47,13 @@ public class ViewModelWithEventDispatcherAndState<T> extends ViewModelWithEventD
       mName = name;
       int i = 0;
       while (i < data.length) {
-        String key = (String) data[i++];
+        Object key = data[i++];
         Object value = data[i++];
         mData.put(key, value);
       }
     }
 
-    public Map<String, Object> getData() {
+    public Map<Object, Object> getData() {
       return mData;
     }
 
