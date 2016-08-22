@@ -29,6 +29,13 @@ public class ViewModelWithEventDispatcherAndState<T> extends ViewModelWithEventD
 
   private BehaviorSubject<State<T>> mState = BehaviorSubject.create();
 
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    mState.onCompleted();
+    mState = null;
+  }
+
   public Observable<State<T>> getState() {
     return mState;
   }
