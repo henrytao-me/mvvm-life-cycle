@@ -24,15 +24,15 @@ import android.view.ViewGroup;
 
 import me.henrytao.mvvmlifecycle.MVVMObserver;
 import me.henrytao.mvvmlifecycle.MVVMViewModel;
+import me.henrytao.mvvmlifecycle.rx.UnsubscribeLifeCycle;
+import rx.Subscription;
 
 /**
  * Created by henrytao on 4/15/16.
  */
-public abstract class RecyclerViewBindingViewHolder<D> extends RecyclerView.ViewHolder {
+public abstract class RecyclerViewBindingViewHolder<D> extends RecyclerView.ViewHolder implements MVVMObserver {
 
   public abstract void bind(D data);
-
-  public abstract void onInitializeViewModels();
 
   protected MVVMObserver mObserver;
 
@@ -43,17 +43,40 @@ public abstract class RecyclerViewBindingViewHolder<D> extends RecyclerView.View
     this(observer, parent, 0);
   }
 
-  protected RecyclerViewBindingViewHolder(MVVMObserver observer, ViewGroup parent, View view) {
-    super(view);
+  protected RecyclerViewBindingViewHolder(MVVMObserver observer, View itemView) {
+    super(itemView);
     mObserver = observer;
     onInitializeViewModels();
   }
 
   protected RecyclerViewBindingViewHolder(MVVMObserver observer, ViewGroup parent, @LayoutRes int layoutId) {
-    this(observer, parent, LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
+    super(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
+    mObserver = observer;
+    onInitializeViewModels();
   }
 
+  @Override
   public void addViewModel(MVVMViewModel viewModel) {
     mObserver.addViewModel(viewModel);
+  }
+
+  @Override
+  public void manageSubscription(UnsubscribeLifeCycle unsubscribeLifeCycle, Subscription... subscriptions) {
+    mObserver.manageSubscription(unsubscribeLifeCycle, subscriptions);
+  }
+
+  @Override
+  public void manageSubscription(String id, Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle) {
+    mObserver.manageSubscription(id, subscription, unsubscribeLifeCycle);
+  }
+
+  @Override
+  public void manageSubscription(Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle) {
+    mObserver.manageSubscription(subscription, unsubscribeLifeCycle);
+  }
+
+  @Override
+  public void unsubscribe(String id) {
+    mObserver.unsubscribe(id);
   }
 }
