@@ -43,16 +43,14 @@ public abstract class RecyclerViewBindingViewHolder<D> extends RecyclerView.View
     this(observer, parent, 0);
   }
 
-  protected RecyclerViewBindingViewHolder(MVVMObserver observer, View itemView) {
-    super(itemView);
+  protected RecyclerViewBindingViewHolder(MVVMObserver observer, ViewGroup parent, View view) {
+    super(view);
     mObserver = observer;
     onInitializeViewModels();
   }
 
   protected RecyclerViewBindingViewHolder(MVVMObserver observer, ViewGroup parent, @LayoutRes int layoutId) {
-    super(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
-    mObserver = observer;
-    onInitializeViewModels();
+    this(observer, parent, LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
   }
 
   @Override
