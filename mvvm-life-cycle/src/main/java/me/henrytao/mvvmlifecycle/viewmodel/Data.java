@@ -57,11 +57,7 @@ public class Data {
 
   @Nullable
   public Object get(Object key) {
-    return get(key, null);
-  }
-
-  public Object get(Object key, Object defaultValue) {
-    return key != null && mData.containsKey(key) ? mData.get(key) : defaultValue;
+    return key != null && mData.containsKey(key) ? mData.get(key) : null;
   }
 
   public <T> T get(Object key, Class<T> tClass) {
