@@ -51,6 +51,10 @@ public class Data {
   public Data() {
   }
 
+  public boolean containsKey(Object key) {
+    return mData.containsKey(key);
+  }
+
   @Nullable
   public Object get(Object key) {
     return get(key, null);
