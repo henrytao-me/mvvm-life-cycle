@@ -16,9 +16,6 @@
 
 package me.henrytao.mvvmlifecycle.viewmodel;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
@@ -46,7 +43,7 @@ public class ViewModelWithEventDispatcherAndState<T> extends ViewModelWithEventD
 
   public static class State<T> {
 
-    private final Map<Object, Object> mData = new HashMap<>();
+    private final Data mData = new Data();
 
     private final T mName;
 
@@ -60,7 +57,7 @@ public class ViewModelWithEventDispatcherAndState<T> extends ViewModelWithEventD
       }
     }
 
-    public Map<Object, Object> getData() {
+    public Data getData() {
       return mData;
     }
 

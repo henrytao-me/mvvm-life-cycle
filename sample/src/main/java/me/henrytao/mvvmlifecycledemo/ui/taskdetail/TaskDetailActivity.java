@@ -94,7 +94,7 @@ public class TaskDetailActivity extends BaseActivity {
           Snackbar.make(mBinding.container, R.string.task_marked_complete, Snackbar.LENGTH_SHORT).show();
           break;
         case CLICK_EDIT_TASK:
-          startActivity(TaskAddEditActivity.newIntent(this, (String) state.getData().get(Constants.Key.ID)));
+          startActivity(TaskAddEditActivity.newIntent(this, state.getData().getString(Constants.Key.ID)));
           break;
         case DELETE_TASK:
           finish();

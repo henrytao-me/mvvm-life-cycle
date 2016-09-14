@@ -81,17 +81,17 @@ public class TasksFragment extends BaseFragment {
           Snackbar.make(mBinding.swipeRefreshLayout, R.string.task_marked_complete, Snackbar.LENGTH_SHORT).show();
           break;
         case CLICK_TASK:
-          startActivity(TaskDetailActivity.newIntent(getContext(), (String) state.getData().get(Constants.Key.ID)));
+          startActivity(TaskDetailActivity.newIntent(getContext(), state.getData().getString(Constants.Key.ID)));
           break;
         case RELOADED_TASKS:
           mAdapter.notifyDataSetChanged();
           mBinding.swipeRefreshLayout.setRefreshing(false);
           break;
         case CREATED_TASK:
-          mAdapter.notifyItemInserted((int) state.getData().get(Constants.Key.INDEX));
+          mAdapter.notifyItemInserted(state.getData().getInt(Constants.Key.INDEX));
           break;
         case UPDATED_TASK:
-          mAdapter.notifyItemChanged((int) state.getData().get(Constants.Key.INDEX));
+          mAdapter.notifyItemChanged(state.getData().getInt(Constants.Key.INDEX));
           break;
         case REMOVED_TASK:
           mAdapter.notifyDataSetChanged();
