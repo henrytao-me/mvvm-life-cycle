@@ -21,6 +21,8 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.henrytao.mvvmlifecycle.viewmodel.Data;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -35,6 +37,35 @@ public class SampleTest {
     data.put("hello", "moto");
     String tmp = getData(String.class, data, "hello");
     assertThat(tmp, equalTo("moto"));
+  }
+
+  @Test
+  public void testData() throws Exception {
+    Data data = new Data();
+    data.put("hello", new boolean[]{false, true});
+    boolean[] result = data.getBooleanArray("hello");
+    assertThat(result.length, equalTo(2));
+    assertThat(result[0], equalTo(false));
+    assertThat(result[1], equalTo(true));
+  }
+
+  @Test
+  public void testData_array() throws Exception {
+    Data data = new Data();
+    data.put("hello", "moto");
+    Data dataArray = new Data();
+    dataArray.put("array", new Data[]{data});
+    Data[] result = dataArray.getArray("array", Data.class);
+    assertThat(result.length, equalTo(1));
+    assertThat(result[0].getString("hello"), equalTo("moto"));
+  }
+
+  @Test
+  public void testData_null() throws Exception {
+    Data data = new Data();
+    data.put("hello", new boolean[]{false, true});
+    boolean[] result = data.getBooleanArray("hello_moto");
+    assertThat(result, equalTo(null));
   }
 
   private <T> T getData(Class<T> tClass, Map<Object, Object> data, Object key) {
