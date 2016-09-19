@@ -68,12 +68,37 @@ public class Data {
     return getData(tClass, mData, key, defaultValue);
   }
 
+  public <T> T[] getArray(Object key, Class<T> tClass) {
+    return getArray(key, tClass, null);
+  }
+
+  @SuppressWarnings("unchecked")
+  public <T> T[] getArray(Object key, Class<T> tClass, T[] defaultValue) {
+    try {
+      return (T[]) getData(Object.class, mData, key, defaultValue);
+    } catch (ClassCastException ignore) {
+      return defaultValue;
+    }
+  }
+
   public boolean getBoolean(Object key) {
     return getBoolean(key, false);
   }
 
   public boolean getBoolean(Object key, boolean defaultValue) {
     return getData(Boolean.class, mData, key, defaultValue);
+  }
+
+  public boolean[] getBooleanArray(Object key) {
+    return getBooleanArray(key, null);
+  }
+
+  public boolean[] getBooleanArray(Object key, boolean[] defaultValue) {
+    try {
+      return (boolean[]) getData(Object.class, mData, key, defaultValue);
+    } catch (ClassCastException ignore) {
+      return defaultValue;
+    }
   }
 
   public byte getByte(Object key) {
@@ -84,12 +109,36 @@ public class Data {
     return getData(Byte.class, mData, key, defaultValue);
   }
 
+  public byte[] getByteArray(Object key) {
+    return getByteArray(key, null);
+  }
+
+  public byte[] getByteArray(Object key, byte[] defaultValue) {
+    try {
+      return (byte[]) getData(Object.class, mData, key, defaultValue);
+    } catch (ClassCastException ignore) {
+      return defaultValue;
+    }
+  }
+
   public char getChar(Object key) {
     return getChar(key, (char) 0);
   }
 
   public char getChar(Object key, char defaultValue) {
     return getData(Character.class, mData, key, defaultValue);
+  }
+
+  public char[] getCharArray(Object key) {
+    return getCharArray(key, null);
+  }
+
+  public char[] getCharArray(Object key, char[] defaultValue) {
+    try {
+      return (char[]) getData(Object.class, mData, key, defaultValue);
+    } catch (ClassCastException ignore) {
+      return defaultValue;
+    }
   }
 
   public double getDouble(Object key) {
@@ -100,6 +149,18 @@ public class Data {
     return getData(Double.class, mData, key, defaultValue);
   }
 
+  public double[] getDoubleArray(Object key) {
+    return getDoubleArray(key, null);
+  }
+
+  public double[] getDoubleArray(Object key, double[] defaultValue) {
+    try {
+      return (double[]) getData(Object.class, mData, key, defaultValue);
+    } catch (ClassCastException ignore) {
+      return defaultValue;
+    }
+  }
+
   public float getFloat(Object key) {
     return getFloat(key, 0f);
   }
@@ -108,12 +169,36 @@ public class Data {
     return getData(Float.class, mData, key, defaultValue);
   }
 
+  public float[] getFloatArray(Object key) {
+    return getFloatArray(key, null);
+  }
+
+  public float[] getFloatArray(Object key, float[] defaultValue) {
+    try {
+      return (float[]) getData(Object.class, mData, key, defaultValue);
+    } catch (ClassCastException ignore) {
+      return defaultValue;
+    }
+  }
+
   public int getInt(Object key) {
     return getInt(key, (int) 0);
   }
 
   public int getInt(Object key, int defaultValue) {
     return getData(Integer.class, mData, key, defaultValue);
+  }
+
+  public int[] getIntArray(Object key) {
+    return getIntArray(key, null);
+  }
+
+  public int[] getIntArray(Object key, int[] defaultValue) {
+    try {
+      return (int[]) getData(Object.class, mData, key, defaultValue);
+    } catch (ClassCastException ignore) {
+      return defaultValue;
+    }
   }
 
   public <T> List<T> getList(Object key, Class<T> tClass) {
@@ -132,12 +217,36 @@ public class Data {
     return getData(Long.class, mData, key, defaultValue);
   }
 
+  public long[] getLongArray(Object key) {
+    return getLongArray(key, null);
+  }
+
+  public long[] getLongArray(Object key, long[] defaultValue) {
+    try {
+      return (long[]) getData(Object.class, mData, key, defaultValue);
+    } catch (ClassCastException ignore) {
+      return defaultValue;
+    }
+  }
+
   public short getShort(Object key) {
     return getShort(key, (short) 0);
   }
 
   public short getShort(Object key, short defaultValue) {
     return getData(Short.class, mData, key, defaultValue);
+  }
+
+  public short[] getShortArray(Object key) {
+    return getShortArray(key, null);
+  }
+
+  public short[] getShortArray(Object key, short[] defaultValue) {
+    try {
+      return (short[]) getData(Object.class, mData, key, defaultValue);
+    } catch (ClassCastException ignore) {
+      return defaultValue;
+    }
   }
 
   @Nullable
@@ -147,6 +256,18 @@ public class Data {
 
   public String getString(Object key, String defaultValue) {
     return getData(String.class, mData, key, defaultValue);
+  }
+
+  public String[] getStringArray(Object key) {
+    return getStringArray(key, null);
+  }
+
+  public String[] getStringArray(Object key, String[] defaultValue) {
+    try {
+      return (String[]) getData(Object.class, mData, key, defaultValue);
+    } catch (ClassCastException ignore) {
+      return defaultValue;
+    }
   }
 
   public void put(Object key, Object value) {
