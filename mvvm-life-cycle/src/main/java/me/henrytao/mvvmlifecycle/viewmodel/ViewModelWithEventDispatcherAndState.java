@@ -47,7 +47,7 @@ public class ViewModelWithEventDispatcherAndState<T> extends ViewModelWithEventD
 
     private final T mName;
 
-    protected State(T name, Object... data) {
+    public State(T name, Object... data) {
       mName = name;
       int i = 0;
       while (i < data.length) {
