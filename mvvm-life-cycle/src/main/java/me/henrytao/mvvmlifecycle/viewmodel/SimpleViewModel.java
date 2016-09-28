@@ -88,13 +88,13 @@ public class SimpleViewModel extends BaseObservable implements MVVMLifeCycle {
     mSubscriptionManager.unsubscribe(UnsubscribeLifeCycle.STOP);
   }
 
-  protected void manageSubscription(UnsubscribeLifeCycle unsubscribeLifeCycle, Subscription... subscriptions) {
+  public void manageSubscription(UnsubscribeLifeCycle unsubscribeLifeCycle, Subscription... subscriptions) {
     for (Subscription subscription : subscriptions) {
       manageSubscription(subscription, unsubscribeLifeCycle);
     }
   }
 
-  protected void manageSubscription(Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle) {
+  public void manageSubscription(Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle) {
     if ((unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY && mIsDestroy) ||
         (unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY_VIEW && mIsDestroyView) ||
         (unsubscribeLifeCycle == UnsubscribeLifeCycle.STOP && mIsStop) ||
@@ -107,7 +107,7 @@ public class SimpleViewModel extends BaseObservable implements MVVMLifeCycle {
     mSubscriptionManager.manageSubscription(subscription, unsubscribeLifeCycle);
   }
 
-  protected void manageSubscription(String id, Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle) {
+  public void manageSubscription(String id, Subscription subscription, UnsubscribeLifeCycle unsubscribeLifeCycle) {
     if ((unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY && mIsDestroy) ||
         (unsubscribeLifeCycle == UnsubscribeLifeCycle.DESTROY_VIEW && mIsDestroyView) ||
         (unsubscribeLifeCycle == UnsubscribeLifeCycle.STOP && mIsStop) ||
@@ -120,7 +120,7 @@ public class SimpleViewModel extends BaseObservable implements MVVMLifeCycle {
     mSubscriptionManager.manageSubscription(id, subscription, unsubscribeLifeCycle);
   }
 
-  protected void unsubscribe(String id) {
+  public void unsubscribe(String id) {
     mSubscriptionManager.unsubscribe(id);
   }
 }
