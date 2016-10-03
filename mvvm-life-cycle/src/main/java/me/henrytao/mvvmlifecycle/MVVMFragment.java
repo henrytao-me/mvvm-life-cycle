@@ -213,11 +213,11 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
 
   @Override
   public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
     // dispatching
     for (MVVMViewModel viewModel : mViewModels) {
       viewModel.onSaveInstanceState(outState);
     }
+    super.onSaveInstanceState(outState);
   }
 
   @Override
