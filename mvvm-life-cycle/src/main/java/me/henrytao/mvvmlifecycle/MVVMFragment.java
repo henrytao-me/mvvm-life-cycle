@@ -39,7 +39,9 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
 
   public abstract View onInflateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState);
 
-  protected List<MVVMViewModel> mViewModels;
+  protected List<MVVMViewModel> mViewModels = new ArrayList<>();
+
+  private List<MVVMViewModel> mAdapterViewModels = new ArrayList<>();
 
   private boolean mIsDestroy;
 
@@ -58,8 +60,17 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
   private SubscriptionManager mSubscriptionManager = new SubscriptionManager();
 
   @Override
+  public void addAdapterViewModel(MVVMViewModel viewModel) throws IllegalAccessException {
+    addViewModel(viewModel);
+    if (!mAdapterViewModels.contains(viewModel)) {
+      mAdapterViewModels.add(viewModel);
+    }
+    throw new IllegalAccessException("This method should be used with care");
+  }
+
+  @Override
   public void addViewModel(MVVMViewModel viewModel) {
-    if (mViewModels != null && !mViewModels.contains(viewModel)) {
+    if (!mViewModels.contains(viewModel)) {
       mViewModels.add(viewModel);
       propagateLifeCycle(viewModel);
     }
@@ -161,7 +172,6 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
       viewModel.onDestroy();
     }
     mViewModels.clear();
-    mViewModels = null;
   }
 
   @Override
@@ -174,6 +184,11 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
     for (MVVMViewModel viewModel : mViewModels) {
       viewModel.onDestroyView();
     }
+    for (MVVMViewModel viewModel : mAdapterViewModels) {
+      viewModel.onDestroy();
+    }
+    mViewModels.removeAll(mAdapterViewModels);
+    mAdapterViewModels.clear();
   }
 
   @Override
