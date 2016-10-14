@@ -26,8 +26,8 @@ ext {
       applicationId    : "me.henrytao.mvvmlifecycle",
       minSdkVersion    : 9,
       targetSdkVersion : 23,
-      versionCode      : 15,
-      versionName      : "2.7.6"
+      versionCode      : 16,
+      versionName      : "2.7.7"
   ]
 
   bintray = [

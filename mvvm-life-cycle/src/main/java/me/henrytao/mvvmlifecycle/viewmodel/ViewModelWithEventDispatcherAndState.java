@@ -17,14 +17,20 @@
 package me.henrytao.mvvmlifecycle.viewmodel;
 
 import rx.Observable;
-import rx.subjects.BehaviorSubject;
+import rx.subjects.PublishSubject;
 
 /**
  * Created by henrytao on 4/24/16.
  */
 public class ViewModelWithEventDispatcherAndState<T> extends ViewModelWithEventDispatcher {
 
-  private BehaviorSubject<State<T>> mState = BehaviorSubject.create();
+  private PublishSubject<State<T>> mState;
+
+  @Override
+  public void onCreate() {
+    super.onCreate();
+    mState = PublishSubject.create();
+  }
 
   @Override
   public void onDestroy() {

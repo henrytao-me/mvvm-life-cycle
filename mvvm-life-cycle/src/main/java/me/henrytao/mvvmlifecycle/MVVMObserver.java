@@ -24,6 +24,8 @@ import rx.Subscription;
  */
 public interface MVVMObserver {
 
+  void addAdapterViewModel(MVVMViewModel viewModel) throws IllegalAccessException;
+
   void addViewModel(MVVMViewModel viewModel);
 
   void manageSubscription(UnsubscribeLifeCycle unsubscribeLifeCycle, Subscription... subscriptions);

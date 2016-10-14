@@ -54,8 +54,16 @@ public abstract class RecyclerViewBindingViewHolder<D> extends RecyclerView.View
   }
 
   @Override
+  public void addAdapterViewModel(MVVMViewModel viewModel) throws IllegalAccessException {
+    throw new IllegalAccessException("This method should not be called");
+  }
+
+  @Override
   public void addViewModel(MVVMViewModel viewModel) {
-    mObserver.addViewModel(viewModel);
+    try {
+      mObserver.addAdapterViewModel(viewModel);
+    } catch (IllegalAccessException ignore) {
+    }
   }
 
   @Override
