@@ -238,10 +238,15 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mViewModels = new ArrayList<>();
+    Bundle bundle = getIntent().getExtras();
+    onInitializeBundle(bundle != null ? bundle : new Bundle(), savedInstanceState);
     onInitializeViewModels();
     onCreate();
     onSetContentView(savedInstanceState);
     onCreateView();
+  }
+
+  public void onInitializeBundle(Bundle bundle, Bundle savedInstanceState) {
   }
 
   private void propagateLifeCycle(@NonNull MVVMViewModel viewModel) {

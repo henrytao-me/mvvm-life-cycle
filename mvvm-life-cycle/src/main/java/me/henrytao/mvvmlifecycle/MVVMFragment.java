@@ -141,6 +141,8 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mViewModels = new ArrayList<>();
+    Bundle bundle = getArguments();
+    onInitializeBundle(bundle != null ? bundle : new Bundle(), savedInstanceState);
     onInitializeViewModels();
     onCreate();
   }
@@ -267,6 +269,9 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
   @Override
   public void unsubscribe(String id) {
     mSubscriptionManager.unsubscribe(id);
+  }
+
+  public void onInitializeBundle(Bundle bundle, Bundle savedInstanceState) {
   }
 
   private void propagateLifeCycle(@NonNull MVVMViewModel viewModel) {
