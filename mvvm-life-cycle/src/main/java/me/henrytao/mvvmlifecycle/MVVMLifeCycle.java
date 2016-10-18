@@ -34,6 +34,8 @@ public interface MVVMLifeCycle {
 
   void onDestroyView();
 
+  void onInitializeBundle(Bundle bundle, Bundle savedInstanceState);
+
   void onPause();
 
   void onRestoreInstanceState(Bundle savedInstanceState);

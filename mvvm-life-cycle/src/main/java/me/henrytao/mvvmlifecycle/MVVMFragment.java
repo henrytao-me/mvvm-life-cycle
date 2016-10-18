@@ -141,6 +141,8 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mViewModels = new ArrayList<>();
+    Bundle bundle = getArguments();
+    onInitializeBundle(bundle != null ? bundle : new Bundle(), savedInstanceState);
     onInitializeViewModels();
     onCreate();
   }
@@ -189,6 +191,10 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
     }
     mViewModels.removeAll(mAdapterViewModels);
     mAdapterViewModels.clear();
+  }
+
+  @Override
+  public void onInitializeBundle(Bundle bundle, Bundle savedInstanceState) {
   }
 
   @Override
