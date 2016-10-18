@@ -165,10 +165,6 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
   }
 
   @Override
-  public void onInitializeBundle(Bundle bundle, Bundle savedInstanceState) {
-  }
-
-  @Override
   public void onPause() {
     mState = Constants.State.ON_PAUSE;
     mIsPause = true;
@@ -248,6 +244,9 @@ public abstract class MVVMActivity extends AppCompatActivity implements MVVMLife
     onCreate();
     onSetContentView(savedInstanceState);
     onCreateView();
+  }
+
+  public void onInitializeBundle(Bundle bundle, Bundle savedInstanceState) {
   }
 
   private void propagateLifeCycle(@NonNull MVVMViewModel viewModel) {

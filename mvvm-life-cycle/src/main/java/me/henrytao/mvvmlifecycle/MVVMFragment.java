@@ -194,10 +194,6 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
   }
 
   @Override
-  public void onInitializeBundle(Bundle bundle, Bundle savedInstanceState) {
-  }
-
-  @Override
   public void onPause() {
     mState = Constants.State.ON_PAUSE;
     mIsPause = true;
@@ -273,6 +269,9 @@ public abstract class MVVMFragment extends android.support.v4.app.Fragment imple
   @Override
   public void unsubscribe(String id) {
     mSubscriptionManager.unsubscribe(id);
+  }
+
+  public void onInitializeBundle(Bundle bundle, Bundle savedInstanceState) {
   }
 
   private void propagateLifeCycle(@NonNull MVVMViewModel viewModel) {
